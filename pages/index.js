@@ -1,9 +1,9 @@
-// import styles from '../styles/Home.module.css'
+import Image from "next/image"
 
 export default function Home() {
   return (
     <div >
-       <h1>REGALIA</h1>
+       <Image src='/homepage.jpg' alt='homepage' width={4000} height={2000} className='object-cover'></Image>
 
     </div>
   )

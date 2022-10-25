@@ -4,7 +4,7 @@ import Login from './login'
 function MyApp({ Component, pageProps }) {
   return <>
   <Login/>
-    <Component {...pageProps} /></>
+  <Component {...pageProps} /></>
 }
 
 export default MyApp

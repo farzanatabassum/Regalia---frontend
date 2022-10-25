@@ -20,13 +20,12 @@ const Navbar = () => {
               </button>
             </div>
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <h1 className='px-10 py-7 text-3xl font-extrabold'>Regalia</h1>
+                <h1 className='px-15 py-7  text-3xl font-extrabold'>Regalia</h1>
               <div className="flex flex-shrink-0 items-center">
                 <div className="hidden sm:ml-6 sm:block">
-                  {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
                   <ul className="flex justify-center ">
                     <Link href="/">
-                      <li className=" text-gray-900  px-12 py-7 rounded-md text-sm font-medium">
+                      <li className="ml-96 text-gray-900 px-12 py-7 rounded-md text-sm font-medium">
                         Home
                       </li>
                     </Link>
@@ -42,7 +41,7 @@ const Navbar = () => {
                     </Link>
 
                     <Link href="/signup">
-                      <li className="text-gray-900 hover:bg-gray-500 hover:text-white  px-12 py-7 rounded-md text-sm font-medium ">
+                      <li className=" text-gray-900 hover:bg-gray-500 hover:text-white  px-12 py-7 rounded-md text-sm font-medium ">
                         Sign Up/Login
                       </li>
                     </Link>
@@ -63,24 +62,23 @@ const Navbar = () => {
               </Link>
 
               <Link href="/about">
-                <li className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                <li className="text-gray-700 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                   About
                 </li>
               </Link>
 
               <Link href="/sellWithUs">
-                <li className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                <li className="text-gray-700 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                   Sell with us
                 </li>
               </Link>
 
               <Link href="/signup">
-                <li className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                <li className="text-gray-700 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
                   Sign Up/Login
                 </li>
               </Link>
             </ul>
-            {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
           </div>
         </div>
       </nav>

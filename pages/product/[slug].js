@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+// import Image from 'next/image';
 
 const Post = () => {
   const router = useRouter();
@@ -9,6 +10,9 @@ const Post = () => {
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
+            {/* <Image alt="ecommerce"
+              className="lg:w-1/2  lg:h-auto  object-cover w-7/12 object-top rounded"
+              src="/dress1.jpg" width='380px' height='300px'></Image> */}
             <img
               alt="ecommerce"
               className="lg:w-1/2  lg:h-auto  object-cover w-7/12 object-top rounded"

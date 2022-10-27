@@ -30,10 +30,10 @@ const SingleProduct = ({img,category,brand,fabric,condition,size,price}) => {
               <h2 className=" mb-2 text-lg title-font text-gray-500 tracking-widest">
               <span className='font-bold'>Size:</span> {size}
               </h2>
-              <h2 className=" mb-2 text-lg title-font text-gray-500 tracking-widest">
+              <h2 className=" mb-6 text-lg title-font text-gray-500 tracking-widest">
               <span className='font-bold'>Price:</span> {price}
               </h2>
-              <button class="flex ml-auto text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded">Add to Cart</button>
+              <button class="flex text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded">Add to Cart</button>
 
             </div>
           </div>

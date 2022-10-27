@@ -5,7 +5,7 @@ import Link from 'next/link';
 const SignIn = () => {
   return (
     <div>
-        <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="flex min-h-full items-center justify-center py-16 px-4 sm:px-6 lg:px-8 ">
         <div className="w-full max-w-md space-y-8">
           <div>
             <h1 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -31,7 +31,7 @@ const SignIn = () => {
             <input type="hidden" name="remember" value="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
-                <h2 className='mb-2'>Email Address</h2>
+                <h2 className='mb-1'>Email Address</h2>
                 <label htmlFor="email-address" className="sr-only">
                   Email address
                 </label>
@@ -46,7 +46,7 @@ const SignIn = () => {
                 />
               </div>
               <div>
-              <h2 className='mb-2'>Password</h2>
+              <h2 className='mb-1'>Password</h2>
                 <label htmlFor="password" className="sr-only">
                   Password
                 </label>

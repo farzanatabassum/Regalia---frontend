@@ -19,7 +19,7 @@ const Navbar = () => {
               </button>
             </div>
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-              <h1 className="px-15 py-7  text-3xl font-extrabold">Regalia</h1>
+              <h1 className="px-15 py-7  text-3xl font-extrabold mr-auto">Regalia</h1>
               <div className="flex flex-shrink-0 items-center">
                 <div className="hidden sm:ml-6 sm:block">
                   <ul className="flex justify-center ">
@@ -41,7 +41,7 @@ const Navbar = () => {
                   </ul>
                 </div>
               </div>
-              <div className="flex ml-auto h-auto items-center py-7">
+              <div className="flex  h-auto items-center px-12 py-7">
                 <Link href="/signup">
                   <button
                     type="button"

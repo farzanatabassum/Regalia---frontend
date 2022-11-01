@@ -3,38 +3,38 @@ import Link from 'next/link';
 
 
 const SignUp = () => {
-  // const [name,setName]=useState()
-  // const [email,setEmail]=useState()
-  // const [password,setPassword]=useState()
-  // const handleChange=(e)=>{
-  //   if(e.target.name==='name'){
-  //     setName(e.target.value)
-  //   }
-  //   else if(e.target.name==='email'){
-  //     setEmail(e.target.value)
-  //   }
-  //   else if(e.target.name==='password'){
-  //     setPassword(e.target.value)
-  //   }
+  const [name,setName]=useState()
+  const [email,setEmail]=useState()
+  const [password,setPassword]=useState()
+  const handleChange=(e)=>{
+    if(e.target.name==='name'){
+      setName(e.target.value)
+    }
+    else if(e.target.name==='email'){
+      setEmail(e.target.value)
+    }
+    else if(e.target.name==='password'){
+      setPassword(e.target.value)
+    }
 
-  // }
-  // const handleSubmit=async(e)=>{
-  //   e.preventDefault()
-  //   const userData={name,email,password}
-  //   let res=await fetch("http://localhost:3000/api/users/signup",{
-  //     method:'POST',
-  //     headers:{
-  //       'Content-Type':'application/json',
+  }
+  const handleSubmit=async(e)=>{
+    e.preventDefault()
+    const userData={name,email,password}
+    let res=await fetch("http://localhost:5000/api/users/signup",{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
 
-  //     },
-  //     body: JSON.stringify(userData),
-  //   })
-  //   let response=await res.json()
-  //   console.log(response)
-  //   setName('')
-  //   setEmail('')
-  //   setPassword('')
-  // }
+      },
+      body: JSON.stringify(userData),
+    })
+    let response=await res.json()
+    console.log(response)
+    setName('')
+    setEmail('')
+    setPassword('')
+  }
   return (
     <div>
         <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -59,8 +59,7 @@ const SignUp = () => {
               </Link>
             </p>
           </div>
-          {/* <form onSubmit={handleSubmit} className="mt-8 space-y-6" action="#" method="POST"> */}
-          <form  className="mt-8 space-y-6" action="#" method="POST">
+          <form onSubmit={handleSubmit} className="mt-8 space-y-6" action="#" method="POST">
             <input type="hidden" name="remember" value="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
@@ -76,8 +75,9 @@ const SignUp = () => {
                   required
                   className=" mb-5 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Your name"
-                  // onChange={handleChange}
                   value={name}
+
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -93,8 +93,8 @@ const SignUp = () => {
                   required
                   className=" mb-5 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Email address"
-                  // onChange={handleChange}
                   value={email}
+                  onChange={handleChange}
 
                 />
               </div>
@@ -111,8 +111,8 @@ const SignUp = () => {
                   required
                   className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Password"
-                  // onChange={handleChange}
                   value={password}
+                  onChange={handleChange}
                 />
               </div>
             </div>

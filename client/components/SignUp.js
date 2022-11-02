@@ -1,43 +1,84 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Link from 'next/link';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
 
 const SignUp = () => {
-  const [name,setName]=useState()
-  const [email,setEmail]=useState()
-  const [password,setPassword]=useState()
-  const handleChange=(e)=>{
-    if(e.target.name==='name'){
-      setName(e.target.value)
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const router=useRouter()
+  const handleChange = (e) => {
+    if (e.target.name === 'name') {
+      setName(e.target.value);
+    } else if (e.target.name === 'email') {
+      setEmail(e.target.value);
+    } else if (e.target.name === 'password') {
+      setPassword(e.target.value);
     }
-    else if(e.target.name==='email'){
-      setEmail(e.target.value)
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const userData = { name, email, password };
+    try {
+      //fetching signup api
+      let res = await fetch('http://localhost:5000/api/users/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+      let response = await res.json();
+      console.log(response);
+      setName('');
+      setEmail('');
+      setPassword('');
+      //setting the token
+      localStorage.setItem("Token",response.token)
+      toast.success('Your account has been created', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
+      // setTimeout(() => {
+      //   router.push('http://localhost:3000')
+      // }, 1000);
+    } catch (error) {
+      toast.error('Invalid credentials', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
     }
-    else if(e.target.name==='password'){
-      setPassword(e.target.value)
-    }
-
-  }
-  const handleSubmit=async(e)=>{
-    e.preventDefault()
-    const userData={name,email,password}
-    let res=await fetch("http://localhost:5000/api/users/signup",{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-
-      },
-      body: JSON.stringify(userData),
-    })
-    let response=await res.json()
-    console.log(response)
-    setName('')
-    setEmail('')
-    setPassword('')
-  }
+  };
   return (
     <div>
-        <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      {/* React toastify */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
             <h1 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -47,27 +88,32 @@ const SignUp = () => {
               SIGN UP FOR AN ACCOUNT
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
-                <span> Or </span>
-              
+              <span> Or </span>
+
               <Link href="/login">
                 <a
                   href="#"
                   className="font-medium text-gray-800 hover:text-gray-600"
                 >
-                 LOGIN
+                  LOGIN
                 </a>
               </Link>
             </p>
           </div>
-          <form onSubmit={handleSubmit} className="mt-8 space-y-6" action="#" method="POST">
+          <form
+            onSubmit={handleSubmit}
+            className="mt-8 space-y-6"
+            action="#"
+            method="POST"
+          >
             <input type="hidden" name="remember" value="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
-              <h2 className='mb-2'>Name</h2>
+                <h2 className="mb-2">Name</h2>
                 <label htmlFor="name" className="sr-only">
                   Name
                 </label>
-                <input 
+                <input
                   id="name"
                   name="name"
                   type="text"
@@ -76,12 +122,11 @@ const SignUp = () => {
                   className=" mb-5 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Your name"
                   value={name}
-
                   onChange={handleChange}
                 />
               </div>
               <div>
-              <h2 className='mb-2'>Email Address</h2>
+                <h2 className="mb-2">Email Address</h2>
                 <label htmlFor="email" className="sr-only">
                   Email address
                 </label>
@@ -95,11 +140,10 @@ const SignUp = () => {
                   placeholder="Email address"
                   value={email}
                   onChange={handleChange}
-
                 />
               </div>
               <div>
-              <h2 className='mb-2'>Password</h2>
+                <h2 className="mb-2">Password</h2>
                 <label htmlFor="password" className="sr-only">
                   Password
                 </label>
@@ -128,9 +172,8 @@ const SignUp = () => {
           </form>
         </div>
       </div>
-      
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;

@@ -13,7 +13,7 @@
 /out/
 /client/out/
 /client/.next/
-
+.env
 # production
 /build
 

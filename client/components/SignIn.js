@@ -9,6 +9,12 @@ const SignIn = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const router=useRouter()
+  useEffect(()=>{
+    const authtoken=(localStorage.getItem('Token'));
+    if(authtoken){
+        router.push('/')
+    }
+  },[router])
   const handleChange = (e) => {
    if (e.target.name === 'email') {
       setEmail(e.target.value);

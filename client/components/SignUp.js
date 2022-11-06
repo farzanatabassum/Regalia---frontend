@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
-
 const SignUp = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();

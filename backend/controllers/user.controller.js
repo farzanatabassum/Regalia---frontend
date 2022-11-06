@@ -8,6 +8,11 @@ const bcrypt=require('bcryptjs')
 //public
 const register=asyncHandler(async(req,res)=>{
     const {name,email,gender,password}=req.body
+    //if password less than 7
+    if(password.length < 7) {
+        res.status(400);
+        throw new Error('Password must be at least 7 characters long');
+        }
     //Any Input field is empty
     if(!name||!email||!gender||!password){
         res.status(400)

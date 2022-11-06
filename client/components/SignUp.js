@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 const SignUp = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
+  const [gender, setGender] = useState();
   const [password, setPassword] = useState();
   const router=useRouter()
   const handleChange = (e) => {
@@ -14,13 +15,15 @@ const SignUp = () => {
       setName(e.target.value);
     } else if (e.target.name === 'email') {
       setEmail(e.target.value);
+    } else if (e.target.name === 'gender') {
+      setGender(e.target.value);
     } else if (e.target.name === 'password') {
       setPassword(e.target.value);
     }
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userData = { name, email, password };
+    const userData = { name, email,gender, password };
     try {
       //fetching signup api
       let res = await fetch('http://localhost:5000/api/users/signup', {
@@ -34,6 +37,7 @@ const SignUp = () => {
       console.log(response);
       setName('');
       setEmail('');
+      setGender('');
       setPassword('');
       //setting the token
       localStorage.setItem("Token",response.token)
@@ -82,13 +86,13 @@ const SignUp = () => {
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
-            <h1 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+            <h1 className="mt-1 text-center text-3xl font-bold tracking-tight text-gray-900">
               Regalia
             </h1>
-            <h2 className="mt-6 text-center text-base font-bold tracking-tight text-gray-900">
+            <h2 className="mt-2 text-center text-base font-bold tracking-tight text-gray-900">
               SIGN UP FOR AN ACCOUNT
             </h2>
-            <p className="mt-2 text-center text-sm text-gray-600">
+            <p className="mt-1 text-center text-sm text-gray-600">
               <span> Or </span>
 
               <Link href="/login">
@@ -103,14 +107,14 @@ const SignUp = () => {
           </div>
           <form
             onSubmit={handleSubmit}
-            className="mt-8 space-y-6"
+            className="mt-1 space-y-6"
             action="#"
             method="POST"
           >
             <input type="hidden" name="remember" value="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
-                <h2 className="mb-2">Name</h2>
+                <h2 className="mb-1">Name</h2>
                 <label htmlFor="name" className="sr-only">
                   Name
                 </label>
@@ -120,14 +124,14 @@ const SignUp = () => {
                   type="text"
                   autoComplete="name"
                   required
-                  className=" mb-5 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Your name"
                   value={name}
                   onChange={handleChange}
                 />
               </div>
               <div>
-                <h2 className="mb-2">Email Address</h2>
+                <h2 className="mb-1">Email Address</h2>
                 <label htmlFor="email" className="sr-only">
                   Email address
                 </label>
@@ -137,14 +141,33 @@ const SignUp = () => {
                   type="email"
                   autoComplete="email"
                   required
-                  className=" mb-5 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Email address"
                   value={email}
                   onChange={handleChange}
                 />
               </div>
               <div>
-                <h2 className="mb-2">Password</h2>
+                <h2 className="mb-1">Gender</h2>
+                <label htmlFor="gender" className="sr-only">
+                  Gender
+                </label>
+                <input
+                  id="gender"
+                  name="gender"
+                  type="gender"
+                  autoComplete="gender"
+                  required
+                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                  placeholder="Gender"
+                  value={gender}
+                  onChange={handleChange}
+                  
+                />
+                  
+              </div>
+              <div>
+                <h2 className="mb-1">Password</h2>
                 <label htmlFor="password" className="sr-only">
                   Password
                 </label>

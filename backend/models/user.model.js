@@ -10,6 +10,11 @@ const userSchema= mongoose.Schema({
         required:[true, 'Please provide an email'],
         unique:true,
     },
+    gender:{
+        type:String,
+        required:[true, 'Please select a gender'],
+
+    },
     password:{
         type:String,
         required:[true, 'Please provide a password'],

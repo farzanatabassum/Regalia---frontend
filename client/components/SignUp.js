@@ -47,9 +47,10 @@ const SignUp = () => {
         progress: undefined,
         theme: 'dark',
       });
-      // setTimeout(() => {
-      //   router.push('http://localhost:3000')
-      // }, 1000);
+      //navigating to homepage
+      setTimeout(() => {
+        router.push('/')
+      }, 1000);
     } catch (error) {
       toast.error('Invalid credentials', {
         position: 'top-right',

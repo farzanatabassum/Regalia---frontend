@@ -9,14 +9,6 @@ const SignIn = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const router=useRouter()
-  // useEffect(()=>{
-  //   if (localStorage.getItem("Token")) {
-  //     setTimeout(() => {
-  //       router.push("/");
-  //     }, 1000);
-  //   }
-  // }, [])
-  
   const handleChange = (e) => {
    if (e.target.name === 'email') {
       setEmail(e.target.value);
@@ -52,9 +44,10 @@ const SignIn = () => {
         progress: undefined,
         theme: 'dark',
       });
-      // setTimeout(() => {
-      //   router.push('http://localhost:3000')
-      // }, 1000);
+      //navigating to homepage
+      setTimeout(() => {
+        router.push('/')
+      }, 1000);
     } catch (error) {
       toast.error('Invalid credentials', {
         position: 'top-right',

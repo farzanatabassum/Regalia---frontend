@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
+import {RiAccountCircleLine  } from 'react-icons/ri';
 
-const Navbar = () => {
+
+const Navbar = ({user}) => {
   return (
     <div>
       <nav className="bg-gray-200">
@@ -42,14 +44,15 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="flex  h-auto items-center px-12 py-7">
-                <Link href="/signup">
+                {user.value &&<RiAccountCircleLine className='text-xl md:text-2xl mx-2'/>}
+               {!user.value && <Link href="/login">
                   <button
                     type="button"
                     className=" text-white bg-gray-700 font-medium rounded-lg text-sm px-5 py-3 text-center "
                   >
                     Sign Up/Login
                   </button>
-                </Link>
+                </Link>}
               </div>
             </div>
           </div>

@@ -44,7 +44,9 @@ const Navbar = ({user}) => {
                 </div>
               </div>
               <div className="flex  h-auto items-center px-12 py-7">
-                {user.value &&<RiAccountCircleLine className='text-xl md:text-2xl mx-2'/>}
+                {/* User logged in */}
+                {user.value && <RiAccountCircleLine className='text-xl md:text-2xl mx-2'/>}
+                  {/* User logged out */}
                {!user.value && <Link href="/login">
                   <button
                     type="button"

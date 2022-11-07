@@ -80,11 +80,23 @@ const login=asyncHandler(async(req,res)=>{
 }
 
 )
+//api/users/me
+//get request
+//private
 const getUser=asyncHandler(async(req,res)=>{
-    res.json({message:'Display user data'})
-}
+    const {_id,name,email,gender}=await User.findById(req.user.id)
 
-)
+
+    res.status(200).json({
+        id:_id,
+        name,
+        email,
+        gender,
+    })
+})
+
+
+
 //generate a token
 const generateToken=(id)=>{
     return jwt.sign({id},process.env.JWT_SECRET,{

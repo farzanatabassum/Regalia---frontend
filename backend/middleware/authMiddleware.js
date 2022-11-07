@@ -7,17 +7,11 @@ const protect=asyncHandler(async(req,res,next)=>{
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         try{
             //get token from the user
-            token=req.headers.authorization.split('')[1]
+            token=req.headers.authorization.split(' ')[1]
             //Verify token
             const decoded=jwt.verify(token,process.env.JWT_SECRET)
             //get user from the token
-            const user=await User.findById(decoded.id).select('-password')
-            if(!user){
-                res.status(404)
-                throw new Error('No user found')
-            }
-            req.user = user
-
+             req.user=await User.findById(decoded.id).select('-password')
             next()
         
 

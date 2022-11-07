@@ -35,7 +35,7 @@ const Navbar = ({user}) => {
                         About
                       </li>
                     </Link>
-                    <Link href="/sellWithUs">
+                    <Link href="/sellwithus">
                       <li className="text-gray-900 hover:bg-gray-500 hover:text-white  px-12 py-7 rounded-md text-sm font-medium">
                         Sell with us
                       </li>

@@ -10,7 +10,10 @@ connDB()
 app.use(express.json())
 app.use(cors())
 app.use(express.urlencoded({extended:false}))
+//user routes
 app.use('/api/users',require('./routes/user.route'))
+//product routes
+app.use('/api/products',require('./routes/product.route'))
 app.listen(port,()=>{
     console.log(`Starting port ${port}`)
 })

@@ -1,6 +1,15 @@
+import {useRouter} from 'next/router'
 import React from 'react'
+import { useEffect } from 'react'
 
 const SellWithUs = () => {
+  const router=useRouter()
+  useEffect(()=>{
+    if(!localStorage.getItem("Token")){
+      router.push('/login')
+    }
+  },[router]
+  )
   return (
     <div>
        <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

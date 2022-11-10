@@ -4,45 +4,47 @@ const { protect } = require('../middleware/authMiddleware');
 const {createProduct,getProduct}=require('../controllers/product.controller')
 //for files
 const multer = require('multer');
-const path = require('path');
-const imgStorage = multer.diskStorage({
-  destination: path.join(__dirname,'../productImages'),
-  filename: (req, file, cb) => {
-    return cb(
-      null, 
-      `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`
-    );
-  },
+const {
+  ref,
+  uploadBytes,
+  listAll,
+  deleteObject,
+} = require("firebase/storage");
+const storage=require('../firebase/firebase');
+const route = require('color-convert/route');
+const memoStorage = multer.memoryStorage();
+const upload = multer({ memoStorage });
+//add picture
+router.post("/addPicture", upload.single("image"), async (req, res) => {
+  const file = req.file;
+  const imageRef = ref(storage, file.originalname);
+  const metatype = { contentType: file.mimetype, name: file.originalname };
+  await uploadBytes(imageRef, file.buffer, metatype)
+    .then((snapshot) => {
+      res.send("uploaded!");
+    })
+    .catch((error) => console.log(error.message));
 });
-const uploadImage = multer({
-  storage: imgStorage,
-  fileFilter: function (req, file, cb) {
-    let ext = path.extname(file.originalname);
-    if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
-      return cb(new Error('Only images are allowed'));
-    }
-    cb(null, true);
-  },
-  limits: {
-    fileSize: 1024 * 1024,
-  },
+//get Image url
+router.get("/pictures", async (req, res) => {
+  const listRef = ref(storage);
+  let productPictures = [];
+  await listAll(listRef)
+    .then((pics) => {
+      productPictures = pics.items.map((item) => {
+        const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${item._location.bucket}/o/${item._location.path_}?alt=media`;
+        return {
+          url: publicUrl,
+          name: item._location.path_,
+        };
+      });
+      res.send(productPictures);
+    })
+    .catch((error) => console.log(error.message));
 });
-router.use(express.static('../productImages'));
 
-// router.use('/image', express.static('../productImages'));
-// router.post('/image', uploadImage.single('image'), (req, res) => {
-//   console.log(req.file)
-//   res.json({
-//     success: 1,
-//     image_url: `http://localhost:5000/api/products/image/${req.file.filename}`,
-//   });
-// });
-router.route('/create').post(uploadImage.single('image'),protect,createProduct)
+
+router.route('/create').post(protect,createProduct)
 router.route('/read').get(protect,getProduct)
-// router.use((err, req, res, next) => {
-//   console.log(err.message);
-//   res.status(404).json({
-//     msg: err.message,
-//   });
-// });
+
 module.exports = router;

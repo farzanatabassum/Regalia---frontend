@@ -5,24 +5,18 @@ const asyncHandler=require('express-async-handler')
 //post req
 //private
 const createProduct=asyncHandler(async(req,res)=>{
-    
-  
-    const {filename}=req.file
-    const {category,brand,fabric,size,condition,gender,originPrice, sellingPrice,tags}=req.body
-    console.log(req.file)
+   
+    const {image,category,brand,fabric,size,condition,gender,originPrice, sellingPrice,tags}=req.body
 
     //Any Input field is empty
-    if(!filename||!category||!brand||!fabric||!size||!condition||!gender||!originPrice||!sellingPrice||!tags){
+    if(!image||!category||!brand||!fabric||!size||!condition||!gender||!originPrice||!sellingPrice||!tags){
         res.status(400)
         throw new Error("Please add all fields")
     }
-    // let arrTags=[]
-    // for(let i=0;i<req.body.length;i++){
-    //     arrTags[i]=req.body[i].tags
-    // }
+    
 
     const product=await Product.create({
-        image:filename,
+        image,
         category,
         brand,
         fabric,

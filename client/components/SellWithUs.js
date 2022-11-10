@@ -7,7 +7,7 @@ const SellWithUs = () => {
   const router=useRouter()
   useEffect(()=>{
     if(!localStorage.getItem("Token")){
-      toast("Please Login first")
+      toast.error("Please Login first")
       router.push('/login')
     }
   },[router]

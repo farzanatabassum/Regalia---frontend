@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
-const {createProduct}=require('../controllers/product.controller')
+const {createProduct,getProduct}=require('../controllers/product.controller')
 //for files
 const multer = require('multer');
 const path = require('path');
@@ -37,12 +37,12 @@ router.use(express.static('../productImages'));
 //     image_url: `http://localhost:5000/api/products/image/${req.file.filename}`,
 //   });
 // });
-// router.route('/create').post(protect,createProduct)
 router.route('/create').post(uploadImage.single('image'),protect,createProduct)
-router.use((err, req, res, next) => {
-  console.log(err.message);
-  res.status(404).json({
-    msg: err.message,
-  });
-});
+router.route('/read').get(protect,getProduct)
+// router.use((err, req, res, next) => {
+//   console.log(err.message);
+//   res.status(404).json({
+//     msg: err.message,
+//   });
+// });
 module.exports = router;

@@ -36,5 +36,13 @@ const createProduct=asyncHandler(async(req,res)=>{
     })
     res.status(200).json(product)
 })
+////api/products/read
+//get req
+//private
+const getProduct=asyncHandler(async(req,res)=>{
+    const products = await Product.find({ user: req.user.id })
 
-module.exports={createProduct,}
+    res.status(200).json(products)
+
+})
+module.exports={createProduct,getProduct,}

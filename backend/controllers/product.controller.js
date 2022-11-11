@@ -5,7 +5,6 @@ const asyncHandler=require('express-async-handler')
 //post req
 //private
 const createProduct=asyncHandler(async(req,res)=>{
-   
     const {image,category,brand,fabric,size,condition,gender,originPrice, sellingPrice,tags}=req.body
 
     //Any Input field is empty

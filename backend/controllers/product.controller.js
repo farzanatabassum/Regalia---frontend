@@ -1,21 +1,26 @@
 const Product=require('../models/product.model')
 const asyncHandler=require('express-async-handler')
+const cloudinary = require("../config/cloudinary");
+
 
 //api/products/create
 //post req
 //private
 const createProduct=asyncHandler(async(req,res)=>{
-    const {image,category,brand,fabric,size,condition,gender,originPrice, sellingPrice,tags}=req.body
+  const file=req.files.image
+  const result = await cloudinary.uploader.upload(file.tempFilePath, {
+    folder: "productImages",
+  });
+  console.log(result)
+    const {category,brand,fabric,size,condition,gender,originPrice, sellingPrice,tags}=req.body
 
     //Any Input field is empty
-    if(!image||!category||!brand||!fabric||!size||!condition||!gender||!originPrice||!sellingPrice||!tags){
+    if(!file||!category||!brand||!fabric||!size||!condition||!gender||!originPrice||!sellingPrice||!tags){
         res.status(400)
         throw new Error("Please add all fields")
     }
-    
-
     const product=await Product.create({
-        image,
+        image:result.url,
         category,
         brand,
         fabric,
@@ -29,6 +34,7 @@ const createProduct=asyncHandler(async(req,res)=>{
     })
     res.status(200).json(product)
 })
+
 ////api/products/read
 //get req
 //private

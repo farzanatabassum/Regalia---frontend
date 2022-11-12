@@ -35,7 +35,7 @@ const createProduct=asyncHandler(async(req,res)=>{
     res.status(200).json(product)
 })
 
-////api/products/read
+//api/products/read
 //get req
 //private
 const getProduct=asyncHandler(async(req,res)=>{
@@ -44,4 +44,7 @@ const getProduct=asyncHandler(async(req,res)=>{
     res.status(200).json(products)
 
 })
+//api/products/deleteProduct
+//delete req
+//private
 module.exports={createProduct,getProduct,}

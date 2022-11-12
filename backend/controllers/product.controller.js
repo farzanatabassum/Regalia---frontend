@@ -42,6 +42,58 @@ const getProduct=asyncHandler(async(req,res)=>{
     res.status(200).json(products)
 
 })
+//api/products/editProduct?id=id&url=imageUrl
+//put req
+//private
+const editProduct=asyncHandler(async(req,res)=>{
+  let product = await Product.findById(req.query.id);
+
+  if (!product) {
+    res.status(400)
+    throw new Error('Product not found')
+  }
+
+   // Check for user
+   if (!req.user) {
+    res.status(401)
+    throw new Error('User not found')
+  }
+  //Getting image name from image url
+  const imageUrl=req.query.url
+  const imageUrlArray=imageUrl.split('/')
+  const imageSplit=imageUrlArray[imageUrlArray.length-1]
+  const imageName=imageSplit.split('.')[0]
+  console.log(imageName)
+
+   //Deleting image from cloudinary
+  const resultImage=await cloudinary.uploader.destroy(imageName)
+  res.status(200).json({message:resultImage})
+
+  //inserting new image in cloudinary
+  const file=req.files.image
+  const result = await cloudinary.uploader.upload(file.tempFilePath)
+  console.log(result)
+  const data={
+    image:result.url||product.image,
+        category:req.body.category||product.category,
+        brand:req.body.brand||product.brand,
+        fabric:req.body.fabric||product.fabric,
+        size:req.body. size||product. size,
+        condition:req.body.condition||product.condition,
+        gender:req.body.gender||product.gender,
+        originPrice:req.body.originPrice||product.originPrice, 
+        sellingPrice:req.body.sellingPrice||product.sellingPrice,
+        tags:req.body. tags||product. tags,
+  }
+  //update product
+  
+  const updatedProduct = await Product.findByIdAndUpdate(req.query.id, data,{
+    new: true,
+  })
+  res.status(200).json(updatedProduct)
+
+
+})
 //api/products/deleteProduct?id=id&url=imageUrl
 //delete req
 //private
@@ -73,4 +125,4 @@ const deleteProduct=asyncHandler(async(req,res)=>{
   })
 
 })
-module.exports={createProduct,getProduct,deleteProduct,}
+module.exports={createProduct,getProduct,editProduct,deleteProduct,}

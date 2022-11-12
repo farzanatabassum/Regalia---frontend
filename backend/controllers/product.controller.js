@@ -98,6 +98,12 @@ const editProduct=asyncHandler(async(req,res)=>{
 //delete req
 //private
 const deleteProduct=asyncHandler(async(req,res)=>{
+  let product = await Product.findById(req.query.id);
+
+  if (!product) {
+    res.status(400)
+    throw new Error('Product not found')
+  }
    // Check for user
    if (!req.user) {
     res.status(401)

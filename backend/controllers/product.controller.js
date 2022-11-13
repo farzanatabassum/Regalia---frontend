@@ -106,7 +106,7 @@ const editProduct = asyncHandler(async (req, res) => {
   res.status(200).json(updatedProduct);
 });
 
-//api/products/deleteProduct?id=id&url=imageUrl
+//api/products/deleteProduct?id=id
 //delete req
 //private
 //User can delete product
@@ -123,7 +123,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
     throw new Error('User not found');
   }
   //Getting image name from image url
-  const imageUrl = req.query.url;
+  const imageUrl = product.image;
   const imageUrlArray = imageUrl.split('/');
   const image = imageUrlArray[imageUrlArray.length - 1];
   const imageName = image.split('.')[0];

@@ -94,6 +94,7 @@ const editProduct=asyncHandler(async(req,res)=>{
 
 
 })
+
 //api/products/deleteProduct?id=id&url=imageUrl
 //delete req
 //private
@@ -131,4 +132,12 @@ const deleteProduct=asyncHandler(async(req,res)=>{
   })
 
 })
-module.exports={createProduct,getProduct,editProduct,deleteProduct,}
+
+//api/products/listAll
+//get req
+//private
+const listAll=asyncHandler(async(req,res)=>{
+
+})
+
+module.exports={createProduct,getProduct,editProduct,deleteProduct,listAll,}

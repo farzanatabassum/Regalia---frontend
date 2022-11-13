@@ -151,18 +151,12 @@ const SignUp = () => {
                 <label htmlFor="gender" className="sr-only">
                   Gender
                 </label>
-                <input
-                  id="gender"
-                  name="gender"
-                  type="gender"
-                  autoComplete="gender"
-                  required
-                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  placeholder="Gender"
-                  value={gender}
-                  onChange={handleChange}
-                  
-                />
+                <select  name='gender' value={gender} onChange={handleChange} class="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 ">
+                  <option selected>Choose a gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>   
+                </select>
+               
                   
               </div>
               <div>
@@ -176,7 +170,7 @@ const SignUp = () => {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                  className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Password"
                   value={password}
                   onChange={handleChange}

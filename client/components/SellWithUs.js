@@ -1,6 +1,17 @@
+import {useRouter} from 'next/router'
 import React from 'react'
+import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 const SellWithUs = () => {
+  const router=useRouter()
+  useEffect(()=>{
+    if(!localStorage.getItem("Token")){
+      toast.error("Please Login first")
+      router.push('/login')
+    }
+  },[router]
+  )
   return (
     <div>
        <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -108,21 +119,12 @@ const SellWithUs = () => {
                 <label htmlFor="gender" className="sr-only">
                   Gender
                 </label>
-                <input
-                  name="gender"
-                  type="gender"
-                  autoComplete="gender"
-                  id='gender'
-                  list='gender-list'
-                  required
-                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  placeholder="Select a gender"
-                />
-                <datalist id="gender-list">
-                    <option value="Male"/>
-                    <option value="Female"/>
-                    <option value="Other"/>
-                </datalist>
+                <select  name='gender'  class="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 ">
+                  <option selected>Choose a gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>   
+                </select>
+             
 
                   
               </div>
@@ -166,16 +168,9 @@ const SellWithUs = () => {
                 <label htmlFor="tags" className="sr-only">
                   Tags
                 </label>
-                <input
-                  id="tags"
-                  name="tags"
-                  type="tags"
-                  autoComplete="tags"
-                  required
-                  className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  placeholder="Select more than one tag"
-                  
-                />
+                <select  name='tags'  class="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 ">
+                  <option selected>Choose two or more tags</option>  
+                </select>
               </div>
               <div>
                 <h2 className="mb-1">Image of the cloth</h2>

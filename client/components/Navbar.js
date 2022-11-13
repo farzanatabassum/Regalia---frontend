@@ -27,17 +27,17 @@ const Navbar = ({user}) => {
                   <ul className="flex justify-center ">
                     <Link href="/">
                       <li className="ml-96 text-gray-900 px-12 py-7 rounded-md text-sm font-medium">
-                        Home
+                        <a>Home</a>
                       </li>
                     </Link>
                     <Link href="/about">
                       <li className="text-gray-900 hover:bg-gray-500 hover:text-white px-12 py-7 rounded-md text-sm font-medium">
-                        About
+                       <a>About</a> 
                       </li>
                     </Link>
                     <Link href="/sellwithus">
                       <li className="text-gray-900 hover:bg-gray-500 hover:text-white  px-12 py-7 rounded-md text-sm font-medium">
-                        Sell with us
+                       <a>Sell with us</a> 
                       </li>
                     </Link>
                   </ul>

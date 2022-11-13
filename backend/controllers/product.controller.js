@@ -135,7 +135,7 @@ const deleteProduct=asyncHandler(async(req,res)=>{
 
 //api/products/listAll
 //get req
-//private
+//public
 const listAll=asyncHandler(async(req,res)=>{
 const products=await Product.find()
 res.status(200).json({
@@ -144,4 +144,21 @@ res.status(200).json({
 });
 })
 
-module.exports={createProduct,getProduct,editProduct,deleteProduct,listAll,}
+
+//api/products/single/:id
+//get req
+//public
+const singleProduct=asyncHandler(async(req,res)=>{
+  const product = await Product.findById(req.params.id);
+
+  if (!product) {
+    res.status(400)
+    throw new Error('Product not found')
+  }
+
+  res.status(200).json({
+    success: true,
+    product,
+  });
+});
+module.exports={createProduct,getProduct,editProduct,deleteProduct,listAll,singleProduct,}

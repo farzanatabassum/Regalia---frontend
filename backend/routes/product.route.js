@@ -6,5 +6,5 @@ router.route('/create').post(protect,createProduct)
 router.route('/read').get(protect,getProduct)
 router.route('/editProduct').put(protect,editProduct)
 router.route('/deleteProduct').delete(protect,deleteProduct)
-router.route('/listAll').get(protect,listAll)
+router.route('/listAll').get(listAll)
 module.exports = router;

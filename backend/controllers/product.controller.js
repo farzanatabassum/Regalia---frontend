@@ -63,7 +63,7 @@ const getProduct = asyncHandler(async (req, res) => {
 
   res.status(200).json(products);
 });
-//api/products/editProduct?id=id&url=imageUrl
+//api/products/editProduct?id=id
 //put req
 //private
 //User can update product
@@ -80,23 +80,14 @@ const editProduct = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error('User not found');
   }
-  //Getting image name from image url
-  const imageUrl = req.query.url;
-  const imageUrlArray = imageUrl.split('/');
-  const imageSplit = imageUrlArray[imageUrlArray.length - 1];
-  const imageName = imageSplit.split('.')[0];
-  console.log(imageName);
-
-  //Deleting image from cloudinary
-  const resultImage = await cloudinary.uploader.destroy(imageName);
-  res.status(200).json({ message: resultImage });
-
+  
   //inserting new image in cloudinary
-  const file = req.files.image;
-  const result = await cloudinary.uploader.upload(file.tempFilePath);
-  console.log(result);
+  let result;
+    if (req.files) {
+      result = await cloudinary.uploader.upload(req.files.image.tempFilePath);
+    }
   const data = {
-    image: result.url || product.image,
+    image: result?.url || product.image,
     category: req.body.category || product.category,
     brand: req.body.brand || product.brand,
     fabric: req.body.fabric || product.fabric,

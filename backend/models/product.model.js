@@ -55,6 +55,7 @@ const productSchema= mongoose.Schema({
     tags:{
         type:Array,
         required:[true,"Please provide the tags of the product"],
+        validate:(v)=>Array.isArray(v)&&v.length>1,
     },
 
 },{

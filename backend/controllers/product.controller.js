@@ -98,8 +98,8 @@ const editProduct = asyncHandler(async (req, res) => {
     sellingPrice: req.body.sellingPrice || product.sellingPrice,
     tags: req.body.tags || product.tags,
   };
-  //update product
 
+  //update product
   const updatedProduct = await Product.findByIdAndUpdate(req.query.id, data, {
     new: true,
   });
@@ -112,7 +112,6 @@ const editProduct = asyncHandler(async (req, res) => {
 //User can delete product
 const deleteProduct = asyncHandler(async (req, res) => {
   let product = await Product.findById(req.query.id);
-
   if (!product) {
     res.status(400);
     throw new Error('Product not found');
@@ -149,10 +148,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 //Get all products of all user
 const listAll = asyncHandler(async (req, res) => {
   const products = await Product.find();
-  res.status(200).json({
-    success: true,
-    products,
-  });
+  res.status(200).json(products);
 });
 
 //api/products/single/:id
@@ -161,17 +157,14 @@ const listAll = asyncHandler(async (req, res) => {
 //Get Single product details
 const singleProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
-
   if (!product) {
     res.status(400);
     throw new Error('Product not found');
   }
 
-  res.status(200).json({
-    success: true,
-    product,
-  });
+  res.status(200).json(product);
 });
+
 module.exports = {
   createProduct,
   getProduct,

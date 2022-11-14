@@ -1,8 +1,7 @@
 import {useRouter} from 'next/router'
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect} from 'react'
 import { toast } from 'react-toastify'
-
 const SellWithUs = () => {
   const router=useRouter()
   useEffect(()=>{
@@ -25,6 +24,7 @@ const SellWithUs = () => {
             className="mt-1 space-y-6"
             action="#"
             method="POST"
+            encType="multipart/form-data"
           >
             <input type="hidden" name="remember" value="true" />
             <div className="-space-y-px rounded-md shadow-sm">
@@ -169,19 +169,25 @@ const SellWithUs = () => {
                   Tags
                 </label>
                 <select  name='tags'  class="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 ">
-                  <option selected>Choose two or more tags</option>  
+                  <option selected>Choose two or more tags</option>
+                  <option value="Traditional">Traditional</option>
+                  <option value="Casual">Casual</option>
+                  <option value='Party-wear'>Party-wear</option> 
+                  <option value='Formal'>Formal</option> 
+                  <option value='Plus-size'>Plus-size</option> 
                 </select>
               </div>
+              {/* Image */}
               <div>
                 <h2 className="mb-1">Image of the cloth</h2>
-                <label htmlFor="img" className="sr-only">
+                <label htmlFor="image" className="sr-only">
                   Image
                 </label>
                 <input
-                  id="img"
-                  name="img"
+                  id="image"
+                  name="image"
                   type="file"
-                  autoComplete="img"
+                  autoComplete="image"
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   

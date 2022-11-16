@@ -7,9 +7,14 @@ const cloudinary = require('../config/cloudinary');
 //private
 const createProduct = asyncHandler(async (req, res) => {
   //uploading image in cloudinary
+  // console.log('files:', JSON.parse(JSON.stringify(req.files)));
+  console.log('files:', req.body);
+
+  console.log('filesImage:', req.files.image);
   const file = req.files.image;
   const result = await cloudinary.uploader.upload(file.tempFilePath);
-  console.log(result);
+  console.log('Result', result);
+  console.log(req.body);
   const {
     category,
     brand,
@@ -80,12 +85,12 @@ const editProduct = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error('User not found');
   }
-  
+
   //inserting new image in cloudinary
   let result;
-    if (req.files) {
-      result = await cloudinary.uploader.upload(req.files.image.tempFilePath);
-    }
+  if (req.files) {
+    result = await cloudinary.uploader.upload(req.files.image.tempFilePath);
+  }
   const data = {
     image: result?.url || product.image,
     category: req.body.category || product.category,

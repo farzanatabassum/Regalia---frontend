@@ -1,66 +1,59 @@
-const mongoose=require('mongoose')
+const mongoose = require('mongoose');
 
-const productSchema= mongoose.Schema({
-    user:{
-// set the userId from user collection
- // so, you can reference it
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:"User",
-
+const productSchema = mongoose.Schema(
+  {
+    user: {
+      // set the userId from user collection
+      // so, you can reference it
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
     },
-    image:{
-        type:String,
-        required:[true,'Please provide an image'],
-
-    }, 
-    category:{
-        type:String,
-        required:[true,'Please provide a category'],
-
+    image: {
+      type: String,
+      required:[true,'Please provide an image'],
     },
-    brand:{
-        type:String,
-        required:[true,'Please provide a brand name'],
+    category: {
+      type: String,
+      required: [true, 'Please provide a category'],
     },
-    fabric:{
-        type:String,
-        required:[true,'Please provide a fabric name'],
+    brand: {
+      type: String,
+      required: [true, 'Please provide a brand name'],
     },
-    size:{
-        type:String,
-        required:[true,'Please provide size of the product'],
+    fabric: {
+      type: String,
+      required: [true, 'Please provide a fabric name'],
     },
-    condition:{
-        type:String,
-        required:[true,'Please provide the condition of the product'],
-
+    size: {
+      type: String,
+      required: [true, 'Please provide size of the product'],
     },
-    gender:{
-        type:String,
-        required:[true,'Please provide the gender'],
-
-
+    condition: {
+      type: String,
+      required: [true, 'Please provide the condition of the product'],
     },
-    originPrice:{
-        type:Number,
-        required:[true,'Please provide the original price of the product'],
-
+    gender: {
+      type: String,
+      required: [true, 'Please provide the gender'],
     },
-    sellingPrice:{
-        type:Number,
-        required:[true,'Please provide the selling price of the product'],
-
+    originPrice: {
+      type: Number,
+      required: [true, 'Please provide the original price of the product'],
     },
-    tags:{
-        type:Array,
-        required:[true,"Please provide the tags of the product"],
-        validate:(v)=>Array.isArray(v)&&v.length>1,
+    sellingPrice: {
+      type: Number,
+      required: [true, 'Please provide the selling price of the product'],
     },
+    tags: {
+      type: Array,
+      required: [true, 'Please provide the tags of the product'],
+    //   validate: (v) => Array.isArray(v) && v.length > 1,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-},{
-    timestamps:true,
-})
-
-
-module.exports=mongoose.model("Product",productSchema)
+module.exports = mongoose.model('Product', productSchema);

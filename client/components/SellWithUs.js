@@ -1,38 +1,98 @@
-import {useRouter} from 'next/router'
-import React from 'react'
-import { useEffect} from 'react'
-import { toast } from 'react-toastify'
+import { useRouter } from 'next/router';
+import React from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
 const SellWithUs = () => {
-  const router=useRouter()
-  useEffect(()=>{
-    if(!localStorage.getItem("Token")){
-      toast.error("Please Login first")
-      router.push('/login')
+  const [category, setCategory] = useState();
+  const [brand, setBrand] = useState();
+  const [fabric, setFabric] = useState();
+  const [size, setSize] = useState();
+  const [condition, setCondition] = useState();
+  const [gender, setGender] = useState();
+  const [originPrice, setOriginPrice] = useState();
+  const [sellingPrice, setSellingPrice] = useState();
+  const [tags, setTags] = useState();
+  const [image, setImage] = useState();
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem('Token')) {
+      toast.error('Please Login first');
+      router.push('/login');
     }
-  },[router]
-  )
+  }, [router]);
+  //for image file
+  const selectedFile = (e) => {
+    const image = e.target.files[0];
+    setImage(image);
+  };
+  //form submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      category,
+      brand,
+      fabric,
+      size,
+      condition,
+      gender,
+      originPrice,
+      sellingPrice,
+      tags,
+      image,
+    };
+    console.log(data);
+    try {
+      const token = localStorage.getItem('Token');
+      console.log(token);
+      let response = await fetch('http://localhost:5000/api/products/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+      console.log(response);
+      let res = await response.json();
+      console.log('Result', res);
+      setCategory('');
+      setBrand('');
+      setFabric('');
+      setSize('');
+      setCondition('');
+      setGender('');
+      setOriginPrice('');
+      setSellingPrice('');
+      setTags('');
+      setImage('');
+      //navigating to homepage
+      // setTimeout(() => {
+      //   router.push('/');
+      // }, 1000);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
-       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
             <h1 className="mt-1 text-center text-2xl font-bold tracking-tight text-gray-900">
               Seller&apos;s Product Information
             </h1>
           </div>
-          <form
-            className="mt-1 space-y-6"
-            action="#"
-            method="POST"
-            encType="multipart/form-data"
-          >
+          <form onSubmit={handleSubmit} className="mt-1 space-y-6">
             <input type="hidden" name="remember" value="true" />
             <div className="-space-y-px rounded-md shadow-sm">
-             {/* Category */}
+              {/* Category */}
               <div>
                 <h2 className="mb-1">Category</h2>
                 <label htmlFor="category" className="sr-only">
-                    Category
+                  Category
                 </label>
                 <input
                   id="category"
@@ -42,14 +102,15 @@ const SellWithUs = () => {
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Category"
-                 
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
                 />
               </div>
               {/* Brand of the cloth */}
               <div>
-                <h2 className="mb-1">  Brand of the cloth</h2>
+                <h2 className="mb-1"> Brand of the cloth</h2>
                 <label htmlFor="brand" className="sr-only">
-                   Brand of the cloth
+                  Brand of the cloth
                 </label>
                 <input
                   id="brand"
@@ -59,14 +120,15 @@ const SellWithUs = () => {
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Brand of the cloth"
-                 
+                  value={brand}
+                  onChange={(e) => setBrand(e.target.value)}
                 />
               </div>
               {/* Fabric of the cloth */}
               <div>
                 <h2 className="mb-1">Fabric of the cloth</h2>
                 <label htmlFor="fabric" className="sr-only">
-                    Fabric
+                  Fabric
                 </label>
                 <input
                   id="fabric"
@@ -76,14 +138,15 @@ const SellWithUs = () => {
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Fabric"
-                 
+                  value={fabric}
+                  onChange={(e) => setFabric(e.target.value)}
                 />
               </div>
               {/* Size of the cloth */}
               <div>
                 <h2 className="mb-1">Size of the cloth</h2>
                 <label htmlFor="size" className="sr-only">
-                    Size of the cloth
+                  Size of the cloth
                 </label>
                 <input
                   id="size"
@@ -93,14 +156,15 @@ const SellWithUs = () => {
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Size of the cloth"
-                 
+                  value={size}
+                  onChange={(e) => setSize(e.target.value)}
                 />
               </div>
               {/* Condition of the cloth */}
               <div>
                 <h2 className="mb-1">Condition of the cloth</h2>
                 <label htmlFor="condition" className="sr-only">
-                    Condition of the cloth
+                  Condition of the cloth
                 </label>
                 <input
                   id="condition"
@@ -110,7 +174,8 @@ const SellWithUs = () => {
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Condition of the cloth"
-                 
+                  value={condition}
+                  onChange={(e) => setCondition(e.target.value)}
                 />
               </div>
               {/* Gender */}
@@ -119,20 +184,22 @@ const SellWithUs = () => {
                 <label htmlFor="gender" className="sr-only">
                   Gender
                 </label>
-                <select  name='gender'  class="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 ">
+                <select
+                  name="gender"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
+                >
                   <option selected>Choose a gender</option>
                   <option value="Male">Male</option>
-                  <option value="Female">Female</option>   
+                  <option value="Female">Female</option>
                 </select>
-             
-
-                  
               </div>
               {/* Original Price of the cloth */}
               <div>
                 <h2 className="mb-1">Original Price of the cloth</h2>
                 <label htmlFor="originPrice" className="sr-only">
-                    Original Price of the cloth
+                  Original Price of the cloth
                 </label>
                 <input
                   id="originPrice"
@@ -142,39 +209,48 @@ const SellWithUs = () => {
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Original Price of the cloth"
-                 
+                  value={originPrice}
+                  onChange={(e) => setOriginPrice(e.target.value)}
                 />
               </div>
               {/* Selling price of the cloth */}
               <div>
                 <h2 className="mb-1">Selling price of the cloth</h2>
-                <label htmlFor="sellPrice" className="sr-only">
-                Selling price of the cloth
+                <label htmlFor="sellingPrice" className="sr-only">
+                  Selling price of the cloth
                 </label>
                 <input
-                  id="sellPrice"
-                  name="sellPrice"
-                  type="sellPrice"
-                  autoComplete="sellPrice"
+                  id="sellingPrice"
+                  name="sellingPrice"
+                  type="sellingPrice"
+                  autoComplete="sellingPrice"
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Selling price of the cloth"
-                 
+                  value={sellingPrice}
+                  onChange={(e) => setSellingPrice(e.target.value)}
                 />
               </div>
-             {/* Tags */}
+              {/* Tags */}
               <div>
                 <h2 className="mb-1">Tags</h2>
                 <label htmlFor="tags" className="sr-only">
                   Tags
                 </label>
-                <select  name='tags'  class="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 ">
+                <select
+                  name="tags"
+                  value={tags}
+                  onChange={(e) => {
+                    setTags(e.target.value);
+                  }}
+                  className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
+                >
                   <option selected>Choose two or more tags</option>
                   <option value="Traditional">Traditional</option>
                   <option value="Casual">Casual</option>
-                  <option value='Party-wear'>Party-wear</option> 
-                  <option value='Formal'>Formal</option> 
-                  <option value='Plus-size'>Plus-size</option> 
+                  <option value="Party-wear">Party-wear</option>
+                  <option value="Formal">Formal</option>
+                  <option value="Plus-size">Plus-size</option>
                 </select>
               </div>
               {/* Image */}
@@ -190,7 +266,7 @@ const SellWithUs = () => {
                   autoComplete="image"
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  
+                  onChange={selectedFile}
                 />
               </div>
             </div>
@@ -207,7 +283,7 @@ const SellWithUs = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SellWithUs
+export default SellWithUs;

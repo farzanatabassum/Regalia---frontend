@@ -90,6 +90,8 @@ const SellWithUs = () => {
       setOriginPrice('');
       setSellingPrice('');
       setTags('');
+      setFile('');
+      setProgress(0)
       //navigating to homepage
       // setTimeout(() => {
       //   router.push('/');

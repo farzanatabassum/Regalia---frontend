@@ -2,7 +2,8 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { storage } from '../firebase/firebase';
 const SellWithUs = () => {
   const [category, setCategory] = useState();
   const [brand, setBrand] = useState();
@@ -13,7 +14,11 @@ const SellWithUs = () => {
   const [originPrice, setOriginPrice] = useState();
   const [sellingPrice, setSellingPrice] = useState();
   const [tags, setTags] = useState();
-  const [image, setImage] = useState();
+  const [file, setFile] = useState(null);
+  const[url,setUrl]=useState(null);
+  const [progress, setProgress] = useState(0);
+
+  // const [image, setImage] = useState();
   const router = useRouter();
   useEffect(() => {
     if (!localStorage.getItem('Token')) {
@@ -23,9 +28,29 @@ const SellWithUs = () => {
   }, [router]);
   //for image file
   const selectedFile = (e) => {
-    const image = e.target.files[0];
-    setImage(image);
+    if (!file) return;
+    const storageRef = ref(storage, `products/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const prog = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(prog);
+      },
+      (error) => console.log(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setUrl(downloadURL)
+          console.log('File available at', downloadURL);
+        });
+      }
+      
+    );
   };
+
   //form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +64,7 @@ const SellWithUs = () => {
       originPrice,
       sellingPrice,
       tags,
-      image,
+      image:url,
     };
     console.log(data);
     try {
@@ -65,12 +90,11 @@ const SellWithUs = () => {
       setOriginPrice('');
       setSellingPrice('');
       setTags('');
-      setImage('');
       //navigating to homepage
       // setTimeout(() => {
       //   router.push('/');
       // }, 1000);
-      return res;
+      // return res;
     } catch (error) {
       console.log(error);
     }
@@ -266,8 +290,20 @@ const SellWithUs = () => {
                   autoComplete="image"
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  onChange={selectedFile}
+                  // onChange={selectedFile}
+                  onChange={(event) => {
+                    setFile(event.target.files[0]);
+                  }}
                 />
+                <button
+                  type="submit"
+                  className="group relative flex w-48 justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                  onClick={selectedFile}
+                >
+                  {' '}
+                  Upload Image
+                </button>
+                <h2>Uploading done {progress}%</h2>
               </div>
             </div>
 

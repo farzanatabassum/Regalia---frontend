@@ -6,16 +6,9 @@ const cloudinary = require('../config/cloudinary');
 //post req
 //private
 const createProduct = asyncHandler(async (req, res) => {
-  //uploading image in cloudinary
-  // console.log('files:', JSON.parse(JSON.stringify(req.files)));
-  console.log('files:', req.body);
-
-  console.log('filesImage:', req.files.image);
-  const file = req.files.image;
-  const result = await cloudinary.uploader.upload(file.tempFilePath);
-  console.log('Result', result);
   console.log(req.body);
   const {
+    image,
     category,
     brand,
     fabric,
@@ -29,7 +22,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
   //Any Input field is empty
   if (
-    !file ||
+    !image ||
     !category ||
     !brand ||
     !fabric ||
@@ -44,7 +37,7 @@ const createProduct = asyncHandler(async (req, res) => {
     throw new Error('Please add all fields');
   }
   const product = await Product.create({
-    image: result.url,
+    image,
     category,
     brand,
     fabric,

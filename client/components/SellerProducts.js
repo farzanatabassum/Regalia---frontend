@@ -1,12 +1,12 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import {useRouter} from 'next/router'
 import { useEffect } from 'react';
 import { useState } from 'react';
 
 const SellerProducts = () => {
   const [products, setProducts] = useState([]);
-  const { _id } = useParams();
-  //   const [isLoading, setIsLoading] = useState(true);
+  const router=useRouter()
+    const [isLoading, setIsLoading] = useState(true);
   //   const [error, setError] = useState(null);
   //  useEffect(()=>{
   //         //token
@@ -50,18 +50,25 @@ const SellerProducts = () => {
       .then((parsed) => {
         console.log(parsed);
         setProducts(parsed);
+        setIsLoading(false)
       });
   }, []);
   //Deleting Products
-  const handleDelete = (productId) => {
+  const handleDelete = async (productId) => {
     const token = localStorage.getItem('Token');
-    fetch(`http://localhost:5000/api/products/deleteProduct/${productId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `http://localhost:5000/api/products/deleteProduct/${productId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    router.push('/')
   };
 
   return (
@@ -69,7 +76,7 @@ const SellerProducts = () => {
       {/* productlist */}
       <section className="py-10 px-12">
         <h3 className="text-left text-xl font-semibold mb-3">My Products</h3>
-        {/* {isLoading && <div>Loading... </div>} */}
+        {isLoading && <div>Loading... </div>}
         <div className="grid grid-flow-row gap-8 text-neutral-600 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           {products.map((product) => {
             return (

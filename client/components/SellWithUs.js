@@ -74,7 +74,6 @@ const SellWithUs = () => {
     console.log(data);
     try {
       const token = localStorage.getItem('Token');
-      console.log(token);
       let response = await fetch('http://localhost:5000/api/products/create', {
         method: 'POST',
         headers: {
@@ -97,9 +96,9 @@ const SellWithUs = () => {
       setFile(null);
       setProgress(0);
       //navigating to homepage
-      // setTimeout(() => {
-      //   router.push('/');
-      // }, 1000);
+      setTimeout(() => {
+        router.push('/seller');
+      }, 1000);
       return res;
     } catch (error) {
       console.log(error);

@@ -24,12 +24,13 @@ const SingleProduct = ({img,category,brand,fabric,condition,size,price}) => {
               <h2 className=" mb-2 text-lg title-font text-gray-500 tracking-widest">
               <span className='font-bold'>Fabric:</span> {fabric}
               </h2>
-              <h2 className="mb-2 text-lg title-font text-gray-500 tracking-widest">
-              <span className='font-bold'>Condition:</span> {condition}
-              </h2>
               <h2 className=" mb-2 text-lg title-font text-gray-500 tracking-widest">
               <span className='font-bold'>Size:</span> {size}
               </h2>
+              <h2 className="mb-2 text-lg title-font text-gray-500 tracking-widest">
+              <span className='font-bold'>Condition:</span> {condition}
+              </h2>
+              
               <h2 className=" mb-6 text-lg title-font text-gray-500 tracking-widest">
               <span className='font-bold'>Price:</span> {price}
               </h2>

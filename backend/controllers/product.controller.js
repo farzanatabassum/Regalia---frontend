@@ -22,7 +22,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
   //Any Input field is empty
   if (
-    !image ||
+    !image||
     !category ||
     !brand ||
     !fabric ||

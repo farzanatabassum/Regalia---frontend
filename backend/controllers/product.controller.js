@@ -109,7 +109,7 @@ const editProduct = asyncHandler(async (req, res) => {
 //private
 //User can delete product
 const deleteProduct = asyncHandler(async (req, res) => {
-  let product = await Product.findById(req.query.id);
+  let product = await Product.findById(req.params.id);
   if (!product) {
     res.status(400);
     throw new Error('Product not found');
@@ -119,25 +119,13 @@ const deleteProduct = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error('User not found');
   }
-  //Getting image name from image url
-  const imageUrl = product.image;
-  const imageUrlArray = imageUrl.split('/');
-  const image = imageUrlArray[imageUrlArray.length - 1];
-  const imageName = image.split('.')[0];
-  console.log(imageName);
-  //Deleting product
-  await Product.deleteOne({ _id: req.query.id })
-    //Deleting image from cloudinary
-    .then((result) => {
-      cloudinary.uploader.destroy(imageName, (error, result) => {
-        console.log(error, result);
-      });
-      res.status(200).json({ message: result });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({ Error: error });
-    });
+
+  //Deleting prod  res.status(200).json({ id: req.params.id })
+
+  await Product.deleteOne()
+  res.status(200).json({ id: req.params.id })
+
+   
 });
 
 //api/products/listAll

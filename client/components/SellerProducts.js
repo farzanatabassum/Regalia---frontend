@@ -1,9 +1,11 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
 const SellerProducts = () => {
-    const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
+  const { _id } = useParams();
   //   const [isLoading, setIsLoading] = useState(true);
   //   const [error, setError] = useState(null);
   //  useEffect(()=>{
@@ -35,7 +37,6 @@ const SellerProducts = () => {
   //  }
   //  )
   useEffect(() => {
-    console.log('useEffect is running');
     const token = localStorage.getItem('Token');
     fetch('http://localhost:5000/api/products/read', {
       headers: {
@@ -48,9 +49,20 @@ const SellerProducts = () => {
       })
       .then((parsed) => {
         console.log(parsed);
-        setProducts(parsed)
+        setProducts(parsed);
       });
-  },[]);
+  }, []);
+  //Deleting Products
+  const handleDelete = (productId) => {
+    const token = localStorage.getItem('Token');
+    fetch(`http://localhost:5000/api/products/deleteProduct/${productId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
 
   return (
     <div>
@@ -110,24 +122,25 @@ const SellerProducts = () => {
                   </h5>
                 </div>
                 <div className="flex justify-center mb-4 mr-5">
-                <button
+                  <button
                     type="button"
                     className=" text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-3 text-center "
                   >
-                   Edit
+                    Edit
                   </button>
                   <button
                     type="button"
                     className=" text-white bg-red-700 font-medium rounded-lg text-sm px-5 py-3 text-center "
+                    onClick={() => {
+                      handleDelete(product._id);
+                    }}
                   >
                     Delete
                   </button>
                 </div>
-                
               </div>
             );
           })}
-          
         </div>
       </section>
     </div>

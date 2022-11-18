@@ -9,7 +9,7 @@ router.route('/read').get(protect,getProduct)
 //Update product
 router.route('/editProduct').put(protect,editProduct)
 //Delete product
-router.route('/deleteProduct').delete(protect,deleteProduct)
+router.route('/deleteProduct/:id').delete(protect,deleteProduct)
 //List all product
 router.route('/listAll').get(listAll)
 //Single product details

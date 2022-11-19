@@ -22,7 +22,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
   //Any Input field is empty
   if (
-    !image||
+    !image ||
     !category ||
     !brand ||
     !fabric ||
@@ -122,10 +122,8 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
   //Deleting prod  res.status(200).json({ id: req.params.id })
 
-  await Product.deleteOne()
-  res.status(200).json({ id: req.params.id })
-
-   
+  await Product.deleteOne();
+  res.status(200).json({ id: req.params.id });
 });
 
 //api/products/listAll
@@ -133,7 +131,9 @@ const deleteProduct = asyncHandler(async (req, res) => {
 //public
 //Get all products of all user
 const listAll = asyncHandler(async (req, res) => {
-  const products = await Product.find();
+  const products = await Product.find({})
+    .sort({ _id: -1, brand:1, category: 1, size: 1, })
+    .limit(8);
   res.status(200).json(products);
 });
 

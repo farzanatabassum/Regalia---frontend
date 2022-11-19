@@ -2,40 +2,10 @@ import React from 'react';
 import {useRouter} from 'next/router'
 import { useEffect } from 'react';
 import { useState } from 'react';
-
 const SellerProducts = () => {
   const [products, setProducts] = useState([]);
   const router=useRouter()
     const [isLoading, setIsLoading] = useState(true);
-  //   const [error, setError] = useState(null);
-  //  useEffect(()=>{
-  //         //token
-  //         const token = localStorage.getItem('Token');
-  //         const url='http://localhost:5000/api/products/read'
-  //       fetch(url,{
-  //         headers:{
-  //             'Content-Type': 'application/json',
-  //             Authorization: `Bearer ${token}`,
-  //           }
-  //       })
-  //       .then(async response => {
-  //         console.log(response)
-  //         const data = await response.json();
-
-  //         // check for error response
-  //         if (!response.ok) {
-  //             throw Error("Couldn't fetch the data")
-
-  //         }
-  //         return data
-  //         .then(data=> {
-  //             setProducts(data)
-  //             setIsLoading(false)
-  //             setError(null)
-
-  //         })
-  //  }
-  //  )
   useEffect(() => {
     const token = localStorage.getItem('Token');
     fetch('http://localhost:5000/api/products/read', {

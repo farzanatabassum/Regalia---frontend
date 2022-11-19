@@ -1,6 +1,7 @@
 import React from 'react'
 
 const SingleProduct = ({img,category,brand,fabric,condition,size,price}) => {
+
   return (
     <div>
         <section className="text-gray-600 body-font overflow-hidden">
@@ -15,26 +16,26 @@ const SingleProduct = ({img,category,brand,fabric,condition,size,price}) => {
             <h1 className="text-gray-900  text-3xl title-font font-medium mb-3 ">
              Description
               </h1>
-              <h2 className=" mb-2 text-lg title-font text-gray-500 tracking-widest">
+              <h2 className=" mb-2 text-lg title-font text-gray-700 dark:text-gray-400">
                 <span className='font-bold'>Category:</span> {category}
               </h2>
-              <h2 className=" mb-2 text-lg title-font text-gray-500 tracking-widest">
+              <h2 className=" mb-2 text-lg title-font text-gray-700 dark:text-gray-400">
               <span className='font-bold'>Brand:</span> {brand}
               </h2>
-              <h2 className=" mb-2 text-lg title-font text-gray-500 tracking-widest">
+              <h2 className=" mb-2 text-lg title-font text-gray-700 dark:text-gray-400">
               <span className='font-bold'>Fabric:</span> {fabric}
               </h2>
-              <h2 className=" mb-2 text-lg title-font text-gray-500 tracking-widest">
+              <h2 className=" mb-2 text-lg title-font text-gray-700 dark:text-gray-400">
               <span className='font-bold'>Size:</span> {size}
               </h2>
-              <h2 className="mb-2 text-lg title-font text-gray-500 tracking-widest">
+              <h2 className="mb-2 text-lg title-font text-gray-700 dark:text-gray-400">
               <span className='font-bold'>Condition:</span> {condition}
               </h2>
               
-              <h2 className=" mb-6 text-lg title-font text-gray-500 tracking-widest">
+              <h2 className=" mb-6 text-lg font-normal text-gray-700 dark:text-gray-400">
               <span className='font-bold'>Price:</span> {price}
               </h2>
-              <button className="flex text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded">Add to Cart</button>
+              <button className="flex text-white bg-gray-700 border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded">Add to Cart</button>
 
             </div>
           </div>

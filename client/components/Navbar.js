@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import {RiAccountCircleLine  } from 'react-icons/ri';
 
 
 const Navbar = ({user}) => {
+  const [dropdown,setDropdown]= useState(false)
+  
   return (
     <div>
       <nav className="bg-gray-200">
@@ -43,9 +45,19 @@ const Navbar = ({user}) => {
                   </ul>
                 </div>
               </div>
-              <div className="flex  h-auto items-center px-12 py-7">
+              <div className=" flex  h-auto items-center px-12 py-7">
+                <a onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}} >
+           {dropdown && <div  onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}} className='absolute right-8 bg-gray-400 top-9 rounded-md px-5 py-4 w-36 z-10'>
+                <ul>
+                <Link href={'/seller'}><a> <li className='py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white'>My Products</li></a></Link>
+
+                  <li className='py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white'>My Profile</li>
+                  <li className='py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white'>Logout</li>
+                </ul>
+              </div>}
                 {/* User logged in */}
-                {user.value && <RiAccountCircleLine className='text-xl md:text-2xl mx-2'/>}
+                {user.value && <RiAccountCircleLine  className='text-xl md:text-2xl mx-2'/>}
+                </a>
                   {/* User logged out */}
                {!user.value && <Link href="/login">
                   <button
@@ -56,6 +68,7 @@ const Navbar = ({user}) => {
                   </button>
                 </Link>}
               </div>
+             
             </div>
           </div>
         </div>

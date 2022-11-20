@@ -30,8 +30,9 @@ const ProductItem = () => {
         <div className="grid grid-flow-row gap-8 text-neutral-600 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           {products.map((product) => {
             return (
-              <Link href={`/product/${product._id}` }  key={product._id}>
+             
 
+              <Link href={`/product/${product._id}` }  key={product._id}>
               <div
                 className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
                
@@ -59,6 +60,7 @@ const ProductItem = () => {
                 </div>
               </div>
               </Link>
+             
 
             );
           })}

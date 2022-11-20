@@ -1,11 +1,11 @@
 import React from 'react';
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useState } from 'react';
 const SellerProducts = () => {
   const [products, setProducts] = useState([]);
-  const router=useRouter()
-    const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const token = localStorage.getItem('Token');
     fetch('http://localhost:5000/api/products/read', {
@@ -20,7 +20,7 @@ const SellerProducts = () => {
       .then((parsed) => {
         console.log(parsed);
         setProducts(parsed);
-        setIsLoading(false)
+        setIsLoading(false);
       });
   }, []);
   //Deleting Products
@@ -38,14 +38,14 @@ const SellerProducts = () => {
     );
     const data = await response.json();
     console.log(data);
-    router.push('/')
+    router.push('/');
   };
 
   return (
     <div>
       {/* productlist */}
       <section className="py-10 px-12">
-        <h3 className="text-left text-xl font-semibold mb-3">My Products</h3>
+        <h3 className="text-center text-2xl font-semibold mb-3">My Products</h3>
         {isLoading && <div>Loading... </div>}
         <div className="grid grid-flow-row gap-8 text-neutral-600 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           {products.map((product) => {
@@ -54,6 +54,11 @@ const SellerProducts = () => {
                 className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
                 key={product._id}
               >
+                {/* {!product && (
+                  <h1 className="text-center text-2xl font-semibold mb-3">
+                    No products to display
+                  </h1>
+                )} */}
                 <img
                   className="rounded-t-lg object-contain object-center h-[56vh] w-full"
                   src={product.image}
@@ -95,16 +100,21 @@ const SellerProducts = () => {
                   </h5>
                   <h5 className=" font-normal text-gray-700 dark:text-gray-400">
                     <span className="font-bold">Tags of the cloth:</span>{' '}
+                    {/* {tags.map((tag)=>{
+                    `  {product.${tag}}`
+                    })} */}
                     {product.tags}
                   </h5>
                 </div>
-                <div className="flex justify-center mb-4 mr-5">
-                  <button
-                    type="button"
-                    className=" text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-3 text-center "
-                  >
-                    Edit
-                  </button>
+                <div className="flex justify-center mb-4 ">
+                  <div className="mr-5">
+                    <button
+                      type="button"
+                      className=" text-white bg-blue-600 font-medium rounded-lg text-sm px-5 py-3 text-center "
+                    >
+                      Edit
+                    </button>
+                  </div>
                   <button
                     type="button"
                     className=" text-white bg-red-700 font-medium rounded-lg text-sm px-5 py-3 text-center "

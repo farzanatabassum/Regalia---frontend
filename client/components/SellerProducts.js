@@ -1,14 +1,16 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import Link from 'next/link';
 const SellerProducts = () => {
   const [products, setProducts] = useState([]);
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
+    getProduct();
+  }, []);
+  const getProduct = async () => {
     const token = localStorage.getItem('Token');
-    fetch('http://localhost:5000/api/products/read', {
+    await fetch('http://localhost:5000/api/products/read', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
@@ -22,7 +24,7 @@ const SellerProducts = () => {
         setProducts(parsed);
         setIsLoading(false);
       });
-  }, []);
+  };
   //Deleting Products
   const handleDelete = async (productId) => {
     const token = localStorage.getItem('Token');
@@ -38,8 +40,7 @@ const SellerProducts = () => {
     );
     const data = await response.json();
     console.log(data);
-    setProducts(products);
-    router.push('/');
+    getProduct();
   };
 
   return (
@@ -108,14 +109,17 @@ const SellerProducts = () => {
                   </h5>
                 </div>
                 <div className="flex justify-center mb-4 ">
-                  <div className="mr-5">
-                    <button
-                      type="button"
-                      className=" text-white bg-blue-600 font-medium rounded-lg text-sm px-5 py-3 text-center "
-                    >
-                      Edit
-                    </button>
-                  </div>
+                  <Link href={`update/${product._id}`}>
+                    <div className="mr-5">
+                      {' '}
+                      <button
+                        type="button"
+                        className=" text-white bg-blue-600 font-medium rounded-lg text-sm px-5 py-3 text-center "
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  </Link>
                   <button
                     type="button"
                     className=" text-white bg-red-700 font-medium rounded-lg text-sm px-5 py-3 text-center "

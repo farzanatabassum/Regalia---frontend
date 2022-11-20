@@ -6,7 +6,7 @@ const cloudinary = require('../config/cloudinary');
 //post req
 //private
 const createProduct = asyncHandler(async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const {
     image,
     category,
@@ -119,10 +119,16 @@ const deleteProduct = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error('User not found');
   }
+  // Make sure the logged in user matches the goal user
+  if (product.user.toString() !== req.user.id) {
+    res.status(401)
+    throw new Error('User not authorized')
+  }
+
 
   //Deleting prod  res.status(200).json({ id: req.params.id })
 
-  await Product.deleteOne();
+  await Product.deleteOne({ _id: req.params.id });
   res.status(200).json({ id: req.params.id });
 });
 

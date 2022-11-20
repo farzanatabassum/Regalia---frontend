@@ -38,6 +38,7 @@ const SellerProducts = () => {
     );
     const data = await response.json();
     console.log(data);
+    setProducts(products);
     router.push('/');
   };
 

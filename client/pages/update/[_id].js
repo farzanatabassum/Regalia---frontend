@@ -1,9 +1,132 @@
-import React from 'react';
-import Multiselect from 'multiselect-react-dropdown';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../firebase/firebase';
 
-const UpdateProduct = () => {
+import Multiselect from 'multiselect-react-dropdown';
+
+const Update = () => {
+  //Dynamic routing
+  const router = useRouter();
+  const { _id } = router.query;
+  console.log('ProductId: ', _id);
+  //State properties
+  const [category, setCategory] = useState();
+  const [brand, setBrand] = useState();
+  const [fabric, setFabric] = useState();
+  const [size, setSize] = useState();
+  const [condition, setCondition] = useState();
+  const [gender, setGender] = useState();
+  const [originPrice, setOriginPrice] = useState();
+  const [sellingPrice, setSellingPrice] = useState();
+  const [tags, setTags] = useState();
+  const [file, setFile] = useState(null);
+  const [url, setUrl] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const optionList = ['Traditional', 'Casual', 'Party-wear', 'Formal'];
+  const [products, setProducts] = useState([]);
+  //getting product
+  useEffect(() => {
+    console.log('useEffect is running');
+    fetch(`http://localhost:5000/api/products/single/${_id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((parsed) => {
+        console.log(parsed);
+        setProducts(parsed);
+        setCategory(parsed.category);
+        setBrand(parsed.brand);
+        setFabric(parsed.fabric);
+        setSize(parsed.size);
+        setCondition(parsed.condition);
+        setGender(parsed.gender);
+        setOriginPrice(parsed.originPrice);
+        setSellingPrice(parsed.sellingPrice);
+        setTags(parsed.tags);
+        // setUrl(parsed.url);
+        console.log(parsed.url);
+      });
+  }, [_id]);
+  //for image
+  const selectedFile = (e) => {
+    e.preventDefault();
+    if (!file) return;
+    const storageRef = ref(storage, `products/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const prog = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(prog);
+      },
+      (error) => console.log(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setUrl(downloadURL);
+          console.log('File available at', downloadURL);
+        });
+      }
+    );
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      category,
+      brand,
+      fabric,
+      size,
+      condition,
+      gender,
+      originPrice,
+      sellingPrice,
+      tags,
+      image: url,
+    };
+    console.log(data);
+    try {
+      const token = localStorage.getItem('Token');
+      let response = await fetch(
+        `http://localhost:5000/api/products/editProduct/${_id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        }
+      );
+      let res = await response.json();
+      console.log('Result', res);
+      setCategory('');
+      setBrand('');
+      setFabric('');
+      setSize('');
+      setCondition('');
+      setGender('');
+      setOriginPrice('');
+      setSellingPrice('');
+      setTags('');
+      setFile(null);
+      setProgress(0);
+      //navigating to homepage
+      // setTimeout(() => {
+      //   router.push('/seller');
+      // }, 1000);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -26,7 +149,6 @@ const UpdateProduct = () => {
                   id="category"
                   name="category"
                   type="category"
-                  autoComplete="category"
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Category"
@@ -44,7 +166,6 @@ const UpdateProduct = () => {
                   id="brand"
                   name="brand"
                   type="brand"
-                  autoComplete="brand"
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Brand of the cloth"
@@ -62,7 +183,6 @@ const UpdateProduct = () => {
                   id="fabric"
                   name="fabric"
                   type="fabric"
-                  autoComplete="fabric"
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Fabric"
@@ -80,7 +200,6 @@ const UpdateProduct = () => {
                   id="size"
                   name="size"
                   type="size"
-                  autoComplete="size"
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Size of the cloth"
@@ -98,7 +217,6 @@ const UpdateProduct = () => {
                   id="condition"
                   name="condition"
                   type="condition"
-                  autoComplete="condition"
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Condition of the cloth"
@@ -133,7 +251,6 @@ const UpdateProduct = () => {
                   id="originPrice"
                   name="originPrice"
                   type="originPrice"
-                  autoComplete="originPrice"
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Original Price of the cloth"
@@ -151,7 +268,6 @@ const UpdateProduct = () => {
                   id="sellingPrice"
                   name="sellingPrice"
                   type="sellingPrice"
-                  autoComplete="sellingPrice"
                   required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Selling price of the cloth"
@@ -184,8 +300,6 @@ const UpdateProduct = () => {
                   id="image"
                   name="image"
                   type="file"
-                  autoComplete="image"
-                  required
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   // onChange={selectedFile}
                   onChange={(event) => {
@@ -220,4 +334,4 @@ const UpdateProduct = () => {
   );
 };
 
-export default UpdateProduct;
+export default Update;

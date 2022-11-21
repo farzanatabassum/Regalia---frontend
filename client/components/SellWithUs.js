@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { storage } from '../firebase/firebase';
+import { storage } from '../pages/firebase/firebase';
 import Multiselect from 'multiselect-react-dropdown';
 
 const SellWithUs = () => {

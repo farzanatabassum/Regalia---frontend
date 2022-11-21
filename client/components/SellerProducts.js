@@ -109,7 +109,7 @@ const SellerProducts = () => {
                   </h5>
                 </div>
                 <div className="flex justify-center mb-4 ">
-                  <Link href={`update/${product._id}`}>
+                  <Link href={`/update/${product._id}`}>
                     <div className="mr-5">
                       {' '}
                       <button

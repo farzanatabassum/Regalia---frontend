@@ -61,12 +61,12 @@ const getProduct = asyncHandler(async (req, res) => {
 
   res.status(200).json(products);
 });
-//api/products/editProduct?id=id
+//api/products/editProduct/:id
 //put req
 //private
 //User can update product
 const editProduct = asyncHandler(async (req, res) => {
-  let product = await Product.findById(req.query.id);
+  let product = await Product.findById(req.params.id);
 
   if (!product) {
     res.status(400);
@@ -78,33 +78,24 @@ const editProduct = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error('User not found');
   }
-
-  //inserting new image in cloudinary
-  let result;
-  if (req.files) {
-    result = await cloudinary.uploader.upload(req.files.image.tempFilePath);
+  // Make sure the logged in user matches the goal user
+  if (product.user.toString() !== req.user.id) {
+    res.status(401);
+    throw new Error('User not authorized');
   }
-  const data = {
-    image: result?.url || product.image,
-    category: req.body.category || product.category,
-    brand: req.body.brand || product.brand,
-    fabric: req.body.fabric || product.fabric,
-    size: req.body.size || product.size,
-    condition: req.body.condition || product.condition,
-    gender: req.body.gender || product.gender,
-    originPrice: req.body.originPrice || product.originPrice,
-    sellingPrice: req.body.sellingPrice || product.sellingPrice,
-    tags: req.body.tags || product.tags,
-  };
 
   //update product
-  const updatedProduct = await Product.findByIdAndUpdate(req.query.id, data, {
-    new: true,
-  });
+  const updatedProduct = await Product.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+    }
+  );
   res.status(200).json(updatedProduct);
 });
 
-//api/products/deleteProduct?id=id
+//api/products/deleteProduct/:id
 //delete req
 //private
 //User can delete product
@@ -121,10 +112,9 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
   // Make sure the logged in user matches the goal user
   if (product.user.toString() !== req.user.id) {
-    res.status(401)
-    throw new Error('User not authorized')
+    res.status(401);
+    throw new Error('User not authorized');
   }
-
 
   //Deleting prod  res.status(200).json({ id: req.params.id })
 
@@ -138,7 +128,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 //Get all products of all user
 const listAll = asyncHandler(async (req, res) => {
   const products = await Product.find({})
-    .sort({ _id: -1, brand:1, category: 1, size: 1, })
+    .sort({ _id: -1, brand: 1, category: 1, size: 1 })
     .limit(8);
   res.status(200).json(products);
 });

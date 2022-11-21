@@ -7,7 +7,7 @@ router.route('/create').post(protect,createProduct)
 //User gets all his product
 router.route('/read').get(protect,getProduct)
 //Update product
-router.route('/editProduct').put(protect,editProduct)
+router.route('/editProduct/:id').put(protect,editProduct)
 //Delete product
 router.route('/deleteProduct/:id').delete(protect,deleteProduct)
 //List all product

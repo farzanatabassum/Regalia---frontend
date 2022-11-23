@@ -20,13 +20,34 @@ const userSchema= mongoose.Schema({
         required:[true, 'Please provide a password'],
         minlength:7,
     },
-    // productPreferences:{
-    //     summer:{
-    //         type:Boolean,
-    //         default:false,
-    //     }
+    productPreference:{
+        summer:{
+            type:Boolean,
+            default:false,
+        },
+        winter:{
+            type:Boolean,
+            default:false,
+        },
+        casual:{
+            type:Boolean,
+            default:false,
+        },
+        traditional:{
+            type:Boolean,
+            default:false,
+        },
+        formal:{
+            type:Boolean,
+            default:false,
+        },
+        sportsWear:{
+            type:Boolean,
+            default:false,
+
+        }
     
-    // }
+    },
 },{
     timestamps:true,
 })

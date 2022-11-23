@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../firebase/firebase';
-import Multiselect from 'multiselect-react-dropdown';
+// import Multiselect from 'multiselect-react-dropdown';
 
 const Update = () => {
   //Dynamic routing
@@ -22,7 +22,6 @@ const Update = () => {
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
   const [progress, setProgress] = useState(0);
-  const optionList = ['Traditional', 'Casual', 'Party-wear', 'Formal'];
   const [products, setProducts] = useState([]);
   //getting product
   useEffect(() => {
@@ -35,8 +34,6 @@ const Update = () => {
         return response.json();
       })
       .then((parsed) => {
-        console.log(parsed);
-        console.log('Image', parsed.image);
         setProducts(parsed);
         setCategory(parsed.category);
         setBrand(parsed.brand);
@@ -283,14 +280,26 @@ const Update = () => {
                   Tags
                 </label>
 
-                <Multiselect
+                {/* <Multiselect
                   isObject={false}
                   onRemove={setTags}
                   onSelect={setTags}
                   options={optionList}
                   className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
                   hidePlaceholder
-                />
+                /> */}
+                   <select
+                  name="tags"
+                  value={tags}
+                  onChange={(e) => setTags(e.target.value)}
+                  className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
+                >
+                  <option defaultValue>Choose a tag</option>
+                  <option value="Traditional">Traditional</option>
+                  <option value="Casual">Casual</option>
+                  <option value="Formal">Formal</option>
+                  <option value="Party-wear">Party-wear</option>
+                </select>
               </div>
               {/* Image */}
               <div>

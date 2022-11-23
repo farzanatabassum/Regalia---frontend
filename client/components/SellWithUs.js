@@ -35,7 +35,6 @@ const SellWithUs = () => {
     if (!file) return;
     const storageRef = ref(storage, `products/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
-
     uploadTask.on(
       'state_changed',
       (snapshot) => {
@@ -53,8 +52,6 @@ const SellWithUs = () => {
       }
     );
   };
- 
-  
 
   //form submit
   const handleSubmit = async (e) => {
@@ -95,7 +92,7 @@ const SellWithUs = () => {
       setTags('');
       setFile(null);
       setProgress(0);
-      //navigating to homepage
+      //navigating to My products page
       setTimeout(() => {
         router.push('/seller');
       }, 1000);
@@ -266,6 +263,12 @@ const SellWithUs = () => {
                 <label htmlFor="tags" className="sr-only">
                   Tags
                 </label>
+                {/* {tags && tags.length < 2 && (
+                  <h1 className="text-red-600">
+                    {' '}
+                    Please choose two or more tags
+                  </h1>
+                )} */}
                 <Multiselect
                   isObject={false}
                   onRemove={setTags}
@@ -293,16 +296,17 @@ const SellWithUs = () => {
                     setFile(event.target.files[0]);
                   }}
                 />
-                <button
-                  type="submit"
-                  // disabled={file===null}
-                  className="group relative flex w-48 justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                  onClick={selectedFile}
-                >
-                  {' '}
-                  Upload Image
-                </button>
-                <h2>Uploading done {progress}%</h2>
+                {file && (
+                  <button
+                    type="submit"
+                    className="group relative flex w-48 justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                    onClick={selectedFile}
+                  >
+                    {' '}
+                    Upload Image
+                  </button>
+                )}
+                {file && <h2>Uploading done {progress}%</h2>}
               </div>
             </div>
 

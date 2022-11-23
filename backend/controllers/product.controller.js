@@ -1,6 +1,5 @@
 const Product = require('../models/product.model');
 const asyncHandler = require('express-async-handler');
-const cloudinary = require('../config/cloudinary');
 
 //api/products/create
 //post req

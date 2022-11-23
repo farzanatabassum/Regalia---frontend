@@ -20,6 +20,13 @@ const userSchema= mongoose.Schema({
         required:[true, 'Please provide a password'],
         minlength:7,
     },
+    // productPreferences:{
+    //     summer:{
+    //         type:Boolean,
+    //         default:false,
+    //     }
+    
+    // }
 },{
     timestamps:true,
 })

@@ -3,14 +3,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../firebase/firebase';
-
 import Multiselect from 'multiselect-react-dropdown';
 
 const Update = () => {
   //Dynamic routing
   const router = useRouter();
   const { _id } = router.query;
-  console.log('ProductId: ', _id);
   //State properties
   const [category, setCategory] = useState();
   const [brand, setBrand] = useState();
@@ -28,7 +26,6 @@ const Update = () => {
   const [products, setProducts] = useState([]);
   //getting product
   useEffect(() => {
-    console.log('useEffect is running');
     fetch(`http://localhost:5000/api/products/single/${_id}`, {
       headers: {
         'Content-Type': 'application/json',
@@ -39,6 +36,7 @@ const Update = () => {
       })
       .then((parsed) => {
         console.log(parsed);
+        console.log('Image', parsed.image);
         setProducts(parsed);
         setCategory(parsed.category);
         setBrand(parsed.brand);
@@ -49,13 +47,15 @@ const Update = () => {
         setOriginPrice(parsed.originPrice);
         setSellingPrice(parsed.sellingPrice);
         setTags(parsed.tags);
-        // setUrl(parsed.url);
-        console.log(parsed.url);
+        setUrl(parsed.image);
       });
   }, [_id]);
-  //for image
+ 
+
+  //for new image
   const selectedFile = (e) => {
     e.preventDefault();
+
     if (!file) return;
     const storageRef = ref(storage, `products/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
@@ -77,6 +77,7 @@ const Update = () => {
       }
     );
   };
+  //form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
@@ -118,10 +119,10 @@ const Update = () => {
       setTags('');
       setFile(null);
       setProgress(0);
-      //navigating to homepage
-      // setTimeout(() => {
-      //   router.push('/seller');
-      // }, 1000);
+      //navigating to My products page
+      setTimeout(() => {
+        router.push('/seller');
+      }, 1000);
       return res;
     } catch (error) {
       console.log(error);
@@ -281,6 +282,7 @@ const Update = () => {
                 <label htmlFor="tags" className="sr-only">
                   Tags
                 </label>
+
                 <Multiselect
                   isObject={false}
                   onRemove={setTags}
@@ -296,26 +298,37 @@ const Update = () => {
                 <label htmlFor="image" className="sr-only">
                   Image
                 </label>
+                {url && (
+                 
+                  <img
+                    style={{
+                      width: '100px',
+                      height: '100px',
+                    }}
+                    src={url}
+                    alt="product"
+                  />
+                )}
                 <input
                   id="image"
                   name="image"
                   type="file"
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  // onChange={selectedFile}
-                  onChange={(event) => {
-                    setFile(event.target.files[0]);
+                  onChange={(e) => {
+                    setFile(e.target.files[0]);
                   }}
                 />
-                <button
-                  type="submit"
-                  // disabled={file===null}
-                  className="group relative flex w-48 justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                  onClick={selectedFile}
-                >
-                  {' '}
-                  Upload Image
-                </button>
-                <h2>Uploading done {progress}%</h2>
+                {file && (
+                  <button
+                    type="submit"
+                    className="group relative flex w-48 justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                    onClick={selectedFile}
+                  >
+                    {' '}
+                    Upload Image
+                  </button>
+                )}
+                {file && <h2>Uploading done {progress}%</h2>}
               </div>
             </div>
 

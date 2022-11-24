@@ -109,6 +109,24 @@ const getUser = asyncHandler(async (req, res) => {
     gender,
   });
 });
+//api/users/update preference
+//put request
+//private
+const updatePreference=asyncHandler(async(req,res)=>{
+    //Check user exist
+    const user = await User.findById(req.user.id);
+    const {summer,winter,casual,traditional,sportswear,formal}=req.body
+    if(user.productPreference===false){
+      const update = await User.findByIdAndUpdate(
+        req.user.id,
+        req.body,
+        {
+          new: true,
+        }
+      );
+      res.status(200).json(update);
+    }
+})
 
 //generate a token
 const generateToken = (id) => {
@@ -117,4 +135,4 @@ const generateToken = (id) => {
   });
 };
 
-module.exports = { register, login, getUser };
+module.exports = { register, login, getUser ,updatePreference,};

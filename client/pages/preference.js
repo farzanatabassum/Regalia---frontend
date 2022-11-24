@@ -1,11 +1,12 @@
 import React from 'react'
+import ProductPreference from '../components/ProductPreference'
 
-const preference = () => {
+const Preference = () => {
   return (
     <div>
-      Preference
+      <ProductPreference/>
     </div>
   )
 }
 
-export default preference
+export default Preference

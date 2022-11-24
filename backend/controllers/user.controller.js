@@ -8,18 +8,7 @@ const bcrypt = require('bcryptjs');
 //public
 const register = asyncHandler(async (req, res) => {
   // const {name,email,gender,password}=req.body
-  const {
-    name,
-    email,
-    gender,
-    password,
-    summer,
-    winter,
-    casual,
-    traditional,
-    formal,
-    sportsWear,
-  } = req.body;
+  const { name, email, gender, password } = req.body;
   //if password less than 7
   if (password.length < 7) {
     res.status(400);
@@ -45,12 +34,6 @@ const register = asyncHandler(async (req, res) => {
     email,
     gender,
     password: hash,
-    summer,
-    winter,
-    casual,
-    traditional,
-    formal,
-    sportsWear,
   });
   if (user) {
     res.status(200).json({
@@ -58,12 +41,12 @@ const register = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       gender: user.gender,
-      summer: user.productPreference.summer,
-      winter: user.productPreference.winter,
-      casual: user.productPreference.casual,
-      traditional: user.productPreference.traditional,
-      formal: user.productPreference.formal,
-      sportsWear: user.productPreference.sportsWear,
+      // summer: user.productPreference.summer,
+      // winter: user.productPreference.winter,
+      // casual: user.productPreference.casual,
+      // traditional: user.productPreference.traditional,
+      // formal: user.productPreference.formal,
+      // sportsWear: user.productPreference.sportsWear,
       token: generateToken(user._id),
     });
   } else {
@@ -109,24 +92,19 @@ const getUser = asyncHandler(async (req, res) => {
     gender,
   });
 });
-//api/users/update preference
+
+//api/users/updatePreference/:id
 //put request
 //private
-const updatePreference=asyncHandler(async(req,res)=>{
-    //Check user exist
-    const user = await User.findById(req.user.id);
-    const {summer,winter,casual,traditional,sportswear,formal}=req.body
-    if(user.productPreference===false){
-      const update = await User.findByIdAndUpdate(
-        req.user.id,
-        req.body,
-        {
-          new: true,
-        }
-      );
-      res.status(200).json(update);
-    }
-})
+const updatePreference = asyncHandler(async (req, res) => {
+  //Check user exist
+  const user = await User.findById(req.user.id);
+  const { summer, winter, casual, traditional, sportswear, formal } = req.body;
+  const update = await User.findByIdAndUpdate(req.user.id, req.body, {
+    new: true,
+  });
+  res.status(200).json(update);
+});
 
 //generate a token
 const generateToken = (id) => {
@@ -135,4 +113,4 @@ const generateToken = (id) => {
   });
 };
 
-module.exports = { register, login, getUser ,updatePreference,};
+module.exports = { register, login, getUser, updatePreference, };

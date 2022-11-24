@@ -1,13 +1,14 @@
 import React from 'react';
 
 const ProductPreference = () => {
+ 
   return (
     <div>
       <section className="py-10 px-12">
         <p className="text-center text-2xl font-semibold mb-10">Choose at least 2 products from the preference product list to get your recommended products</p>
         <div className="grid grid-flow-row gap-8 text-neutral-600 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {/* summer */}
-          <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+          <div   className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
               src='/shirt.jpg'
@@ -24,7 +25,7 @@ const ProductPreference = () => {
           </div>
 
           {/* winter */}
-          <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+          <div   className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
               src='/jacket.jpg'
@@ -40,7 +41,7 @@ const ProductPreference = () => {
             </div>
           </div>
           {/* casual */}
-          <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+          <div    className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
               src='/skirt.jpg'
@@ -56,7 +57,7 @@ const ProductPreference = () => {
             </div>
           </div>
           {/* traditional */}
-          <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+          <div   className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
               src='/punjabi.jpg'
@@ -72,7 +73,7 @@ const ProductPreference = () => {
             </div>
           </div>
           {/* formal */}
-          <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+          <div   className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
               src='/Suit.jpg'
@@ -88,7 +89,7 @@ const ProductPreference = () => {
             </div>
           </div>
           {/* sportsWear */}
-          <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+          <div   className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
               src="/tracksuit.jpg"

@@ -5,7 +5,6 @@ const asyncHandler = require('express-async-handler');
 //post req
 //private
 const createProduct = asyncHandler(async (req, res) => {
-  // console.log(req.body);
   const {
     image,
     category,

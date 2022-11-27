@@ -3,9 +3,9 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { storage } from '../pages/firebase/firebase';
+import { storage } from '../../backend/firebase/firebase';
 import Multiselect from 'multiselect-react-dropdown';
-import preferenceTags from '../../backend/helper/preferenceTags'
+import preferenceTags from '../../backend/helper/preferenceTags';
 const SellWithUs = () => {
   const [category, setCategory] = useState();
   const [brand, setBrand] = useState();
@@ -309,19 +309,6 @@ const SellWithUs = () => {
                   hidePlaceholder
                 />
                 <h1 className="text-red-600 ">{error}</h1>
-                {/* {tags.length==1 && <h1>Please choose at least two tags</h1>} */}
-                {/* <select
-                  name="tags"
-                  value={tags}
-                  onChange={(e) => setTags(e.target.value)}
-                  className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
-                >
-                  <option defaultValue>Choose a tag</option>
-                  <option value="Traditional">Traditional</option>
-                  <option value="Casual">Casual</option>
-                  <option value="Formal">Formal</option>
-                  <option value="Party-wear">Party-wear</option>
-                </select> */}
               </div>
               {/* Image */}
               <div>

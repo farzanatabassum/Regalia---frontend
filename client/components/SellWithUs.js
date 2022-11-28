@@ -16,6 +16,7 @@ const SellWithUs = () => {
   const [originPrice, setOriginPrice] = useState();
   const [sellingPrice, setSellingPrice] = useState();
   const [tags, setTags] = useState([]);
+  const [tag, setTag] = useState([]);
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
   const [progress, setProgress] = useState(0);
@@ -48,7 +49,6 @@ const SellWithUs = () => {
   for (let n = 0; n < preferenceTags.sportsWear.length; n++) {
     options.push(preferenceTags.sportsWear[n]);
   }
-  console.log(options);
 
   //for image file
   const selectedFile = (e) => {
@@ -299,15 +299,21 @@ const SellWithUs = () => {
                   onSelect={(e) => {
                     if (e.length == 1) {
                       setError('Please choose at least two or more tags!!!');
-                      setTags(e.join(', '));
+                      setTags(e);
+
+                     
                     } else {
                       setError('');
-                      setTags(e.join(', '));
+                      setTags(e);
+
                     }
+                    console.log("Tags",tags)
                   }}
+                  avoidHighlightFirstOption
                   className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
                   hidePlaceholder
                 />
+                
                 <h1 className="text-red-600 ">{error}</h1>
               </div>
               {/* Image */}

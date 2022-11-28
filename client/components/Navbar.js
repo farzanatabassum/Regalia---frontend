@@ -47,10 +47,10 @@ const Navbar = ({user}) => {
               </div>
               <div className=" flex  h-auto items-center px-12 py-7">
                 <a onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}} >
-           {dropdown && <div  onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}} className='absolute right-8 bg-gray-400 top-9 rounded-md px-5 py-4 w-36 z-10'>
+           {dropdown && <div  onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}} className='absolute right-8 bg-gray-400 top-9 rounded-md px-5 py-4 w-44 z-10'>
                 <ul>
                 <Link href={'/seller'}><a> <li className='py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white'>My Products</li></a></Link>
-
+                <Link href={'/updatePreference'}><a> <li className='py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white'>My Preferences</li></a></Link>
                   <li className='py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white'>My Profile</li>
                   <li className='py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white'>Logout</li>
                 </ul>

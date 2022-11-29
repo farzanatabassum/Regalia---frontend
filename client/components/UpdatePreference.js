@@ -36,7 +36,7 @@ const UpdatePreference = () => {
   //summer
   const changeSummer = (e) => {
     if (summer === false) {
-      e.currentTarget.style.border = '4px solid blue';
+      e.currentTarget.style.border = '10px solid blue';
     } else {
       e.currentTarget.style.border = 'none';
     }
@@ -46,14 +46,14 @@ const UpdatePreference = () => {
   //Saving Preferences
   const savePreference = async () => {
     const data = {
-     summer,
+      summer,
       winter,
       casual,
       formal,
       traditional,
       sportsWear,
     };
-    console.log(data)
+    console.log('Data', data);
     try {
       const token = localStorage.getItem('Token');
       let response = await fetch(

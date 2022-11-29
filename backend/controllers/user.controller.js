@@ -102,16 +102,8 @@ const getUser = asyncHandler(async (req, res) => {
 const updatePreference = asyncHandler(async (req, res) => {
   //Check user exist
   const user = await User.findById(req.user.id);
-  const data = {
-    summer: true ||user.productPreference.summer,
-    winter: true || user.productPreference.winter,
-    casual: true || user.productPreference.casual,
-    traditional: true || user.productPreference.traditional,
-    sportswear: true || user.productPreference.sportswear,
-    formal: true || user.productPreference.formal,
-  };
-  // const {summer, winter, casual, traditional, sportswear, formal } =req.body;
-  const update = await User.findByIdAndUpdate(req.user.id, data, {
+  const { summer, winter, casual, traditional, sportswear, formal } = req.body;
+  const update = await User.findByIdAndUpdate(req.user.id, req.body, {
     new: true,
   });
   res.status(200).json(update);

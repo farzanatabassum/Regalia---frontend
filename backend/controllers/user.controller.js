@@ -103,7 +103,7 @@ const updatePreference = asyncHandler(async (req, res) => {
   //Check user exist
   const user = await User.findById(req.user.id);
   const data = {
-    summer: true ||user.productPreference.summer,
+    summer: true || user.productPreference.summer,
     winter: true || user.productPreference.winter,
     casual: true || user.productPreference.casual,
     traditional: true || user.productPreference.traditional,
@@ -117,6 +117,33 @@ const updatePreference = asyncHandler(async (req, res) => {
   res.status(200).json(update);
 });
 
+const updateProfile = asyncHandler(async (req, res) => {
+  //Check user exist
+  const user = await User.findById(req.user.id);
+  const hashPassword = async (password) => {
+    const salt = await bcrypt.genSalt(10);
+    password = await bcrypt.hash(password, salt);
+    return password;
+  };
+  if (user) {
+    user.name = req.body.name || user.name;
+    if (req.body.password) {
+      user.password = await hashPassword(req.body.password);
+    }
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      token: generateToken(updatedUser._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error('User Not Found');
+  }
+});
+
 //generate a token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -124,4 +151,4 @@ const generateToken = (id) => {
   });
 };
 
-module.exports = { register, login, getUser, updatePreference };
+module.exports = { register, login, getUser, updatePreference, updateProfile };

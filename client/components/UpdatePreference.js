@@ -1,5 +1,4 @@
-import { set } from 'mongoose';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 const UpdatePreference = () => {
   const [preference, setPreference] = useState([]);
@@ -9,7 +8,15 @@ const UpdatePreference = () => {
   const [traditional, setTraditional] = useState();
   const [formal, setFormal] = useState();
   const [sportsWear, setSportsWear] = useState();
-  const [count, setCount] = useState(0);
+  let [count, setCount] = useState(0);
+  let x = 1;
+  let sum = 0;
+  const summerDiv = useRef();
+  const winterDiv = useRef();
+  const casualDiv = useRef();
+  const traditionalDiv = useRef();
+  const formalDiv = useRef();
+  const sportsWearDiv = useRef();
   useEffect(() => {
     const token = localStorage.getItem('Token');
     fetch('http://localhost:5000/api/users/me', {
@@ -22,8 +29,6 @@ const UpdatePreference = () => {
         return response.json();
       })
       .then((parsed) => {
-        console.log(parsed);
-        console.log('Product Preference', parsed.productPreference.summer);
         setPreference(parsed);
         setSummer(parsed.productPreference.summer);
         setWinter(parsed.productPreference.winter);
@@ -33,6 +38,34 @@ const UpdatePreference = () => {
         setSportsWear(parsed.productPreference.sportsWear);
       });
   }, []);
+  if (summer == true) {
+    summerDiv.current.style.border = '10px solid blue';
+    sum = sum + x;
+  }
+
+  if (winter === true) {
+    winterDiv.current.style.border = '10px solid blue';
+    sum = sum + x;
+  }
+
+  if (casual === true) {
+    casualDiv.current.style.border = '10px solid blue';
+    sum = sum + x;
+  }
+  if (formal === true) {
+    formalDiv.current.style.border = '10px solid blue';
+    sum = sum + x;
+  }
+  if (traditional === true) {
+    traditionalDiv.current.style.border = '10px solid blue';
+    sum = sum + x;
+  }
+  if (sportsWear === true) {
+    sportsWearDiv.current.style.border = '10px solid blue';
+    sum = sum + x;
+  }
+  count = sum;
+
   //summer
   const changeSummer = (e) => {
     if (summer === false) {
@@ -43,8 +76,6 @@ const UpdatePreference = () => {
       setCount(count--);
     }
     setSummer(!summer);
-    setCount(count);
-    console.log('Summer', !summer, count);
   };
   //winter
   const changeWinter = (e) => {
@@ -56,8 +87,6 @@ const UpdatePreference = () => {
       setCount(count--);
     }
     setWinter(!winter);
-    setCount(count);
-    console.log('Winter', !winter, count);
   };
   //casual
   const changeCasual = (e) => {
@@ -69,8 +98,6 @@ const UpdatePreference = () => {
       setCount(count--);
     }
     setCasual(!casual);
-    setCount(count);
-    console.log('Casual', !casual, count);
   };
   //traditional
   const changeTraditional = (e) => {
@@ -82,8 +109,6 @@ const UpdatePreference = () => {
       setCount(count--);
     }
     setTraditional(!traditional);
-    setCount(count);
-    console.log('Traditional', !traditional, count);
   };
   //formal
   const changeFormal = (e) => {
@@ -95,8 +120,6 @@ const UpdatePreference = () => {
       setCount(count--);
     }
     setFormal(!formal);
-    setCount(count);
-    console.log('Formal', !formal, count);
   };
   //sportsWear
   const changeSportsWear = (e) => {
@@ -108,8 +131,6 @@ const UpdatePreference = () => {
       setCount(count--);
     }
     setSportsWear(!sportsWear);
-    setCount(count);
-    console.log('SportsWear', !sportsWear, count);
   };
   //Saving Preferences
   const savePreference = async () => {
@@ -123,7 +144,6 @@ const UpdatePreference = () => {
         sportsWear,
       },
     };
-    console.log('Data', data);
     try {
       const token = localStorage.getItem('Token');
       let response = await fetch(
@@ -162,6 +182,7 @@ const UpdatePreference = () => {
           <div
             className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
             onClick={changeSummer}
+            ref={summerDiv}
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
@@ -182,6 +203,7 @@ const UpdatePreference = () => {
           <div
             className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
             onClick={changeWinter}
+            ref={winterDiv}
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
@@ -201,6 +223,7 @@ const UpdatePreference = () => {
           <div
             className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
             onClick={changeCasual}
+            ref={casualDiv}
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
@@ -220,6 +243,7 @@ const UpdatePreference = () => {
           <div
             className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
             onClick={changeTraditional}
+            ref={traditionalDiv}
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
@@ -239,6 +263,7 @@ const UpdatePreference = () => {
           <div
             className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
             onClick={changeFormal}
+            ref={formalDiv}
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
@@ -258,6 +283,7 @@ const UpdatePreference = () => {
           <div
             className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
             onClick={changeSportsWear}
+            ref={sportsWearDiv}
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
@@ -275,7 +301,6 @@ const UpdatePreference = () => {
           </div>
         </div>
         {/* Saving the preferences */}
-
         <div className="flex justify-center mt-9">
           <button
             onClick={savePreference}

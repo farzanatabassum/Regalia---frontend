@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import SingleProduct from '../../components/SingleProduct';
 import { useState, useEffect } from 'react';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 
 const Post = () => {
   const router = useRouter();
@@ -27,6 +29,7 @@ const Post = () => {
 
   return (
     <>
+    <Navbar/>
       {isLoading && <div>Loading... </div>}
       <SingleProduct
         img={products.image}
@@ -37,6 +40,7 @@ const Post = () => {
         size={products.size}
         price={products.sellingPrice}
       />
+      <Footer/>
     </>
   );
 };

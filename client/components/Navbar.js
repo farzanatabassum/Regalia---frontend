@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Link from 'next/link';
 import {RiAccountCircleLine  } from 'react-icons/ri';
+import { useRouter } from 'next/router'
 
-
-const Navbar = ({user}) => {
+const Navbar = () => {
   const [dropdown,setDropdown]= useState(false)
+  const [user,setUser]=useState({value:null})
+  const [key,setKey]=useState(0)
+  const router=useRouter()
+  useEffect(()=>{
+     const authtoken=localStorage.getItem("Token");
+    if(authtoken){
+      setUser({value:authtoken})
+      setKey(Math.random())
+    }
+  },[router.query])
   
   return (
     <div>

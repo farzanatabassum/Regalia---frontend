@@ -5,6 +5,10 @@ import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../../../backend/firebase/firebase';
 import Multiselect from 'multiselect-react-dropdown';
 import preferenceTags from '../../../backend/helper/preferenceTags';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Update = () => {
   //Dynamic routing
   const router = useRouter();
@@ -137,6 +141,16 @@ const Update = () => {
       setTags('');
       setFile(null);
       setProgress(0);
+      toast.success('Your product has been updated', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
       //navigating to My products page
       setTimeout(() => {
         router.push('/seller');
@@ -148,6 +162,20 @@ const Update = () => {
   };
   return (
     <div>
+      <Navbar/>
+       {/* React toastify */}
+       <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
@@ -379,6 +407,7 @@ const Update = () => {
           </form>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

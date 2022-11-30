@@ -50,9 +50,9 @@ const SignUp = () => {
         progress: undefined,
         theme: 'dark',
       });
-      //navigating to homepage
+      //navigating to preference 
       setTimeout(() => {
-        router.push('/')
+        router.push('/preference')
       }, 1000);
     } catch (error) {
       toast.error('Invalid credentials', {

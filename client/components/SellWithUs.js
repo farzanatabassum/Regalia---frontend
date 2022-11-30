@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../../backend/firebase/firebase';
 import Multiselect from 'multiselect-react-dropdown';
 import preferenceTags from '../../backend/helper/preferenceTags';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const SellWithUs = () => {
   const [category, setCategory] = useState();
   const [brand, setBrand] = useState();
@@ -16,7 +17,6 @@ const SellWithUs = () => {
   const [originPrice, setOriginPrice] = useState();
   const [sellingPrice, setSellingPrice] = useState();
   const [tags, setTags] = useState([]);
-  const [tag, setTag] = useState([]);
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
   const [progress, setProgress] = useState(0);
@@ -89,7 +89,6 @@ const SellWithUs = () => {
       tags,
       image: url,
     };
-    console.log(data);
     try {
       const token = localStorage.getItem('Token');
       let response = await fetch('http://localhost:5000/api/products/create', {
@@ -101,7 +100,6 @@ const SellWithUs = () => {
         body: JSON.stringify(data),
       });
       let res = await response.json();
-      console.log('Result', res);
       setCategory('');
       setBrand('');
       setFabric('');
@@ -113,6 +111,16 @@ const SellWithUs = () => {
       setTags('');
       setFile(null);
       setProgress(0);
+      toast.success('Your product has been created', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
       //navigating to My products page
       setTimeout(() => {
         router.push('/seller');
@@ -125,6 +133,19 @@ const SellWithUs = () => {
 
   return (
     <div>
+      {/* React toastify */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>

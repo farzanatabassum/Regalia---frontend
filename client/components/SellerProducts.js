@@ -48,7 +48,7 @@ const SellerProducts = () => {
       {/* productlist */}
       <section className="py-10 px-12">
         <h3 className="text-center text-2xl font-semibold mb-6">My Products</h3>
-        {!products && <h3 className="text-center text-2xl font-semibold mb-3">
+        {products.length==0 && <h3 className="text-center text-2xl font-semibold mb-3">
             You have not posted any products
           </h3>}
         {products.length>0 && isLoading}

@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
 
 const ProductPreference = () => {
   const [preference, setPreference] = useState([]);
@@ -9,6 +12,7 @@ const ProductPreference = () => {
   const [formal, setFormal] = useState();
   const [sportsWear, setSportsWear] = useState();
   const [count, setCount] = useState(0);
+  const router = useRouter();
   useEffect(() => {
     const token = localStorage.getItem('Token');
     fetch('http://localhost:5000/api/users/me', {
@@ -137,21 +141,47 @@ const ProductPreference = () => {
         }
       );
       let res = await response.json();
-      console.log('Result', res);
+      toast.success('Recommendations for the product created', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
+      //navigating to homepage
+      setTimeout(() => {
+        router.push('/');
+      }, 1000);
       return res;
     } catch (error) {
       console.log(error);
     }
   };
- 
+
   return (
     <div>
+      {/* React toastify */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <section className="py-10 px-12">
         <p className="text-center text-2xl font-semibold mb-10">
           Choose at least 2 products from the preference product list to get
           your recommended products
         </p>
-        {count && count < 2 ? (
+        {count == 1 ? (
           <h1 className="text-center text-2xl font-semibold mb-10 text-red-600">
             Please choose at least 2 products
           </h1>

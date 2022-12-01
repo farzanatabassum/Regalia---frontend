@@ -109,31 +109,7 @@ const updatePreference = asyncHandler(async (req, res) => {
   });
   res.status(200).json(update);
 });
-//recommendation
-//get
-const getPreference = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
-    const productTag = [];
-    if (user.productPreference.summer === true) {
-      productTag.push(preferenceTags.summer);
-    }
-    if (user.productPreference.winter === true) {
-      productTag.push(preferenceTags.winter);
-    }
-    if (user.productPreference.casual === true) {
-      productTag.push(preferenceTags.casual);
-    }
-    if (user.productPreference.formal === true) {
-      productTag.push(preferenceTags.formal);
-    }
-    if (user.productPreference.traditional === true) {
-      productTag.push(preferenceTags.traditional);
-    }
-    if (user.productPreference.sportsWear === true) {
-      productTag.push(preferenceTags.sportsWear);
-    }
-  res.status(200).json(productTag);
-});
+
 //generate a token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -141,4 +117,4 @@ const generateToken = (id) => {
   });
 };
 
-module.exports = { register, login, getUser, updatePreference, getPreference };
+module.exports = { register, login, getUser, updatePreference,  };

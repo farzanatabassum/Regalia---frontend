@@ -16,6 +16,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/users', require('./routes/user.route'));
 //product routes
 app.use('/api/products', require('./routes/product.route'));
+//recommendation routes
+app.use('/api/recommendations', require('./routes/recommendation.route'));
+
 app.listen(port, () => {
   console.log(`Starting port ${port}`);
 });

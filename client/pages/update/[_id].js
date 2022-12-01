@@ -328,6 +328,8 @@ const Update = () => {
                 <label htmlFor="tags" className="sr-only">
                   Tags
                 </label>
+                <h1 className="text-red-600 mb-1 ">{error}</h1>
+
                 <Multiselect
                   isObject={false}
                   options={options}
@@ -355,7 +357,6 @@ const Update = () => {
                   hidePlaceholder
                 />
 
-                <h1 className="text-red-600 ">{error}</h1>
               </div>
               {/* Image */}
               <div>

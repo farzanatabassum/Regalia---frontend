@@ -305,6 +305,7 @@ const SellWithUs = () => {
                 <label htmlFor="tags" className="sr-only">
                   Tags
                 </label>
+                <h1 className="text-red-600 mb-1">{error}</h1>
                 <Multiselect
                   isObject={false}
                   options={options}
@@ -328,14 +329,13 @@ const SellWithUs = () => {
                       setTags(e);
 
                     }
-                    console.log("Tags",tags)
                   }}
                   avoidHighlightFirstOption
                   className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
                   hidePlaceholder
                 />
                 
-                <h1 className="text-red-600 ">{error}</h1>
+              
               </div>
               {/* Image */}
               <div>

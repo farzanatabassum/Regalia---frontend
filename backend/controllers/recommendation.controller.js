@@ -2,6 +2,7 @@ const User = require('../models/user.model');
 const Product = require('../models/product.model');
 const asyncHandler = require('express-async-handler');
 const preferenceTags = require('../helper/preferenceTags');
+const {summer,winter,casual,traditional,formal,sportsWear}=preferenceTags
 //api/recommendations/getPreference
 //get
 //private
@@ -10,29 +11,22 @@ const getPreference = asyncHandler(async (req, res) => {
   console.log('User Preference', user.productPreference);
   const productTag = [];
   if (user.productPreference.summer === true) {
-    for (let i = 0; i < preferenceTags.summer.length; i++) {
-      productTag.push(preferenceTags.summer[i]);
-    }
+    productTag.push(...summer);
   }
   if (user.productPreference.winter === true) {
-    for (let i = 0; i < preferenceTags.winter.length; i++)
-      productTag.push(preferenceTags.winter[i]);
+    productTag.push(...winter)
   }
   if (user.productPreference.casual === true) {
-    for (let i = 0; i < preferenceTags.casual.length; i++)
-      productTag.push(preferenceTags.casual[i]);
+    productTag.push(...casual);
   }
   if (user.productPreference.formal === true) {
-    for (let i = 0; i < preferenceTags.formal.length; i++)
-      productTag.push(preferenceTags.formal[i]);
+    productTag.push(...formal);
   }
   if (user.productPreference.traditional === true) {
-    for (let i = 0; i < preferenceTags.traditional.length; i++)
-      productTag.push(preferenceTags.traditional[i]);
+    productTag.push(...traditional);
   }
   if (user.productPreference.sportsWear === true) {
-    for (let i = 0; i < preferenceTags.sportsWear.length; i++)
-      productTag.push(preferenceTags.sportsWear[i]);
+    productTag.push(...sportsWear);
   }
   console.log(productTag);
   const matchTags = await Product.aggregate([

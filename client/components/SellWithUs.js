@@ -8,6 +8,10 @@ import preferenceTags from '../../backend/helper/preferenceTags';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const SellWithUs = () => {
+  //preferenceTags
+  const { summer, winter, casual, traditional, formal, sportsWear } =
+    preferenceTags;
+  //State properties
   const [category, setCategory] = useState();
   const [brand, setBrand] = useState();
   const [fabric, setFabric] = useState();
@@ -30,25 +34,15 @@ const SellWithUs = () => {
     }
   }, [router]);
   //for tags option
-  const options = [];
-  for (let i = 0; i < preferenceTags.summer.length; i++) {
-    options.push(preferenceTags.summer[i]);
-  }
-  for (let j = 0; j < preferenceTags.winter.length; j++) {
-    options.push(preferenceTags.winter[j]);
-  }
-  for (let k = 0; k < preferenceTags.formal.length; k++) {
-    options.push(preferenceTags.formal[k]);
-  }
-  for (let l = 0; l < preferenceTags.casual.length; l++) {
-    options.push(preferenceTags.casual[l]);
-  }
-  for (let m = 0; m < preferenceTags.traditional.length; m++) {
-    options.push(preferenceTags.traditional[m]);
-  }
-  for (let n = 0; n < preferenceTags.sportsWear.length; n++) {
-    options.push(preferenceTags.sportsWear[n]);
-  }
+  let options = [];
+  options = options.concat(
+    summer,
+    winter,
+    casual,
+    traditional,
+    formal,
+    sportsWear
+  );
 
   //for image file
   const selectedFile = (e) => {
@@ -322,20 +316,15 @@ const SellWithUs = () => {
                     if (e.length == 1) {
                       setError('Please choose at least two or more tags!!!');
                       setTags(e);
-
-                     
                     } else {
                       setError('');
                       setTags(e);
-
                     }
                   }}
                   avoidHighlightFirstOption
                   className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
                   hidePlaceholder
                 />
-                
-              
               </div>
               {/* Image */}
               <div>

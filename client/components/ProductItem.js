@@ -7,7 +7,8 @@ const ProductItem = () => {
   const [user, setUser] = useState({ value: null });
 
   useEffect(() => {
-    const authtoken = localStorage.getItem('Token');
+    try
+    {const authtoken = localStorage.getItem('Token');
     if (authtoken) {
       setUser({ value: authtoken });
     }
@@ -38,6 +39,9 @@ const ProductItem = () => {
               setProducts(parsed);
               setIsLoading(false);
             });
+    }}
+    catch(error){
+      console.log(error)
     }
   }, [user.value]);
   return (

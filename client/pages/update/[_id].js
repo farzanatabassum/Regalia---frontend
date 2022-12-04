@@ -10,6 +10,9 @@ import Footer from '../../components/Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const Update = () => {
+  //preferenceTags
+  const {summer,winter,casual,traditional,formal,sportsWear}=preferenceTags
+
   //Dynamic routing
   const router = useRouter();
   const { _id } = router.query;
@@ -55,25 +58,8 @@ const Update = () => {
   }, [_id]);
 
   //for tags option
-  const options = [];
-  for (let i = 0; i < preferenceTags.summer.length; i++) {
-    options.push(preferenceTags.summer[i]);
-  }
-  for (let j = 0; j < preferenceTags.winter.length; j++) {
-    options.push(preferenceTags.winter[j]);
-  }
-  for (let k = 0; k < preferenceTags.formal.length; k++) {
-    options.push(preferenceTags.formal[k]);
-  }
-  for (let l = 0; l < preferenceTags.casual.length; l++) {
-    options.push(preferenceTags.casual[l]);
-  }
-  for (let m = 0; m < preferenceTags.traditional.length; m++) {
-    options.push(preferenceTags.traditional[m]);
-  }
-  for (let n = 0; n < preferenceTags.sportsWear.length; n++) {
-    options.push(preferenceTags.sportsWear[n]);
-  }
+  let options = [];
+  options=options.concat(summer,winter,casual,traditional,formal,sportsWear)
   //for new image
   const selectedFile = (e) => {
     e.preventDefault();

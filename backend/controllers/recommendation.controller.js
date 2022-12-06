@@ -2,7 +2,8 @@ const User = require('../models/user.model');
 const Product = require('../models/product.model');
 const asyncHandler = require('express-async-handler');
 const preferenceTags = require('../helper/preferenceTags');
-const {summer,winter,casual,traditional,formal,sportsWear}=preferenceTags
+const { summer, winter, casual, traditional, formal, sportsWear } =
+  preferenceTags;
 //api/recommendations/getPreference
 //get
 //private
@@ -14,7 +15,7 @@ const getPreference = asyncHandler(async (req, res) => {
     productTag.push(...summer);
   }
   if (user.productPreference.winter === true) {
-    productTag.push(...winter)
+    productTag.push(...winter);
   }
   if (user.productPreference.casual === true) {
     productTag.push(...casual);
@@ -31,6 +32,21 @@ const getPreference = asyncHandler(async (req, res) => {
   console.log(productTag);
   const matchTags = await Product.aggregate([
     { $match: { tags: { $in: productTag } } },
+    {
+      $addFields: {
+        totalTagMatched: { $size: { $setIntersection: ['$tags', productTag] } },
+      },
+    },
+    {
+      $match: {
+        totalTagMatched: {
+          $gte: 2,
+        },
+      },
+    },
+    {
+      $sort: { _id:-1 },
+    },
   ]);
   res.status(200).json(matchTags);
 });

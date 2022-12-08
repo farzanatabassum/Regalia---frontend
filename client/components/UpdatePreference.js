@@ -213,16 +213,16 @@ const UpdatePreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/shirt.jpg"
+              src="/summer.jpg"
               alt="cloth image"
             />
             <div className="p-5">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Le Reve
+               Summer Collections
               </h5>
-              <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
+              {/* <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
                 <span className="font-bold">Category: </span>Shirt
-              </h5>
+              </h5> */}
             </div>
           </div>
 
@@ -234,16 +234,16 @@ const UpdatePreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/jacket.jpg"
+              src="/winter.jpeg"
               alt="cloth image"
             />
             <div className="p-5">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Cats Eye
+                Winter Collections
               </h5>
-              <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
+              {/* <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
                 <span className="font-bold">Category: </span>Jacket
-              </h5>
+              </h5> */}
             </div>
           </div>
           {/* casual */}
@@ -254,16 +254,16 @@ const UpdatePreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/skirt.jpg"
+              src="/casual.jpeg"
               alt="cloth image"
             />
             <div className="p-5">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Yellow
+                Casual Collections
               </h5>
-              <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
+              {/* <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
                 <span className="font-bold">Category: </span> Skirt
-              </h5>
+              </h5> */}
             </div>
           </div>
           {/* traditional */}
@@ -274,16 +274,16 @@ const UpdatePreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/punjabi.jpg"
+              src="/traditional.jfif"
               alt="cloth image"
             />
             <div className="p-5">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Illiyeen
+                Traditional Collections
               </h5>
-              <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
+              {/* <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
                 <span className="font-bold">Category:</span> Punjabi
-              </h5>
+              </h5> */}
             </div>
           </div>
           {/* formal */}
@@ -294,16 +294,16 @@ const UpdatePreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/Suit.jpg"
+              src="/formal.jfif"
               alt="cloth image"
             />
             <div className="p-5">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Richman
+                Formal Collections
               </h5>
-              <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
+              {/* <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
                 <span className="font-bold">Category:</span> Suit
-              </h5>
+              </h5> */}
             </div>
           </div>
           {/* sportsWear */}
@@ -314,16 +314,16 @@ const UpdatePreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/tracksuit.jpg"
+              src="/sportswear1.jfif"
               alt="cloth image"
             />
             <div className="p-5">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Sailor
+                Sportswear Collections
               </h5>
-              <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
+              {/* <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
                 <span className="font-bold">Category:</span> Tracksuit
-              </h5>
+              </h5> */}
             </div>
           </div>
         </div>

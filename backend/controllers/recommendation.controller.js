@@ -2,6 +2,7 @@ const User = require('../models/user.model');
 const Product = require('../models/product.model');
 const asyncHandler = require('express-async-handler');
 const preferenceTags = require('../helper/preferenceTags');
+const mongoose = require('mongoose');
 const { summer, winter, casual, traditional, formal, sportsWear } =
   preferenceTags;
 //api/recommendations/getPreference
@@ -31,7 +32,14 @@ const getPreference = asyncHandler(async (req, res) => {
   }
   console.log(productTag);
   const matchTags = await Product.aggregate([
-    { $match: { tags: { $in: productTag } } },
+    {
+      $match: {
+        tags: { $in: productTag },
+        user: {
+          $ne: mongoose.Types.ObjectId(req.user.id),
+        },
+      },
+    },
     {
       $addFields: {
         totalTagMatched: { $size: { $setIntersection: ['$tags', productTag] } },
@@ -45,7 +53,7 @@ const getPreference = asyncHandler(async (req, res) => {
       },
     },
     {
-      $sort: { totalTagMatched:-1 },
+      $sort: { totalTagMatched: -1 },
     },
   ]);
   res.status(200).json(matchTags);

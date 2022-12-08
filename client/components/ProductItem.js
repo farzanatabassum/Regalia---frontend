@@ -5,20 +5,20 @@ import { useRouter } from 'next/router';
 const ProductItem = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState({ value: null });
-  const [key,setKey]=useState(0)
-  const router=useRouter()
+  const [user, setUser] = useState();
+  const [key, setKey] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     try {
       const authtoken = localStorage.getItem('Token');
       if (authtoken) {
-        setUser({ value: authtoken });
-        setKey(Math.random())
+        setUser(authtoken);
+        setKey(Math.random());
       }
 
       {
-        !user.value &&
+        !user &&
           fetch('http://localhost:5000/api/products/listAll', {
             headers: {
               'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const ProductItem = () => {
             });
       }
       {
-        user.value &&
+        user &&
           fetch('http://localhost:5000/api/recommendations/getPreference', {
             headers: {
               'Content-Type': 'application/json',
@@ -51,11 +51,11 @@ const ProductItem = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [user.value]);
+  }, [user]);
   return (
     <div>
       <section className="py-10 px-12">
-        {!user.value ? (
+        {!user ? (
           <h3 className="text-left text-2xl font-semibold mb-3">
             Latest Collections
           </h3>

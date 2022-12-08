@@ -45,7 +45,7 @@ const getPreference = asyncHandler(async (req, res) => {
       },
     },
     {
-      $sort: { _id:-1 },
+      $sort: { totalTagMatched:-1 },
     },
   ]);
   res.status(200).json(matchTags);

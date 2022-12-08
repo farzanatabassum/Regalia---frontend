@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const ProductItem = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({ value: null });
+  const [key,setKey]=useState(0)
+  const router=useRouter()
 
   useEffect(() => {
-    try
-    {const authtoken = localStorage.getItem('Token');
-    if (authtoken) {
-      setUser({ value: authtoken });
-    }
-    {
-      !user.value
-        ? fetch('http://localhost:5000/api/products/listAll', {
+    try {
+      const authtoken = localStorage.getItem('Token');
+      if (authtoken) {
+        setUser({ value: authtoken });
+        setKey(Math.random())
+      }
+
+      {
+        !user.value &&
+          fetch('http://localhost:5000/api/products/listAll', {
             headers: {
               'Content-Type': 'application/json',
             },
@@ -25,8 +30,11 @@ const ProductItem = () => {
             .then((parsed) => {
               setProducts(parsed);
               setIsLoading(false);
-            })
-        : fetch('http://localhost:5000/api/recommendations/getPreference', {
+            });
+      }
+      {
+        user.value &&
+          fetch('http://localhost:5000/api/recommendations/getPreference', {
             headers: {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${authtoken}`,
@@ -39,9 +47,9 @@ const ProductItem = () => {
               setProducts(parsed);
               setIsLoading(false);
             });
-    }}
-    catch(error){
-      console.log(error)
+      }
+    } catch (error) {
+      console.log(error);
     }
   }, [user.value]);
   return (

@@ -1,4 +1,3 @@
-import { set } from 'mongoose';
 import React, { useEffect, useState } from 'react';
 
 const UpdatePreference = () => {
@@ -22,8 +21,6 @@ const UpdatePreference = () => {
         return response.json();
       })
       .then((parsed) => {
-        console.log(parsed);
-        console.log('Product Preference', parsed.productPreference.summer);
         setPreference(parsed);
         setSummer(parsed.productPreference.summer);
         setWinter(parsed.productPreference.winter);

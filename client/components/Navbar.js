@@ -51,7 +51,7 @@ const Navbar = ({user}) => {
                 <ul>
                 <Link href={'/seller'}><a> <li className='py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white'>My Products</li></a></Link>
                 <Link href={'/updatePreference'}><a> <li className='py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white'>My Preferences</li></a></Link>
-                  <li className='py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white'>My Profile</li>
+                <Link href={'/profile'}><a> <li className='py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white'>My Profile</li></a></Link>
                   <li className='py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white'>Logout</li>
                 </ul>
               </div>}

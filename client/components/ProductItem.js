@@ -30,6 +30,7 @@ const ProductItem = () => {
             .then((parsed) => {
               setProducts(parsed);
               setIsLoading(false);
+              setKey(Math.random());
             });
       }
       {

@@ -15,7 +15,12 @@ const Navbar = () => {
       setKey(Math.random())
     }
   },[router.query])
-  
+  //logout
+  const logout=()=>{
+    localStorage.removeItem("Token")
+    setUser({value:null})
+    setKey(Math.random())
+  }
   return (
     <div>
       <nav className="bg-gray-200">
@@ -62,7 +67,7 @@ const Navbar = () => {
                 <Link href={'/seller'}><a> <li className='py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white'>My Products</li></a></Link>
                 <Link href={'/updatePreference'}><a> <li className='py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white'>My Preferences</li></a></Link>
                   <li className='py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white'>My Profile</li>
-                  <li className='py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white'>Logout</li>
+                  <li onClick={logout} className='py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white'>Logout</li>
                 </ul>
               </div>}
                 {/* User logged in */}

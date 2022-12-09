@@ -1,15 +1,13 @@
 import React from 'react'
 import Link from 'next/link';
 import { useState } from 'react';
-
-
 const ForgotPassword = () => {
   const [email,setEmail]=useState()
   const handleSubmit=async(e)=>{
     e.preventDefault()
     const userData = {email };
     try {
-      //fetching signup api
+     
       let res = await fetch('http://localhost:5000/api/users/forgot', {
         method: 'POST',
         headers: {
@@ -18,8 +16,9 @@ const ForgotPassword = () => {
         body: JSON.stringify(userData),
       });
       let response = await res.json();
-      console.log(response);
       setEmail('');
+      return response
+      
    
     } catch (error) {
      console.log(error)

@@ -117,7 +117,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
         const token = jwt.sign({ userID: user._id }, secret, {
           expiresIn: '10m',
         });
-        const link = `http://localhost:3000/user/reset/${user._id}/${token}`;
+        const link = `http://localhost:3000/reset/${user._id}/${token}`;
         // email sending
         const transport = nodemailer.createTransport({
           service: 'gmail',
@@ -141,11 +141,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
             res.status(400);
             throw new Error('Reset password link error');
           }
-          return res
-            .status(200)
-            .json({
-              message: 'Email has been sent. Please follow the instructions.',
-            });
+          return res.status(200).json(user);
         });
       } else {
         res.status(400);
@@ -167,7 +163,7 @@ const updatePasswordEmail = asyncHandler(async (req, res) => {
     if (newPassword && confirmPassword && id && token) {
       if (newPassword === confirmPassword) {
         //verify token
-        const user = await User.findById(req.user.id);
+        const user = await User.findById(id);
         const secret = process.env.JWT_SECRET + user._id;
         const isValid = jwt.verify(token, secret);
         if (isValid) {
@@ -183,22 +179,18 @@ const updatePasswordEmail = asyncHandler(async (req, res) => {
           if (isUpdate) {
             return res.status(200).json(user);
           }
-        }
-        else{
+        } else {
           return res.status(400).json({
-            message: "Link has been Expired",
+            message: 'Link has been Expired',
           });
         }
-
-      }
-      else{
+      } else {
         return res
-            .status(400)
-            .json({ message: "password and confirm password does not match" });
+          .status(400)
+          .json({ message: 'password and confirm password does not match' });
       }
-    }
-    else{
-      return res.status(400).json({ message: "All fields are required" });
+    } else {
+      return res.status(400).json({ message: 'All fields are required' });
     }
   } catch (error) {
     return res.status(400).json({ message: error.message });

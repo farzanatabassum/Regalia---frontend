@@ -1,26 +1,30 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import {RiAccountCircleLine  } from 'react-icons/ri';
-import { useRouter } from 'next/router'
+import { RiAccountCircleLine } from 'react-icons/ri';
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
-  const [dropdown,setDropdown]= useState(false)
-  const [user,setUser]=useState({value:null})
-  const [key,setKey]=useState(0)
-  const router=useRouter()
-  useEffect(()=>{
-     const authtoken=localStorage.getItem("Token");
-    if(authtoken){
-      setUser({value:authtoken})
-      setKey(Math.random())
+  const [dropdown, setDropdown] = useState(false);
+  const [user, setUser] = useState({ value: null });
+  const [key, setKey] = useState(0);
+  const router = useRouter();
+  useEffect(() => {
+    const authtoken = localStorage.getItem('Token');
+    if (authtoken) {
+      setUser({ value: authtoken });
+      setKey(Math.random());
     }
-  },[router.query])
+  }, [router.query]);
   //logout
-  const logout=()=>{
-    localStorage.removeItem("Token")
-    setUser({value:null})
-    setKey(Math.random())
-  }
+  const logout = async () => {
+    localStorage.removeItem('Token');
+    setUser({ value: null });
+    router.reload();
+    //navigating to homepage
+    setTimeout(() => {
+      router.push('/');
+    }, 1000);
+  };
   return (
     <div>
       <nav className="bg-gray-200">
@@ -38,7 +42,9 @@ const Navbar = () => {
               </button>
             </div>
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-              <h1 className="px-15 py-7  text-3xl font-extrabold mr-auto">Regalia</h1>
+              <h1 className="px-15 py-7  text-3xl font-extrabold mr-auto">
+                Regalia
+              </h1>
               <div className="flex flex-shrink-0 items-center">
                 <div className="hidden sm:ml-6 sm:block">
                   <ul className="flex justify-center ">
@@ -49,41 +55,82 @@ const Navbar = () => {
                     </Link>
                     <Link href="/about">
                       <li className="text-gray-900 hover:bg-gray-500 hover:text-white px-12 py-7 rounded-md text-sm font-medium">
-                       <a>About</a> 
+                        <a>About</a>
                       </li>
                     </Link>
                     <Link href="/sellwithus">
                       <li className="text-gray-900 hover:bg-gray-500 hover:text-white  px-12 py-7 rounded-md text-sm font-medium">
-                       <a>Sell with us</a> 
+                        <a>Sell with us</a>
                       </li>
                     </Link>
                   </ul>
                 </div>
               </div>
               <div className=" flex  h-auto items-center px-12 py-7">
-                <a onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}} >
-           {dropdown && <div  onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}} className='absolute right-8 bg-gray-400 top-9 rounded-md px-5 py-4 w-44 z-10'>
-                <ul>
-                <Link href={'/seller'}><a> <li className='py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white'>My Products</li></a></Link>
-                <Link href={'/updatePreference'}><a> <li className='py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white'>My Preferences</li></a></Link>
-                  <li className='py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white'>My Profile</li>
-                  <li onClick={logout} className='py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white'>Logout</li>
-                </ul>
-              </div>}
-                {/* User logged in */}
-                {user.value && <RiAccountCircleLine  className='text-xl md:text-2xl mx-2'/>}
+                <a
+                  onMouseOver={() => {
+                    setDropdown(true);
+                  }}
+                  onMouseLeave={() => {
+                    setDropdown(false);
+                  }}
+                >
+                  {dropdown && (
+                    <div
+                      onMouseOver={() => {
+                        setDropdown(true);
+                      }}
+                      onMouseLeave={() => {
+                        setDropdown(false);
+                      }}
+                      className="absolute right-8 bg-gray-400 top-9 rounded-md px-5 py-4 w-44 z-10"
+                    >
+                      <ul>
+                        <Link href={'/seller'}>
+                          <a>
+                            {' '}
+                            <li className="py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white">
+                              My Products
+                            </li>
+                          </a>
+                        </Link>
+                        <Link href={'/updatePreference'}>
+                          <a>
+                            {' '}
+                            <li className="py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white">
+                              My Preferences
+                            </li>
+                          </a>
+                        </Link>
+                        <li className="py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white">
+                          My Profile
+                        </li>
+                        <li
+                          onClick={logout}
+                          className="py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white"
+                        >
+                          Logout
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                  {/* User logged in */}
+                  {user.value && (
+                    <RiAccountCircleLine className="text-xl md:text-2xl mx-2" />
+                  )}
                 </a>
-                  {/* User logged out */}
-               {!user.value && <Link href="/login">
-                  <button
-                    type="button"
-                    className=" text-white bg-gray-700 font-medium rounded-lg text-sm px-5 py-3 text-center "
-                  >
-                    Sign Up/Login
-                  </button>
-                </Link>}
+                {/* User logged out */}
+                {!user.value && (
+                  <Link href="/login">
+                    <button
+                      type="button"
+                      className=" text-white bg-gray-700 font-medium rounded-lg text-sm px-5 py-3 text-center "
+                    >
+                      Sign Up/Login
+                    </button>
+                  </Link>
+                )}
               </div>
-             
             </div>
           </div>
         </div>

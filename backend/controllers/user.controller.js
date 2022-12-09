@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const preferenceTags = require('../helper/preferenceTags');
+const nodemailer=require('nodemailer')
 
 //api/users/signup
 //post req
@@ -42,12 +42,6 @@ const register = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       gender: user.gender,
-      // summer: user.productPreference.summer,
-      // winter: user.productPreference.winter,
-      // casual: user.productPreference.casual,
-      // traditional: user.productPreference.traditional,
-      // formal: user.productPreference.formal,
-      // sportsWear: user.productPreference.sportsWear,
       token: generateToken(user._id),
     });
   } else {
@@ -109,6 +103,35 @@ const updatePreference = asyncHandler(async (req, res) => {
   });
   res.status(200).json(update);
 });
+//forgot password
+const forgotPassword=asyncHandler(async(req,res)=>{
+const {email}=req.body
+try{
+  //Check user exist
+  if(email){
+    const user=await User.findOne({email:email})
+    if(user){
+      //generate token
+      const secret=process.env.JWT_SECRET+user._id
+      const token=jwt.sign({userID:user._id},secret,{
+        expiresIn:"10m",
+      })
+    }
+    else{
+      res.status(400);
+    throw new Error('User does not exist');
+    }
+  }
+  else{
+    res.status(400);
+  throw new Error('Email is required');
+  }
+}
+catch(error){
+  return res.status(400).json({ message: error.message });
+}
+
+})
 
 //generate a token
 const generateToken = (id) => {
@@ -117,4 +140,4 @@ const generateToken = (id) => {
   });
 };
 
-module.exports = { register, login, getUser, updatePreference,  };
+module.exports = { register, login, getUser, updatePreference,forgotPassword, };

@@ -30,7 +30,6 @@ const ProductItem = () => {
             .then((parsed) => {
               setProducts(parsed);
               setIsLoading(false);
-              setKey(Math.random());
             });
       }
       {
@@ -53,7 +52,7 @@ const ProductItem = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [user]);
+  }, [router, user]);
   return (
     <div>
       <section className="py-10 px-12">

@@ -5,6 +5,7 @@ const {
   login,
   getUser,
   updatePreference,
+  forgotPassword,
 } = require('../controllers/user.controller');
 const { protect } = require('../middleware/authMiddleware');
 //signup
@@ -19,6 +20,11 @@ router.route('/me').get(protect, getUser);
 //updatePreference
 //private
 router.route('/updatePreference/:id').put(protect, updatePreference);
+
+//forgot
+//public
+ router.route('/forgot').post(forgotPassword);
+
 
 
 module.exports = router;

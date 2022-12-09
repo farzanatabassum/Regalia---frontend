@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const nodemailer=require('nodemailer')
+const nodemailer = require('nodemailer');
 
 //api/users/signup
 //post req
@@ -104,34 +104,106 @@ const updatePreference = asyncHandler(async (req, res) => {
   res.status(200).json(update);
 });
 //forgot password
-const forgotPassword=asyncHandler(async(req,res)=>{
-const {email}=req.body
-try{
-  //Check user exist
-  if(email){
-    const user=await User.findOne({email:email})
-    if(user){
-      //generate token
-      const secret=process.env.JWT_SECRET+user._id
-      const token=jwt.sign({userID:user._id},secret,{
-        expiresIn:"10m",
-      })
+//public
+const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  try {
+    //Check user exist
+    if (email) {
+      const user = await User.findOne({ email: email });
+      if (user) {
+        //generate token
+        const secret = process.env.JWT_SECRET + user._id;
+        const token = jwt.sign({ userID: user._id }, secret, {
+          expiresIn: '10m',
+        });
+        const link = `http://localhost:3000/user/reset/${user._id}/${token}`;
+        // email sending
+        const transport = nodemailer.createTransport({
+          service: 'gmail',
+          host: 'smtp.gmail.com',
+          port: 465,
+          auth: {
+            user: process.env.EMAIL,
+            pass: process.env.EMAIL_PASSWORD,
+          },
+        });
+        const data = {
+          from: process.env.EMAIL,
+          to: email,
+          subject: 'Reset Account Password Link',
+          html: `
+        <h3>Please click the linkbelow to reset your password</h3>
+        <p>${link}</p>`,
+        };
+        transport.sendMail(data, (error, body) => {
+          if (error) {
+            res.status(400);
+            throw new Error('Reset password link error');
+          }
+          return res
+            .status(200)
+            .json({
+              message: 'Email has been sent. Please follow the instructions.',
+            });
+        });
+      } else {
+        res.status(400);
+        throw new Error('User does not exist');
+      }
+    } else {
+      res.status(400);
+      throw new Error('Email is required');
+    }
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+});
+//updatePasswordEmail
+const updatePasswordEmail = asyncHandler(async (req, res) => {
+  const { newPassword, confirmPassword } = req.body;
+  const { id, token } = req.params;
+  try {
+    if (newPassword && confirmPassword && id && token) {
+      if (newPassword === confirmPassword) {
+        //verify token
+        const user = await User.findById(req.user.id);
+        const secret = process.env.JWT_SECRET + user._id;
+        const isValid = jwt.verify(token, secret);
+        if (isValid) {
+          //Hash Password
+          const salt = await bcrypt.genSalt(10);
+          const hash = await bcrypt.hash(newPassword, salt);
+          const isUpdate = await User.findByIdAndUpdate(user._id, {
+            $set: {
+              password: hash,
+            },
+          });
+
+          if (isUpdate) {
+            return res.status(200).json(user);
+          }
+        }
+        else{
+          return res.status(400).json({
+            message: "Link has been Expired",
+          });
+        }
+
+      }
+      else{
+        return res
+            .status(400)
+            .json({ message: "password and confirm password does not match" });
+      }
     }
     else{
-      res.status(400);
-    throw new Error('User does not exist');
+      return res.status(400).json({ message: "All fields are required" });
     }
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
   }
-  else{
-    res.status(400);
-  throw new Error('Email is required');
-  }
-}
-catch(error){
-  return res.status(400).json({ message: error.message });
-}
-
-})
+});
 
 //generate a token
 const generateToken = (id) => {
@@ -140,4 +212,11 @@ const generateToken = (id) => {
   });
 };
 
-module.exports = { register, login, getUser, updatePreference,forgotPassword, };
+module.exports = {
+  register,
+  login,
+  getUser,
+  updatePreference,
+  forgotPassword,
+  updatePasswordEmail,
+};

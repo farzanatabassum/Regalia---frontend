@@ -6,6 +6,8 @@ const {
   getUser,
   updatePreference,
   forgotPassword,
+  updatePasswordEmail,
+  
 } = require('../controllers/user.controller');
 const { protect } = require('../middleware/authMiddleware');
 //signup
@@ -24,6 +26,9 @@ router.route('/updatePreference/:id').put(protect, updatePreference);
 //forgot
 //public
  router.route('/forgot').post(forgotPassword);
+ //update password
+ router.post("/forgotPassword/:id/:token", updatePasswordEmail);
+
 
 
 

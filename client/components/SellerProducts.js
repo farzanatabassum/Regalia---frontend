@@ -1,29 +1,41 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 const SellerProducts = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const router = useRouter();
   useEffect(() => {
-    getProduct();
-  }, []);
-  const getProduct = async () => {
     const token = localStorage.getItem('Token');
-    await fetch('http://localhost:5000/api/products/read', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        return response.json();
+    if (!token) {
+      router.push('/');
+    } else {
+      getProduct();
+    }
+  }, [router]);
+  const getProduct = async () => {
+    try {
+      const token = localStorage.getItem('Token');
+      await fetch('http://localhost:5000/api/products/read', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .then((parsed) => {
-        console.log(parsed);
-        setProducts(parsed);
-        setIsLoading(false);
-      });
+        .then((response) => {
+          return response.json();
+        })
+        .then((parsed) => {
+          console.log(parsed);
+          setProducts(parsed);
+          setIsLoading(false);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
   //Deleting Products
   const handleDelete = async (productId) => {
@@ -47,10 +59,12 @@ const SellerProducts = () => {
       {/* productlist */}
       <section className="py-10 px-12">
         <h3 className="text-center text-2xl font-semibold mb-6">My Products</h3>
-        {products.length==0 && <h3 className="text-center text-2xl font-semibold mb-3">
+        {products.length == 0 && (
+          <h3 className="text-center text-2xl font-semibold mb-3">
             You have not posted any products
-          </h3>}
-        {products.length>0 && isLoading}
+          </h3>
+        )}
+        {products.length > 0 && isLoading}
         {isLoading && <div>Loading... </div>}
         <div className="grid grid-flow-row gap-8 text-neutral-600 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           {products &&

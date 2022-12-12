@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
 const UpdateProfile = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [gender, setGender] = useState();
   const [password, setPassword] = useState();
   const [user, setUser] = useState();
+  const router=useRouter()
   useEffect(() => {
     const token = localStorage.getItem('Token');
-    fetch('http://localhost:5000/api/users/me', {
+    if(!token){
+      router.push('/')
+    }
+    else
+   { fetch('http://localhost:5000/api/users/me', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
@@ -23,8 +30,8 @@ const UpdateProfile = () => {
         setEmail(parsed.email);
         setGender(parsed.gender);
      
-      });
-  }, []);
+      })}
+  }, [router]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
@@ -45,6 +52,16 @@ const UpdateProfile = () => {
         }
       );
       let res = await response.json();
+      toast.success('Profile updated', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
       return res;
     } catch (error) {
       console.log(error);
@@ -52,6 +69,19 @@ const UpdateProfile = () => {
   };
   return (
     <div>
+       {/* React toastify */}
+       <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>

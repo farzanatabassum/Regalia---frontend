@@ -29,7 +29,16 @@ const SellWithUs = () => {
   const router = useRouter();
   useEffect(() => {
     if (!localStorage.getItem('Token')) {
-      toast.error('Please Login first');
+      toast.error('Please Login first', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
       router.push('/login');
     }
   }, [router]);

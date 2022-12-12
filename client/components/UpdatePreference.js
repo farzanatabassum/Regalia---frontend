@@ -1,12 +1,7 @@
-<<<<<<< HEAD
 import React, { useEffect, useState, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
-=======
-import React, { useEffect, useState } from 'react';
-
->>>>>>> 197bcb1fe39d9e0e17c05e8d95be4e7347ca90a6
 const UpdatePreference = () => {
   const [preference, setPreference] = useState([]);
   const [summer, setSummer] = useState();
@@ -27,7 +22,11 @@ const UpdatePreference = () => {
   const sportsWearDiv = useRef();
   useEffect(() => {
     const token = localStorage.getItem('Token');
-    fetch('http://localhost:5000/api/users/me', {
+    if(!token){
+      router.push('/')
+    }
+    else
+   { fetch('http://localhost:5000/api/users/me', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
@@ -44,8 +43,8 @@ const UpdatePreference = () => {
         setTraditional(parsed.productPreference.traditional);
         setFormal(parsed.productPreference.formal);
         setSportsWear(parsed.productPreference.sportsWear);
-      });
-  }, []);
+      });}
+  }, [router]);
   if (summer == true) {
     summerDiv.current.style.border = '10px solid blue';
     sum = sum + x;

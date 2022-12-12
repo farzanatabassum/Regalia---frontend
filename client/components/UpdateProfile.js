@@ -18,7 +18,6 @@ const UpdateProfile = () => {
         return response.json();
       })
       .then((parsed) => {
-        console.log(parsed);
         setUser(parsed);
         setName(parsed.name);
         setEmail(parsed.email);

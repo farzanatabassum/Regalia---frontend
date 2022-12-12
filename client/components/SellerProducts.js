@@ -39,7 +39,6 @@ const SellerProducts = () => {
       }
     );
     const data = await response.json();
-    console.log(data);
     getProduct();
   };
 

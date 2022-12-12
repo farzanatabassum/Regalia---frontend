@@ -5,9 +5,13 @@ const {
   login,
   getUser,
   updatePreference,
+<<<<<<< HEAD
   forgotPassword,
   updatePasswordEmail,
   
+=======
+  updateProfile,
+>>>>>>> 197bcb1fe39d9e0e17c05e8d95be4e7347ca90a6
 } = require('../controllers/user.controller');
 const { protect } = require('../middleware/authMiddleware');
 //signup
@@ -22,6 +26,7 @@ router.route('/me').get(protect, getUser);
 //updatePreference
 //private
 router.route('/updatePreference/:id').put(protect, updatePreference);
+<<<<<<< HEAD
 
 //forgot
 //public
@@ -32,4 +37,11 @@ router.route('/updatePreference/:id').put(protect, updatePreference);
 
 
 
+=======
+//updateProfile
+//private
+router.route('/updateProfile/:id').put(protect, updateProfile);
+
+
+>>>>>>> 197bcb1fe39d9e0e17c05e8d95be4e7347ca90a6
 module.exports = router;

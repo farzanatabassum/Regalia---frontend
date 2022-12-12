@@ -78,9 +78,8 @@ const login = asyncHandler(async (req, res) => {
 //get request
 //private
 const getUser = asyncHandler(async (req, res) => {
-  const { _id, name, email, gender, productPreference } = await User.findById(
-    req.user.id
-  );
+  const { _id, name, email, gender,  productPreference } =
+    await User.findById(req.user.id);
 
   res.status(200).json({
     id: _id,
@@ -88,6 +87,7 @@ const getUser = asyncHandler(async (req, res) => {
     email,
     gender,
     productPreference,
+    
   });
 });
 
@@ -199,6 +199,33 @@ const updatePasswordEmail = asyncHandler(async (req, res) => {
   }
 });
 
+const updateProfile = asyncHandler(async (req, res) => {
+  //Check user exist
+  const user = await User.findById(req.user.id);
+  const hashPassword = async (password) => {
+    const salt = await bcrypt.genSalt(10);
+    password = await bcrypt.hash(password, salt);
+    return password;
+  };
+  if (user) {
+    user.name = req.body.name || user.name;
+    if (req.body.password) {
+      user.password = await hashPassword(req.body.password);
+    }
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      token: generateToken(updatedUser._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error('User Not Found');
+  }
+});
+
 //generate a token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -213,4 +240,5 @@ module.exports = {
   updatePreference,
   forgotPassword,
   updatePasswordEmail,
+  updateProfile,
 };

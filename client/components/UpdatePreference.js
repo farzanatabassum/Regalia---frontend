@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 import React, { useEffect, useState, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
+=======
+import React, { useEffect, useState } from 'react';
+
+>>>>>>> 197bcb1fe39d9e0e17c05e8d95be4e7347ca90a6
 const UpdatePreference = () => {
   const [preference, setPreference] = useState([]);
   const [summer, setSummer] = useState();

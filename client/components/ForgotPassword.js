@@ -1,6 +1,8 @@
 import React from 'react'
 import Link from 'next/link';
 import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const ForgotPassword = () => {
   const [email,setEmail]=useState()
   const handleSubmit=async(e)=>{
@@ -17,6 +19,16 @@ const ForgotPassword = () => {
       });
       let response = await res.json();
       setEmail('');
+      toast.success('Check your mail', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
       return response
       
    
@@ -28,6 +40,19 @@ const ForgotPassword = () => {
 
   return (
     <div>
+         {/* React toastify */}
+         <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
         <div className="flex min-h-full items-center justify-center py-36 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>

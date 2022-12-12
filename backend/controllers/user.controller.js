@@ -133,8 +133,10 @@ const forgotPassword = asyncHandler(async (req, res) => {
           to: email,
           subject: 'Reset Account Password Link',
           html: `
-        <h3>Please click the linkbelow to reset your password</h3>
-        <p>${link}</p>`,
+        <h3>Please click the link below to reset your password</h3>
+        <a href="${link}"
+        style="background:#0000FF;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Reset
+        Password</a>`,
         };
         transport.sendMail(data, (error, body) => {
           if (error) {

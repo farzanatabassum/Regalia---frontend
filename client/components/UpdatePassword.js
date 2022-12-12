@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UpdatePassword = ({id,token}) => {
   const [newPassword, setNPassword] = useState();
@@ -20,9 +22,19 @@ const UpdatePassword = ({id,token}) => {
         }
       );
       let response = await res.json();
-      console.log(response);
       setNPassword('');
       setCPassword('');
+      toast.success('Password updated', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
+      return response
     } catch (error) {
       console.log(error);
     }
@@ -30,6 +42,19 @@ const UpdatePassword = ({id,token}) => {
 
   return (
     <div>
+        {/* React toastify */}
+        <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <div className="flex min-h-full items-center justify-center py-36 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>

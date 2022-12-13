@@ -271,7 +271,7 @@ const UpdatePreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/traditional.jfif"
+              src="/traditional2.png"
               alt="cloth image"
             />
             <div className="p-5">
@@ -288,7 +288,7 @@ const UpdatePreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/formal.jfif"
+              src="/formal2.jpg"
               alt="cloth image"
             />
             <div className="p-5">
@@ -305,7 +305,7 @@ const UpdatePreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/sportswear1.jfif"
+              src="/sportswear.jpg"
               alt="cloth image"
             />
             <div className="p-5">

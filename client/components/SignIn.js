@@ -29,7 +29,6 @@ const SignIn = () => {
         body: JSON.stringify(userData),
       });
       let response = await res.json();
-      console.log(response);
       setEmail('');
       setPassword('');
       //setting the token
@@ -48,6 +47,7 @@ const SignIn = () => {
       setTimeout(() => {
         router.push('/')
       }, 1000);
+      return response
     } catch (error) {
       toast.error('Invalid credentials', {
         position: 'top-right',

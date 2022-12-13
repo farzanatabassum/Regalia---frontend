@@ -13,7 +13,7 @@ const UpdatePreference = () => {
   let [count, setCount] = useState(0);
   let x = 1;
   let sum = 0;
-  const router=useRouter()
+  const router = useRouter();
   const summerDiv = useRef();
   const winterDiv = useRef();
   const casualDiv = useRef();
@@ -22,28 +22,28 @@ const UpdatePreference = () => {
   const sportsWearDiv = useRef();
   useEffect(() => {
     const token = localStorage.getItem('Token');
-    if(!token){
-      router.push('/')
-    }
-    else
-   { fetch('http://localhost:5000/api/users/me', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        return response.json();
+    if (!token) {
+      router.push('/');
+    } else {
+      fetch('http://localhost:5000/api/users/me', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .then((parsed) => {
-        setPreference(parsed);
-        setSummer(parsed.productPreference.summer);
-        setWinter(parsed.productPreference.winter);
-        setCasual(parsed.productPreference.casual);
-        setTraditional(parsed.productPreference.traditional);
-        setFormal(parsed.productPreference.formal);
-        setSportsWear(parsed.productPreference.sportsWear);
-      });}
+        .then((response) => {
+          return response.json();
+        })
+        .then((parsed) => {
+          setPreference(parsed);
+          setSummer(parsed.productPreference.summer);
+          setWinter(parsed.productPreference.winter);
+          setCasual(parsed.productPreference.casual);
+          setTraditional(parsed.productPreference.traditional);
+          setFormal(parsed.productPreference.formal);
+          setSportsWear(parsed.productPreference.sportsWear);
+        });
+    }
   }, [router]);
   if (summer == true) {
     summerDiv.current.style.border = '10px solid blue';
@@ -177,7 +177,7 @@ const UpdatePreference = () => {
       });
       //navigating to homepage
       setTimeout(() => {
-        router.push('/')
+        router.push('/');
       }, 1000);
       return res;
     } catch (error) {
@@ -187,8 +187,8 @@ const UpdatePreference = () => {
 
   return (
     <div>
-       {/* React toastify */}
-       <ToastContainer
+      {/* React toastify */}
+      <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -205,9 +205,11 @@ const UpdatePreference = () => {
           Choose at least 2 products from the preference product list to get
           your recommended products
         </p>
-        {count==1 ? (
-          <h1 className="text-center text-2xl font-semibold mb-10 text-red-600">Please choose at least 2 products</h1>
-           ) : null}
+        {count == 1 ? (
+          <h1 className="text-center text-2xl font-semibold mb-10 text-red-600">
+            Please choose at least 2 products
+          </h1>
+        ) : null}
         <div className="grid grid-flow-row gap-8 text-neutral-600 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {/* summer */}
           <div
@@ -222,11 +224,8 @@ const UpdatePreference = () => {
             />
             <div className="p-5">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-               Summer Collections
+                Summer Collections
               </h5>
-              {/* <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
-                <span className="font-bold">Category: </span>Shirt
-              </h5> */}
             </div>
           </div>
 
@@ -245,9 +244,6 @@ const UpdatePreference = () => {
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Winter Collections
               </h5>
-              {/* <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
-                <span className="font-bold">Category: </span>Jacket
-              </h5> */}
             </div>
           </div>
           {/* casual */}
@@ -265,9 +261,6 @@ const UpdatePreference = () => {
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Casual Collections
               </h5>
-              {/* <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
-                <span className="font-bold">Category: </span> Skirt
-              </h5> */}
             </div>
           </div>
           {/* traditional */}
@@ -285,9 +278,6 @@ const UpdatePreference = () => {
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Traditional Collections
               </h5>
-              {/* <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
-                <span className="font-bold">Category:</span> Punjabi
-              </h5> */}
             </div>
           </div>
           {/* formal */}
@@ -305,9 +295,6 @@ const UpdatePreference = () => {
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Formal Collections
               </h5>
-              {/* <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
-                <span className="font-bold">Category:</span> Suit
-              </h5> */}
             </div>
           </div>
           {/* sportsWear */}
@@ -325,9 +312,6 @@ const UpdatePreference = () => {
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Sportswear Collections
               </h5>
-              {/* <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
-                <span className="font-bold">Category:</span> Tracksuit
-              </h5> */}
             </div>
           </div>
         </div>

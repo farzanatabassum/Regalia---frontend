@@ -2,10 +2,11 @@ import React from 'react';
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useRouter } from 'next/router';
 const UpdatePassword = ({id,token}) => {
   const [newPassword, setNPassword] = useState();
   const [confirmPassword, setCPassword] = useState();
+  const router=useRouter()
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userData = { newPassword, confirmPassword };
@@ -34,6 +35,10 @@ const UpdatePassword = ({id,token}) => {
         progress: undefined,
         theme: 'dark',
       });
+      //navigating to login
+      setTimeout(() => {
+        router.push('/login')
+      }, 1000);
       return response
     } catch (error) {
       console.log(error);

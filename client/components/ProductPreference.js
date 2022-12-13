@@ -25,8 +25,7 @@ const ProductPreference = () => {
         return response.json();
       })
       .then((parsed) => {
-        console.log(parsed);
-        console.log('Product Preference', parsed.productPreference.summer);
+        
         setPreference(parsed);
         setSummer(parsed.productPreference.summer);
         setWinter(parsed.productPreference.winter);
@@ -126,7 +125,7 @@ const ProductPreference = () => {
         sportsWear,
       },
     };
-    console.log('Data', data);
+   
     try {
       const token = localStorage.getItem('Token');
       let response = await fetch(
@@ -194,15 +193,12 @@ const ProductPreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/shirt.jpg"
+              src="/summer.jpg"
               alt="cloth image"
             />
             <div className="p-5">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Le Reve
-              </h5>
-              <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
-                <span className="font-bold">Category: </span>Shirt
+                Summer Collections
               </h5>
             </div>
           </div>
@@ -214,15 +210,12 @@ const ProductPreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/jacket.jpg"
+              src="/winter.jpeg"
               alt="cloth image"
             />
             <div className="p-5">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Cats Eye
-              </h5>
-              <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
-                <span className="font-bold">Category: </span>Jacket
+                Winter Collections
               </h5>
             </div>
           </div>
@@ -233,15 +226,12 @@ const ProductPreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/skirt.jpg"
+              src="/casual.jpeg"
               alt="cloth image"
             />
             <div className="p-5">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Yellow
-              </h5>
-              <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
-                <span className="font-bold">Category: </span> Skirt
+                Casual Collections
               </h5>
             </div>
           </div>
@@ -252,15 +242,12 @@ const ProductPreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/punjabi.jpg"
+              src="/traditional.jfif"
               alt="cloth image"
             />
             <div className="p-5">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Illiyeen
-              </h5>
-              <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
-                <span className="font-bold">Category:</span> Punjabi
+                Traditional Collections
               </h5>
             </div>
           </div>
@@ -271,15 +258,12 @@ const ProductPreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/Suit.jpg"
-              alt="cloth image"
+              src="/formal.jfif"
+              alt="formal"
             />
             <div className="p-5">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Richman
-              </h5>
-              <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
-                <span className="font-bold">Category:</span> Suit
+                Formal Collections
               </h5>
             </div>
           </div>
@@ -290,15 +274,12 @@ const ProductPreference = () => {
           >
             <img
               className="rounded-t-lg object-contain object-center h-[56vh] w-full"
-              src="/tracksuit.jpg"
+              src="/sportswear1.jfif"
               alt="cloth image"
             />
             <div className="p-5">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Sailor
-              </h5>
-              <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
-                <span className="font-bold">Category:</span> Tracksuit
+                Sportswear Collections
               </h5>
             </div>
           </div>

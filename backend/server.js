@@ -6,7 +6,6 @@ const { errorHandler } = require('./middleware/errorMiddleware');
 const cors = require('cors');
 const port = process.env.PORT || 5000;
 const app = express();
-// const bodyParser = require('body-parser');
 connDB();
 
 app.use(express.json());

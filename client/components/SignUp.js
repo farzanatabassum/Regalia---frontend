@@ -3,57 +3,41 @@ import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router'; 
+import { signup } from '../express_api/signup';
 const SignUp = () => {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [gender, setGender] = useState();
-  const [password, setPassword] = useState();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [password, setPassword] = useState("");
   const router=useRouter()
-  const handleChange = (e) => {
-    if (e.target.name === 'name') {
-      setName(e.target.value);
-    } else if (e.target.name === 'email') {
-      setEmail(e.target.value);
-    } else if (e.target.name === 'gender') {
-      setGender(e.target.value);
-    } else if (e.target.name === 'password') {
-      setPassword(e.target.value);
-    }
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userData = { name, email,gender, password };
+    const userData = await signup( name, email,gender, password) ;
     try {
-      //fetching signup api
-      let res = await fetch('http://localhost:5000/api/users/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-      let response = await res.json();
-      console.log(response);
-      setName('');
-      setEmail('');
-      setGender('');
-      setPassword('');
-      //setting the token
-      localStorage.setItem("Token",response.token)
-      toast.success('Your account has been created', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-      });
-      //navigating to preference 
-      setTimeout(() => {
-        router.push('/preference')
-      }, 1000);
+      if(userData){
+        setName('');
+        setEmail('');
+        setGender('');
+        setPassword('');
+        //setting the token
+        localStorage.setItem("Token",userData.token)
+        toast.success('Your account has been created', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        });
+        //navigating to preference 
+        setTimeout(() => {
+          router.push('/preference')
+        }, 1000);
+
+      }
+     
     } catch (error) {
       toast.error('Invalid credentials', {
         position: 'top-right',
@@ -112,6 +96,7 @@ const SignUp = () => {
           >
             <input type="hidden" name="remember" value="true" />
             <div className="-space-y-px rounded-md shadow-sm">
+              {/* Name */}
               <div>
                 <h2 className="mb-1">Name</h2>
                 <label htmlFor="name" className="sr-only">
@@ -126,9 +111,10 @@ const SignUp = () => {
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Your name"
                   value={name}
-                  onChange={handleChange}
+                  onChange={(e)=>{setName(e.target.value)}}
                 />
               </div>
+              {/*Email Address  */}
               <div>
                 <h2 className="mb-1">Email Address</h2>
                 <label htmlFor="email" className="sr-only">
@@ -143,22 +129,22 @@ const SignUp = () => {
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Email address"
                   value={email}
-                  onChange={handleChange}
+                  onChange={(e)=>{setEmail(e.target.value)}}
                 />
               </div>
+              {/* Gender */}
               <div>
                 <h2 className="mb-1">Gender</h2>
                 <label htmlFor="gender" className="sr-only">
                   Gender
                 </label>
-                <select  name='gender' value={gender} onChange={handleChange} class="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 ">
-                  <option selected>Choose a gender</option>
+                <select  name='gender' value={gender} onChange={(e)=>{setGender(e.target.value)}} className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 ">
+                  <option defaultValue>Choose a gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>   
-                </select>
-               
-                  
+                </select>        
               </div>
+              {/* Password */}
               <div>
                 <h2 className="mb-1">Password</h2>
                 <label htmlFor="password" className="sr-only">
@@ -173,7 +159,7 @@ const SignUp = () => {
                   className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Password"
                   value={password}
-                  onChange={handleChange}
+                  onChange={(e)=>{setPassword(e.target.value)}}
                 />
               </div>
             </div>

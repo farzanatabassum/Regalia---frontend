@@ -1,53 +1,39 @@
-import React, {useState }  from 'react'
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
-
+import { signin } from '../express_api/signin';
 
 const SignIn = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const router=useRouter()
-  const handleChange = (e) => {
-   if (e.target.name === 'email') {
-      setEmail(e.target.value);
-    } else if (e.target.name === 'password') {
-      setPassword(e.target.value);
-    }
-  };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userData = { email, password };
+    const userData = await signin(email, password);
     try {
-      //fetching login api
-      let res = await fetch('http://localhost:5000/api/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-      let response = await res.json();
-      setEmail('');
-      setPassword('');
-      //setting the token
-      localStorage.setItem("Token",response.token)
-      toast.success('You have been logged in', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-      });
-      //navigating to homepage
-      setTimeout(() => {
-        router.push('/')
-      }, 1000);
-      return response
+      if (userData) {
+        setEmail('');
+        setPassword('');
+        //setting the token
+        localStorage.setItem('Token', userData.token);
+        toast.success('You have been logged in', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        });
+        //navigating to homepage
+        setTimeout(() => {
+          router.push('/');
+        }, 1000);
+      }
     } catch (error) {
       toast.error('Invalid credentials', {
         position: 'top-right',
@@ -63,8 +49,8 @@ const SignIn = () => {
   };
   return (
     <div>
-       {/* React toastify */}
-       <ToastContainer
+      {/* React toastify */}
+      <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -76,7 +62,7 @@ const SignIn = () => {
         pauseOnHover
         theme="dark"
       />
-        <div className="flex min-h-full items-center justify-center py-16 px-4 sm:px-6 lg:px-8 ">
+      <div className="flex min-h-full items-center justify-center py-16 px-4 sm:px-6 lg:px-8 ">
         <div className="w-full max-w-md space-y-8">
           <div>
             <h1 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -86,23 +72,29 @@ const SignIn = () => {
               SIGN IN TO YOUR ACCOUNT
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
-                <span> Or </span>
-              
+              <span> Or </span>
+
               <Link href="/signup">
                 <a
                   href="#"
                   className="font-medium text-gray-800 hover:text-gray-600"
                 >
-                 SIGN UP
+                  SIGN UP
                 </a>
               </Link>
             </p>
           </div>
-          <form  onSubmit={handleSubmit} className="mt-8 space-y-6" action="#" method="POST">
+          <form
+            onSubmit={handleSubmit}
+            className="mt-8 space-y-6"
+            action="#"
+            method="POST"
+          >
             <input type="hidden" name="remember" value="true" />
             <div className="-space-y-px rounded-md shadow-sm">
+              {/*Email Address  */}
               <div>
-                <h2 className='mb-1'>Email Address</h2>
+                <h2 className="mb-1">Email Address</h2>
                 <label htmlFor="email" className="sr-only">
                   Email address
                 </label>
@@ -115,11 +107,14 @@ const SignIn = () => {
                   className=" mb-8 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Email address"
                   value={email}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
               </div>
+              {/* Password */}
               <div>
-              <h2 className='mb-1'>Password</h2>
+                <h2 className="mb-1">Password</h2>
                 <label htmlFor="password" className="sr-only">
                   Password
                 </label>
@@ -132,16 +127,26 @@ const SignIn = () => {
                   className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Password"
                   value={password}
-                  onChange={handleChange}
-
+                  onChange={(e) => {
+                    {
+                      setPassword(e.target.value);
+                    }
+                  }}
                 />
               </div>
             </div>
             <div className="flex items-center justify-between">
-        <div className="text-sm">
-         <Link href='/forgot'><a href="#" className="font-medium text-gray-600 hover:text-gray-500">Forgot your password?</a></Link> 
-        </div>
-      </div>
+              <div className="text-sm">
+                <Link href="/forgot">
+                  <a
+                    href="#"
+                    className="font-medium text-gray-600 hover:text-gray-500"
+                  >
+                    Forgot your password?
+                  </a>
+                </Link>
+              </div>
+            </div>
 
             <div>
               <button
@@ -154,9 +159,8 @@ const SignIn = () => {
           </form>
         </div>
       </div>
-      
     </div>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;

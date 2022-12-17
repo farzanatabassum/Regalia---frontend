@@ -1,27 +1,16 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { storage } from '../../backend/firebase/firebase';
-import Multiselect from 'multiselect-react-dropdown';
-import preferenceTags from '../../backend/helper/preferenceTags';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { sellform } from '../express_api/sellform';
+import TagOptions from './TagOptions';
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { storage } from '../../backend/firebase/firebase';
+import Multiselect from 'multiselect-react-dropdown';
+
 const SellWithUs = () => {
-  //preferenceTags
-  const { summer, winter, casual, traditional, formal, sportsWear } =
-    preferenceTags;
-     //for tags option
-  let options = [];
-  options = options.concat(
-    summer,
-    winter,
-    casual,
-    traditional,
-    formal,
-    sportsWear
-  );
+  
   //State properties
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
@@ -36,17 +25,16 @@ const SellWithUs = () => {
   const [url, setUrl] = useState(null);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
-
   const router = useRouter();
+  //options
+  const {options}=TagOptions()
   useEffect(() => {
     if (!localStorage.getItem('Token')) {
       router.push('/login');
     }
   }, [router]);
- 
-
-  //for image file
-  const selectedFile = (e) => {
+   //for image file
+   const selectedFile = (e) => {
     e.preventDefault();
     if (!file) return;
     const storageRef = ref(storage, `products/${file.name}`);
@@ -68,7 +56,6 @@ const SellWithUs = () => {
       }
     );
   };
-
   //form submit
   const handleSubmit = async (e) => {
     e.preventDefault();

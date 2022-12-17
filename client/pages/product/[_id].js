@@ -21,7 +21,6 @@ const Post = () => {
         return response.json();
       })
       .then((parsed) => {
-        console.log(parsed);
         setProducts(parsed);
         setIsLoading(false);
       });

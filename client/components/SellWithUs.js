@@ -7,42 +7,12 @@ import Multiselect from 'multiselect-react-dropdown';
 import preferenceTags from '../../backend/helper/preferenceTags';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { sellform } from '../express_api/sellform';
 const SellWithUs = () => {
   //preferenceTags
   const { summer, winter, casual, traditional, formal, sportsWear } =
     preferenceTags;
-  //State properties
-  const [category, setCategory] = useState();
-  const [brand, setBrand] = useState();
-  const [fabric, setFabric] = useState();
-  const [size, setSize] = useState();
-  const [condition, setCondition] = useState();
-  const [gender, setGender] = useState();
-  const [originPrice, setOriginPrice] = useState();
-  const [sellingPrice, setSellingPrice] = useState();
-  const [tags, setTags] = useState([]);
-  const [file, setFile] = useState(null);
-  const [url, setUrl] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const [error, setError] = useState();
-
-  const router = useRouter();
-  useEffect(() => {
-    if (!localStorage.getItem('Token')) {
-      toast.error('Please Login first', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-      });
-      router.push('/login');
-    }
-  }, [router]);
-  //for tags option
+     //for tags option
   let options = [];
   options = options.concat(
     summer,
@@ -52,6 +22,28 @@ const SellWithUs = () => {
     formal,
     sportsWear
   );
+  //State properties
+  const [category, setCategory] = useState("");
+  const [brand, setBrand] = useState("");
+  const [fabric, setFabric] = useState("");
+  const [size, setSize] = useState("");
+  const [condition, setCondition] = useState("");
+  const [gender, setGender] = useState("");
+  const [originPrice, setOriginPrice] = useState("");
+  const [sellingPrice, setSellingPrice] = useState("");
+  const [tags, setTags] = useState([]);
+  const [file, setFile] = useState(null);
+  const [url, setUrl] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem('Token')) {
+      router.push('/login');
+    }
+  }, [router]);
+ 
 
   //for image file
   const selectedFile = (e) => {
@@ -80,8 +72,8 @@ const SellWithUs = () => {
   //form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {
-      category,
+    const data = 
+    {category,
       brand,
       fabric,
       size,
@@ -90,31 +82,31 @@ const SellWithUs = () => {
       originPrice,
       sellingPrice,
       tags,
-      image: url,
-    };
+      image:url,}
+    ;
+    const productData=await sellform(data)
     try {
-      const token = localStorage.getItem('Token');
-      let response = await fetch('http://localhost:5000/api/products/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      });
-      let res = await response.json();
-      setCategory('');
-      setBrand('');
-      setFabric('');
-      setSize('');
-      setCondition('');
-      setGender('');
-      setOriginPrice('');
-      setSellingPrice('');
-      setTags('');
-      setFile(null);
-      setProgress(0);
-      toast.success('Your product has been created', {
+      if(productData){
+        setProgress(0);
+        toast.success('Product Created', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        });
+        //navigating to My products page
+        setTimeout(() => {
+          router.push('/seller');
+        }, 1000);
+
+      }
+      } catch (error) {
+      console.log(error);
+      toast.error('Try again', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -124,13 +116,6 @@ const SellWithUs = () => {
         progress: undefined,
         theme: 'dark',
       });
-      //navigating to My products page
-      setTimeout(() => {
-        router.push('/seller');
-      }, 1000);
-      return res;
-    } catch (error) {
-      console.log(error);
     }
   };
 

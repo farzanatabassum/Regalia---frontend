@@ -1,20 +1,14 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { storage } from '../../../backend/firebase/firebase';
-import Multiselect from 'multiselect-react-dropdown';
-import preferenceTags from '../../../backend/helper/preferenceTags';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getproductdetails, updateProduct } from '../../express_api/product';
+import TagOptions from '../../components/TagOptions';
+import UploadImage from '../../components/UploadImage';
 const Update = () => {
-  //preferenceTags
-  const { summer, winter, casual, traditional, formal, sportsWear } =
-    preferenceTags;
-
   //Dynamic routing
   const router = useRouter();
   const { _id } = router.query;
@@ -28,12 +22,9 @@ const Update = () => {
   const [originPrice, setOriginPrice] = useState();
   const [sellingPrice, setSellingPrice] = useState();
   const [tags, setTags] = useState([]);
-  const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const [error, setError] = useState();
   const [products, setProducts] = useState([]);
-  //getting product 
+  //getting product
   useEffect(() => {
     getproductdetails(_id).then((parsed) => {
       setProducts(parsed);
@@ -50,41 +41,6 @@ const Update = () => {
     });
   }, [_id]);
 
-  //for tags option
-  let options = [];
-  options = options.concat(
-    summer,
-    winter,
-    casual,
-    traditional,
-    formal,
-    sportsWear
-  );
-  //for new image
-  const selectedFile = (e) => {
-    e.preventDefault();
-
-    if (!file) return;
-    const storageRef = ref(storage, `products/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const prog = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(prog);
-      },
-      (error) => console.log(error),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setUrl(downloadURL);
-          console.log('File available at', downloadURL);
-        });
-      }
-    );
-  };
   //form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -100,13 +56,11 @@ const Update = () => {
       tags,
       image: url,
     };
-    //update product 
+    //update product
     const productData = await updateProduct(_id, data);
 
     try {
-      
-      if (!productData.error) 
-      {
+      if (!productData.error) {
         toast.success('Product updated', {
           position: 'top-right',
           autoClose: 5000,
@@ -299,38 +253,7 @@ const Update = () => {
               </div>
               {/* Tags */}
               <div>
-                <h2 className="mb-1">Tags</h2>
-                <label htmlFor="tags" className="sr-only">
-                  Tags
-                </label>
-                <h1 className="text-red-600 mb-1 ">{error}</h1>
-
-                <Multiselect
-                  isObject={false}
-                  options={options}
-                  onRemove={(e) => {
-                    if (e.length == 1) {
-                      setError('Please choose at least two or more tags!!!');
-                      setTags(e);
-                    } else {
-                      setError('');
-                      setTags(e);
-                    }
-                  }}
-                  onSelect={(e) => {
-                    if (e.length == 1) {
-                      setError('Please choose at least two or more tags!!!');
-                      setTags(e);
-                    } else {
-                      setError('');
-                      setTags(e);
-                    }
-                  }}
-                  selectedValues={tags}
-                  avoidHighlightFirstOption
-                  className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
-                  hidePlaceholder
-                />
+                <TagOptions tags={tags} setTags={setTags} />
               </div>
               {/* Image */}
               <div>
@@ -348,26 +271,7 @@ const Update = () => {
                     alt="product"
                   />
                 )}
-                <input
-                  id="image"
-                  name="image"
-                  type="file"
-                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  onChange={(e) => {
-                    setFile(e.target.files[0]);
-                  }}
-                />
-                {file && (
-                  <button
-                    type="submit"
-                    className="group relative flex w-48 justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                    onClick={selectedFile}
-                  >
-                    {' '}
-                    Upload Image
-                  </button>
-                )}
-                {file && <h2>Uploading done {progress}%</h2>}
+                <UploadImage setUrl={setUrl} />
               </div>
             </div>
 

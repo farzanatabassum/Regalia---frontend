@@ -47,17 +47,12 @@ const UploadImage = ({ setUrl }) => {
   return (
     <div>
       <div>
-        <h2 className="mb-1">Image of the cloth</h2>
-        <label htmlFor="image" className="sr-only">
-          Image
-        </label>
+       
         <h1 className="text-red-600 mb-1">{error}</h1>
         <input
           id="image"
           name="image"
           type="file"
-          autoComplete="image"
-          required
           className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
           onChange={handleChange}
         />

@@ -249,6 +249,10 @@ const SellWithUs = () => {
               </div>
               {/* Image */}
               <div>
+              <h2 className="mb-1">Image of the cloth</h2>
+        <label htmlFor="image" className="sr-only">
+          Image
+        </label>
                 <UploadImage setUrl={setUrl} />
               </div>
             </div>

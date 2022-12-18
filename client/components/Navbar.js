@@ -149,8 +149,9 @@ const Navbar = () => {
             <ul>
               <Link href="/">
                 <li
-                  className="bg-gray-900 text-white px-3 py-2 rounded-md text-base font-medium"
-                  aria-current="page"
+                   className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+                   aria-current="page"
+                  
                 >
                   <a>Home</a>
                 </li>

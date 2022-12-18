@@ -14,7 +14,7 @@ const SignIn = () => {
     e.preventDefault();
     const userData = await signin(email, password);
     try {
-      if (userData) {
+      if (!userData.error) {
         setEmail('');
         setPassword('');
         //setting the token

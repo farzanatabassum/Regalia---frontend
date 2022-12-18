@@ -14,7 +14,7 @@ const SignUp = () => {
     e.preventDefault();
     const userData = await signup( name, email,gender, password) ;
     try {
-      if(userData){
+      if(!userData.error){
         setName('');
         setEmail('');
         setGender('');

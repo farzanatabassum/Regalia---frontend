@@ -43,7 +43,7 @@ const SellWithUs = () => {
     };
     const productData = await sellform(data);
     try {
-      if (productData) {
+      if (!productData.error) {
         toast.success('Product Created', {
           position: 'top-right',
           autoClose: 5000,
@@ -60,7 +60,6 @@ const SellWithUs = () => {
         }, 1000);
       }
     } catch (error) {
-      console.log(error);
       toast.error('Try again', {
         position: 'top-right',
         autoClose: 5000,

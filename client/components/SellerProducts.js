@@ -50,7 +50,7 @@ const SellerProducts = () => {
         },
       }
     );
-    const data = await response.json();
+ await response.json();
     getProduct();
   };
 

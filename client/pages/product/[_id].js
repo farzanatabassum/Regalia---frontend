@@ -3,6 +3,7 @@ import SingleProduct from '../../components/SingleProduct';
 import { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import { getproductdetails } from '../../express_api/product';
 
 const Post = () => {
   const router = useRouter();
@@ -11,15 +12,7 @@ const Post = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log('useEffect is running');
-    fetch(`http://localhost:5000/api/products/single/${_id}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
+    getproductdetails(_id)
       .then((parsed) => {
         setProducts(parsed);
         setIsLoading(false);

@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { getProduct } from '../express_api/product';
 const SellerProducts = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -13,30 +14,13 @@ const SellerProducts = () => {
     if (!token) {
       router.push('/');
     } else {
-      getProduct();
+      getProduct()
+      .then((data) => {
+        setProducts(data);
+        setIsLoading(false);
+      });
     }
   }, [router]);
-  const getProduct = async () => {
-    try {
-      const token = localStorage.getItem('Token');
-      await fetch('http://localhost:5000/api/products/read', {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((parsed) => {
-          console.log(parsed);
-          setProducts(parsed);
-          setIsLoading(false);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
   //Deleting Products
   const handleDelete = async (productId) => {
     const token = localStorage.getItem('Token');

@@ -5,62 +5,32 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { sellform } from '../express_api/sellform';
 import TagOptions from './TagOptions';
-import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { storage } from '../../backend/firebase/firebase';
-import Multiselect from 'multiselect-react-dropdown';
-
+import UploadImage from './UploadImage';
 const SellWithUs = () => {
-  
   //State properties
-  const [category, setCategory] = useState("");
-  const [brand, setBrand] = useState("");
-  const [fabric, setFabric] = useState("");
-  const [size, setSize] = useState("");
-  const [condition, setCondition] = useState("");
-  const [gender, setGender] = useState("");
-  const [originPrice, setOriginPrice] = useState("");
-  const [sellingPrice, setSellingPrice] = useState("");
+  const [category, setCategory] = useState('');
+  const [brand, setBrand] = useState('');
+  const [fabric, setFabric] = useState('');
+  const [size, setSize] = useState('');
+  const [condition, setCondition] = useState('');
+  const [gender, setGender] = useState('');
+  const [originPrice, setOriginPrice] = useState('');
+  const [sellingPrice, setSellingPrice] = useState('');
   const [tags, setTags] = useState([]);
-  const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const [error, setError] = useState("");
   const router = useRouter();
-  //options
-  const {options}=TagOptions()
+
   useEffect(() => {
     if (!localStorage.getItem('Token')) {
       router.push('/login');
     }
   }, [router]);
-   //for image file
-   const selectedFile = (e) => {
-    e.preventDefault();
-    if (!file) return;
-    const storageRef = ref(storage, `products/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const prog = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(prog);
-      },
-      (error) => console.log(error),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setUrl(downloadURL);
-          console.log('File available at', downloadURL);
-        });
-      }
-    );
-  };
+
   //form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = 
-    {category,
+    const data = {
+      category,
       brand,
       fabric,
       size,
@@ -69,12 +39,11 @@ const SellWithUs = () => {
       originPrice,
       sellingPrice,
       tags,
-      image:url,}
-    ;
-    const productData=await sellform(data)
+      image: url,
+    };
+    const productData = await sellform(data);
     try {
-      if(productData){
-        setProgress(0);
+      if (productData) {
         toast.success('Product Created', {
           position: 'top-right',
           autoClose: 5000,
@@ -89,9 +58,8 @@ const SellWithUs = () => {
         setTimeout(() => {
           router.push('/seller');
         }, 1000);
-
       }
-      } catch (error) {
+    } catch (error) {
       console.log(error);
       toast.error('Try again', {
         position: 'top-right',
@@ -129,7 +97,6 @@ const SellWithUs = () => {
             </h1>
           </div>
           <form onSubmit={handleSubmit} className="mt-1 space-y-6">
-            <input type="hidden" name="remember" value="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               {/* Category */}
               <div>
@@ -137,6 +104,7 @@ const SellWithUs = () => {
                 <label htmlFor="category" className="sr-only">
                   Category
                 </label>
+
                 <input
                   id="category"
                   name="category"
@@ -215,7 +183,7 @@ const SellWithUs = () => {
                   type="condition"
                   autoComplete="condition"
                   required
-                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 bg-white sm:text-sm"
                   placeholder="Condition of the cloth"
                   value={condition}
                   onChange={(e) => setCondition(e.target.value)}
@@ -231,7 +199,9 @@ const SellWithUs = () => {
                   name="gender"
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
-                  className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
+                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+
+                  // className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
                 >
                   <option defaultValue>Choose a gender</option>
                   <option value="Male">Male</option>
@@ -276,65 +246,11 @@ const SellWithUs = () => {
               </div>
               {/* Tags */}
               <div>
-                <h2 className="mb-1">Tags</h2>
-                <label htmlFor="tags" className="sr-only">
-                  Tags
-                </label>
-                <h1 className="text-red-600 mb-1">{error}</h1>
-                <Multiselect
-                  isObject={false}
-                  options={options}
-                  onRemove={(e) => {
-                    if (e.length == 1) {
-                      setError('Please choose at least two or more tags!!!');
-                      setTags(e);
-                    } else {
-                      setError('');
-                      setTags(e);
-                    }
-                  }}
-                  onSelect={(e) => {
-                    if (e.length == 1) {
-                      setError('Please choose at least two or more tags!!!');
-                      setTags(e);
-                    } else {
-                      setError('');
-                      setTags(e);
-                    }
-                  }}
-                  avoidHighlightFirstOption
-                  className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
-                  hidePlaceholder
-                />
+                <TagOptions tags={tags} setTags={setTags} />
               </div>
               {/* Image */}
               <div>
-                <h2 className="mb-1">Image of the cloth</h2>
-                <label htmlFor="image" className="sr-only">
-                  Image
-                </label>
-                <input
-                  id="image"
-                  name="image"
-                  type="file"
-                  autoComplete="image"
-                  required
-                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  onChange={(event) => {
-                    setFile(event.target.files[0]);
-                  }}
-                />
-                {file && (
-                  <button
-                    type="submit"
-                    className="group relative flex w-48 justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                    onClick={selectedFile}
-                  >
-                    {' '}
-                    Upload Image
-                  </button>
-                )}
-                {file && <h2>Uploading done {progress}%</h2>}
+                <UploadImage setUrl={setUrl} />
               </div>
             </div>
 

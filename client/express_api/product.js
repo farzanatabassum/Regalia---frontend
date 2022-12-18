@@ -29,4 +29,25 @@ const getProduct = async () => {
     console.log(error);
   }
 };
-export { getproductdetails, getProduct };
+//update product
+const updateProduct=async(_id, data)=>{
+  try {
+    const token = localStorage.getItem('Token');
+    let response = await fetch(
+      `http://localhost:5000/api/products/editProduct/${_id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    let res = await response.json();
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export { getproductdetails, getProduct, updateProduct };

@@ -9,9 +9,11 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getproductdetails, updateProduct } from '../../express_api/product';
 const Update = () => {
   //preferenceTags
-  const {summer,winter,casual,traditional,formal,sportsWear}=preferenceTags
+  const { summer, winter, casual, traditional, formal, sportsWear } =
+    preferenceTags;
 
   //Dynamic routing
   const router = useRouter();
@@ -31,35 +33,33 @@ const Update = () => {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState();
   const [products, setProducts] = useState([]);
-  //getting product
+  //getting product 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/products/single/${_id}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((parsed) => {
-        console.log('Tags', parsed.tags);
-        setProducts(parsed);
-        setCategory(parsed.category);
-        setBrand(parsed.brand);
-        setFabric(parsed.fabric);
-        setSize(parsed.size);
-        setCondition(parsed.condition);
-        setGender(parsed.gender);
-        setOriginPrice(parsed.originPrice);
-        setSellingPrice(parsed.sellingPrice);
-        setTags(parsed.tags);
-        setUrl(parsed.image);
-      });
+    getproductdetails(_id).then((parsed) => {
+      setProducts(parsed);
+      setCategory(parsed.category);
+      setBrand(parsed.brand);
+      setFabric(parsed.fabric);
+      setSize(parsed.size);
+      setCondition(parsed.condition);
+      setGender(parsed.gender);
+      setOriginPrice(parsed.originPrice);
+      setSellingPrice(parsed.sellingPrice);
+      setTags(parsed.tags);
+      setUrl(parsed.image);
+    });
   }, [_id]);
 
   //for tags option
   let options = [];
-  options=options.concat(summer,winter,casual,traditional,formal,sportsWear)
+  options = options.concat(
+    summer,
+    winter,
+    casual,
+    traditional,
+    formal,
+    sportsWear
+  );
   //for new image
   const selectedFile = (e) => {
     e.preventDefault();
@@ -100,34 +100,30 @@ const Update = () => {
       tags,
       image: url,
     };
-    console.log(data);
+    //update product 
+    const productData = await updateProduct(_id, data);
+
     try {
-      const token = localStorage.getItem('Token');
-      let response = await fetch(
-        `http://localhost:5000/api/products/editProduct/${_id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(data),
-        }
-      );
-      let res = await response.json();
-      console.log('Result', res);
-      setCategory('');
-      setBrand('');
-      setFabric('');
-      setSize('');
-      setCondition('');
-      setGender('');
-      setOriginPrice('');
-      setSellingPrice('');
-      setTags('');
-      setFile(null);
-      setProgress(0);
-      toast.success('Your product has been updated', {
+      
+      if (!productData.error) 
+      {
+        toast.success('Product updated', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        });
+        //navigating to My products page
+        setTimeout(() => {
+          router.push('/seller');
+        }, 1000);
+      }
+    } catch (error) {
+      toast.error('Failed to update', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -137,20 +133,13 @@ const Update = () => {
         progress: undefined,
         theme: 'dark',
       });
-      //navigating to My products page
-      setTimeout(() => {
-        router.push('/seller');
-      }, 1000);
-      return res;
-    } catch (error) {
-      console.log(error);
     }
   };
   return (
     <div>
-      <Navbar/>
-       {/* React toastify */}
-       <ToastContainer
+      <Navbar />
+      {/* React toastify */}
+      <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -342,7 +331,6 @@ const Update = () => {
                   className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
                   hidePlaceholder
                 />
-
               </div>
               {/* Image */}
               <div>
@@ -394,7 +382,7 @@ const Update = () => {
           </form>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

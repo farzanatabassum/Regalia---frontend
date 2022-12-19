@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { sellform } from '../express_api/sellform';
+import { createProduct } from '../express_api/product';
 import TagOptions from './TagOptions';
 import UploadImage from './UploadImage';
 const SellWithUs = () => {
@@ -41,7 +41,7 @@ const SellWithUs = () => {
       tags,
       image: url,
     };
-    const productData = await sellform(data);
+    const productData = await createProduct(data);
     try {
       if (!productData.error) {
         toast.success('Product Created', {

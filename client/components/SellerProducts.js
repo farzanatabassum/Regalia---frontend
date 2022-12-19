@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { getProduct } from '../express_api/product';
+import { deleteProduct, getProduct } from '../express_api/product';
 const SellerProducts = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -14,28 +14,28 @@ const SellerProducts = () => {
     if (!token) {
       router.push('/');
     } else {
-      getProduct()
-      .then((data) => {
+      //get seller products
+      getProduct().then((data) => {
         setProducts(data);
         setIsLoading(false);
       });
     }
   }, [router]);
   //Deleting Products
-  const handleDelete = async (productId) => {
-    const token = localStorage.getItem('Token');
-    const response = await fetch(
-      `http://localhost:5000/api/products/deleteProduct/${productId}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+  const handleDelete =  async(productId) => {
+    //delete product
+    const product = await deleteProduct(productId);
+    try {
+      if (!product.error) {
+        //get seller products
+       await getProduct().then((data) => {
+          setProducts(data);
+          setIsLoading(false);
+        });
       }
-    );
- await response.json();
-    getProduct();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

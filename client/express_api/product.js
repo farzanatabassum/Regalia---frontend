@@ -1,3 +1,21 @@
+//create product
+const createProduct = async (data) => {
+  try {
+    const token = localStorage.getItem('Token');
+    let response = await fetch('http://localhost:5000/api/products/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+    let res = await response.json();
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
 //product details
 const getproductdetails = async (_id) => {
   try {
@@ -12,7 +30,7 @@ const getproductdetails = async (_id) => {
   }
 };
 
-//get seller product
+//get seller products
 const getProduct = async () => {
   try {
     //token
@@ -30,7 +48,7 @@ const getProduct = async () => {
   }
 };
 //update product
-const updateProduct=async(_id, data)=>{
+const updateProduct = async (_id, data) => {
   try {
     const token = localStorage.getItem('Token');
     let response = await fetch(
@@ -49,5 +67,32 @@ const updateProduct=async(_id, data)=>{
   } catch (error) {
     console.log(error);
   }
-}
-export { getproductdetails, getProduct, updateProduct };
+};
+//delete product
+const deleteProduct = async (productId) => {
+  try
+  {
+    const token = localStorage.getItem('Token');
+    const response = await fetch(
+      `http://localhost:5000/api/products/deleteProduct/${productId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+   return await response.json();
+  }
+  catch(error){
+    console.log(error)
+  }
+};
+export {
+  createProduct,
+  getproductdetails,
+  getProduct,
+  updateProduct,
+  deleteProduct,
+};

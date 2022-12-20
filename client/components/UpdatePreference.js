@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
+import { getUser, updatePreference } from '../express_api/user';
 const UpdatePreference = () => {
   const [preference, setPreference] = useState([]);
   const [summer, setSummer] = useState();
@@ -25,15 +26,7 @@ const UpdatePreference = () => {
     if (!token) {
       router.push('/');
     } else {
-      fetch('http://localhost:5000/api/users/me', {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => {
-          return response.json();
-        })
+      getUser()
         .then((parsed) => {
           setPreference(parsed);
           setSummer(parsed.productPreference.summer);
@@ -151,21 +144,10 @@ const UpdatePreference = () => {
         sportsWear,
       },
     };
+    const preferenceData=await updatePreference(data,preference._id)
     try {
-      const token = localStorage.getItem('Token');
-      let response = await fetch(
-        `http://localhost:5000/api/users/updatePreference/${preference._id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(data),
-        }
-      );
-      let res = await response.json();
-      toast.success('Recommendations for the product updated', {
+      if(!preferenceData.error)
+     { toast.success('Recommendations updated', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -179,7 +161,7 @@ const UpdatePreference = () => {
       setTimeout(() => {
         router.push('/');
       }, 1000);
-      return res;
+    }
     } catch (error) {
       console.log(error);
     }

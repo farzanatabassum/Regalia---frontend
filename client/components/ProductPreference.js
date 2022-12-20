@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
+import { getUser } from '../express_api/user';
 
 const ProductPreference = () => {
   const [preference, setPreference] = useState([]);
@@ -14,16 +15,7 @@ const ProductPreference = () => {
   const [count, setCount] = useState(0);
   const router = useRouter();
   useEffect(() => {
-    const token = localStorage.getItem('Token');
-    fetch('http://localhost:5000/api/users/me', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
+    getUser()
       .then((parsed) => {
         
         setPreference(parsed);
@@ -126,21 +118,10 @@ const ProductPreference = () => {
       },
     };
    
+    const preferenceData=await updatePreference(data,preference._id)
     try {
-      const token = localStorage.getItem('Token');
-      let response = await fetch(
-        `http://localhost:5000/api/users/updatePreference/${preference._id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(data),
-        }
-      );
-      let res = await response.json();
-      toast.success('Recommendations for the product created', {
+      if(!preferenceData.error)
+     { toast.success('Recommendations updated', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -154,7 +135,7 @@ const ProductPreference = () => {
       setTimeout(() => {
         router.push('/');
       }, 1000);
-      return res;
+    }
     } catch (error) {
       console.log(error);
     }

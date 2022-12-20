@@ -175,7 +175,7 @@ const SignUp = () => {
                   }}
                 />
                 {/* validate the password length */}
-                {password.length >= 7 ? (
+                {password.length > 6 ? (
                   <h1 className="text-black-600 mb-1">Password is ok</h1>
                 ) : (
                   <h1 className="text-red-600 mb-1">

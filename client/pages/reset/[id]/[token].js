@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from '../../../components/Navbar'
+import Footer from '../../../components/Footer'
 import UpdatePassword from '../../../components/UpdatePassword'
 import { useRouter } from 'next/router';
 const Reset = () => {
@@ -8,6 +9,7 @@ const Reset = () => {
     <div>
       <Navbar/>
       <UpdatePassword id={router.query.id} token={router.query.token} />
+      <Footer/>
     </div>
   )
 }

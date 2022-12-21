@@ -3,21 +3,16 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { forgotPassword } from '../express_api/user';
 const ForgotPassword = () => {
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState('');
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userData = { email };
+    const userData = await forgotPassword(email);
     try {
-      let res = await fetch('http://localhost:5000/api/users/forgot', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-      let response = await res.json();
-      setEmail('');
+      if(!userData.error)
+    
+      {setEmail('');
       toast.success('Check your mail', {
         position: 'top-right',
         autoClose: 5000,
@@ -28,9 +23,18 @@ const ForgotPassword = () => {
         progress: undefined,
         theme: 'dark',
       });
-      return response;
+    }
     } catch (error) {
-      console.log(error);
+      toast.error('Try again', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
     }
   };
 

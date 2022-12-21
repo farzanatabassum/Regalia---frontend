@@ -3,43 +3,61 @@ import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
-const UpdatePassword = ({id,token}) => {
-  const [newPassword, setNPassword] = useState();
-  const [confirmPassword, setCPassword] = useState();
-  const router=useRouter()
+import { updatePassword } from '../express_api/user';
+const UpdatePassword = ({ id, token }) => {
+  const [newPassword, setNPassword] = useState('');
+  const [confirmPassword, setCPassword] = useState('');
+  const [error, setError] = useState('');
+  const router = useRouter();
+  const handleConfirmPassword = (event) => {
+    if (event.target.value !== newPassword) {
+      setError('Password does not match');
+      setCPassword(event.target.value);
+    } else {
+      setError('');
+      setCPassword(event.target.value);
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userData = { newPassword, confirmPassword };
+    const userData = await updatePassword(
+      newPassword,
+      confirmPassword,
+      id,
+      token
+    );
     try {
-      
-      let res = await fetch(
-        `http://localhost:5000/api/users/forgotPassword/${id}/${token}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userData),
+      if (newPassword !== confirmPassword) {
+        toast.error('Password does not match', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        });
+      } else {
+        if (!userData.error) {
+          setNPassword('');
+          setCPassword('');
+          toast.success('Password updated', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'dark',
+          });
+          //navigating to login
+          setTimeout(() => {
+            router.push('/login');
+          }, 1000);
         }
-      );
-      let response = await res.json();
-      setNPassword('');
-      setCPassword('');
-      toast.success('Password updated', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-      });
-      //navigating to login
-      setTimeout(() => {
-        router.push('/login')
-      }, 1000);
-      return response
+      }
     } catch (error) {
       console.log(error);
     }
@@ -47,8 +65,8 @@ const UpdatePassword = ({id,token}) => {
 
   return (
     <div>
-        {/* React toastify */}
-        <ToastContainer
+      {/* React toastify */}
+      <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -80,37 +98,44 @@ const UpdatePassword = ({id,token}) => {
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
                 <h2 className="mb-1">New Password</h2>
-                <label htmlFor="npassword" className="sr-only">
+                <label htmlFor="newPassword" className="sr-only">
                   New Password
                 </label>
                 <input
-                  id="npassword"
+                  id="newPassword"
                   name="newPassword"
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                  className="mb-2 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="New Password"
                   value={newPassword}
                   onChange={(e) => setNPassword(e.target.value)}
                 />
+                {/* validate the password length */}
+                {newPassword.length < 7 && (
+                  <h1 className="text-red-600 mb-1">
+                    Password must be at least 7 characters long
+                  </h1>
+                )}
               </div>
               <div>
                 <h2 className="mb-1">Confirm Password</h2>
-                <label htmlFor="cpassword" className="sr-only">
+                <label htmlFor="confirmPassword" className="sr-only">
                   Confirm Password
                 </label>
                 <input
-                  id="cpassword"
+                  id="confirmPassword"
                   name="confirmPassword"
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                  className="mb-2 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Password"
                   value={confirmPassword}
-                  onChange={(e) => setCPassword(e.target.value)}
+                  onChange={handleConfirmPassword}
                 />
+                <h1 className="text-red-600 mb-1">{error}</h1>
               </div>
             </div>
 

@@ -22,13 +22,13 @@ const SellerProducts = () => {
     }
   }, [router]);
   //Deleting Products
-  const handleDelete =  async(productId) => {
+  const handleDelete = async (productId) => {
     //delete product
     const product = await deleteProduct(productId);
     try {
       if (!product.error) {
         //get seller products
-       await getProduct().then((data) => {
+        await getProduct().then((data) => {
           setProducts(data);
           setIsLoading(false);
         });
@@ -42,9 +42,11 @@ const SellerProducts = () => {
     <div>
       {/* productlist */}
       <section className="py-10 px-12">
-        <h3 className="text-center text-2xl font-semibold mb-6">My Products</h3>
+        <h3 className="text-center text-2xl font-semibold mb-10">
+          My Products
+        </h3>
         {products.length == 0 && (
-          <h3 className="text-center text-2xl font-semibold mb-3">
+          <h3 className="text-center text-2xl font-semibold mb-96">
             You have not posted any products
           </h3>
         )}

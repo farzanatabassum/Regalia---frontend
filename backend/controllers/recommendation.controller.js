@@ -33,7 +33,7 @@ const getPreference = asyncHandler(async (req, res) => {
     {
       $match: {
         tags: { $in: productTag },
-        user: {
+        seller: {
           $ne: mongoose.Types.ObjectId(req.user.id),
         },
       },

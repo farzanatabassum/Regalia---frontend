@@ -45,7 +45,7 @@ const createProduct = asyncHandler(async (req, res) => {
     originPrice,
     sellingPrice,
     tags,
-    user: req.user.id,
+    seller: req.user.id,
   });
   res.status(200).json(product);
 });
@@ -55,7 +55,7 @@ const createProduct = asyncHandler(async (req, res) => {
 //private
 //User gets all product
 const getProduct = asyncHandler(async (req, res) => {
-  const products = await Product.find({ user: req.user.id });
+  const products = await Product.find({ seller: req.user.id });
 
   res.status(200).json(products);
 });
@@ -76,8 +76,8 @@ const editProduct = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error('User not found');
   }
-  // Make sure the logged in user matches the goal user
-  if (product.user.toString() !== req.user.id) {
+  // Make sure the logged in user matches the product user
+  if (product.seller.toString() !== req.user.id) {
     res.status(401);
     throw new Error('User not authorized');
   }
@@ -108,8 +108,8 @@ const deleteProduct = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error('User not found');
   }
-  // Make sure the logged in user matches the goal user
-  if (product.user.toString() !== req.user.id) {
+  // Make sure the logged in user matches the product user
+  if (product.seller.toString() !== req.user.id) {
     res.status(401);
     throw new Error('User not authorized');
   }

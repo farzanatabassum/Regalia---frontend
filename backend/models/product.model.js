@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const productSchema = mongoose.Schema(
   {
-    user: {
+    seller: {
       // set the userId from user collection
       // so, you can reference it
       type: mongoose.Schema.Types.ObjectId,

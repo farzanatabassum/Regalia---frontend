@@ -156,9 +156,7 @@ const UpdateProfile = () => {
                   }}
                 />
                  {/* validate the password length */}
-                 {password.length > 6 ? (
-                  <h1 className="text-black-600 mb-1">Password is ok</h1>
-                ) : (
+                 {password.length < 7 && (
                   <h1 className="text-red-600 mb-1">
                     Password must be at least 7 characters long
                   </h1>

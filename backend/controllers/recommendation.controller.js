@@ -10,7 +10,6 @@ const { summer, winter, casual, traditional, formal, sportsWear } =
 //private
 const getPreference = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id);
-  console.log(user.productPreference)
   const productTag = [];
   if (user.productPreference.summer === true) {
     productTag.push(...summer);
@@ -30,7 +29,6 @@ const getPreference = asyncHandler(async (req, res) => {
   if (user.productPreference.sportsWear === true) {
     productTag.push(...sportsWear);
   }
-  console.log(productTag)
   const matchTags = await Product.aggregate([
     {
       $match: {

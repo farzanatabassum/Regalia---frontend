@@ -39,6 +39,8 @@ const UpdateProfile = () => {
           progress: undefined,
           theme: 'dark',
         });
+        localStorage.removeItem('Token');
+        router.reload()
       }
     } catch (error) {
       toast.error('Failed to update', {

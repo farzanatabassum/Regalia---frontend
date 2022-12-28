@@ -49,14 +49,11 @@ const Navbar = () => {
 
                 <ul className="flex space-x-4 ">
                   <Link href="/">
-                    <li
-                      className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-                      aria-current="page"
-                    >
+                    <li className="text-gray-900 hover:bg-gray-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                       <a>Home</a>
                     </li>
                   </Link>
-                  <Link href="/about">
+                  <Link href="/about" >
                     <li className="text-gray-900 hover:bg-gray-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                       <a>About</a>
                     </li>
@@ -148,11 +145,7 @@ const Navbar = () => {
 
             <ul>
               <Link href="/">
-                <li
-                   className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-                   aria-current="page"
-                  
-                >
+                <li className="text-gray-900 hover:bg-gray-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">
                   <a>Home</a>
                 </li>
               </Link>

@@ -40,7 +40,7 @@ const UpdateProfile = () => {
           theme: 'dark',
         });
         localStorage.removeItem('Token');
-        router.reload()
+        router.push('/login')
       }
     } catch (error) {
       toast.error('Failed to update', {

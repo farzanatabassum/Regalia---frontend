@@ -23,10 +23,10 @@ const Navbar = () => {
   const logout = async () => {
     localStorage.removeItem('Token');
     setUser({ value: null });
-    router.reload();
-    //navigating to homepage
+   
+    //navigating to signup page
     setTimeout(() => {
-      router.push('/');
+      router.push('/login');
     }, 1000);
   };
   return (

@@ -207,7 +207,7 @@ const SellWithUs = () => {
               </div>
               {/* Original Price of the cloth */}
               <div>
-                <h2 className="mb-1">Original Price of the cloth</h2>
+                <h2 className="mb-1">Original Price of the cloth (price in BDT)</h2>
                 <label htmlFor="originPrice" className="sr-only">
                   Original Price of the cloth
                 </label>
@@ -225,9 +225,9 @@ const SellWithUs = () => {
               </div>
               {/* Selling price of the cloth */}
               <div>
-                <h2 className="mb-1">Selling price of the cloth</h2>
+                <h2 className="mb-1">Selling price of the cloth (price in BDT)</h2>
                 <label htmlFor="sellingPrice" className="sr-only">
-                  Selling price of the cloth
+                  Selling price of the cloth 
                 </label>
                 <input
                   id="sellingPrice"

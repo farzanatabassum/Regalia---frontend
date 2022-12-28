@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { RiAccountCircleLine } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-
+import { getUser } from '../express_api/user';
 const Navbar = () => {
   const [dropdown, setDropdown] = useState(false);
   const [user, setUser] = useState({ value: null });
+  const [name, setName] = useState('');
   const [key, setKey] = useState(0);
   const router = useRouter();
   useEffect(() => {
@@ -13,6 +14,9 @@ const Navbar = () => {
     if (authtoken) {
       setUser({ value: authtoken });
       setKey(Math.random());
+      getUser().then((data) => {
+        setName(data.name);
+      });
     }
   }, [router.query]);
   //logout
@@ -53,7 +57,7 @@ const Navbar = () => {
                       Home
                     </li>
                   </Link>
-                  <Link href="/about" >
+                  <Link href="/about">
                     <li className="text-gray-900 hover:bg-gray-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                       About
                     </li>
@@ -85,27 +89,22 @@ const Navbar = () => {
                     }}
                     className="absolute right-8 bg-gray-400 top-11 rounded-md px-5 py-4 w-44 z-10"
                   >
+                   
                     <ul>
                       <Link href={'/seller'}>
-                        
-                          <li className="py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white">
-                            My Products
-                          </li>
-                      
+                        <li className="py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white">
+                          My Products
+                        </li>
                       </Link>
                       <Link href={'/updatePreference'}>
-                       
-                          <li className="py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white">
-                            My Preferences
-                          </li>
-                       
+                        <li className="py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white">
+                          My Preferences
+                        </li>
                       </Link>
                       <Link href={'/profile'}>
-                       
-                          <li className="py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white">
-                            My Profile
-                          </li>
-                      
+                        <li className="py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white">
+                          My Profile
+                        </li>
                       </Link>
                       <li
                         onClick={logout}
@@ -118,7 +117,10 @@ const Navbar = () => {
                 )}
                 {/* User logged in */}
                 {user.value && (
-                  <RiAccountCircleLine className="text-xl md:text-2xl mx-10" />
+                  <RiAccountCircleLine className="text-xl md:text-2xl mx-5 mt-5" />                
+                )}
+                {user.value && (
+                   <h3>{name.split(' ')[0]}</h3>
                 )}
               </a>
               {/* User logged out */}
@@ -144,7 +146,7 @@ const Navbar = () => {
             <ul>
               <Link href="/">
                 <li className="text-gray-900 hover:bg-gray-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">
-                Home
+                  Home
                 </li>
               </Link>
               <Link href="/about">
@@ -154,7 +156,7 @@ const Navbar = () => {
               </Link>
               <Link href="/sellwithus">
                 <li className="text-gray-900 hover:bg-gray-500 hover:text-white  px-3 py-2 rounded-md text-base font-medium">
-                 Sell with us
+                  Sell with us
                 </li>
               </Link>
             </ul>

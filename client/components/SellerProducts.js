@@ -91,15 +91,15 @@ const SellerProducts = () => {
                     </h5>
                     <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
                       <span className="font-bold">
-                        Original price of the cloth:
+                        Original price of the cloth: 
                       </span>{' '}
-                      {product.originPrice}
+                      Tk {product.originPrice}
                     </h5>
                     <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
                       <span className="font-bold">
-                        Selling price of the cloth:
+                        Selling price of the cloth: 
                       </span>{' '}
-                      {product.sellingPrice}
+                     Tk {product.sellingPrice}
                     </h5>
                     <h5 className=" font-normal text-gray-700 dark:text-gray-400">
                       <span className="font-bold">Tags of the cloth:</span>{' '}

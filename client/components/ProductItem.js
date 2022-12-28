@@ -89,7 +89,7 @@ const ProductItem = () => {
                     </h5>
                     <h5 className="mb-2 font-normal text-gray-700 dark:text-gray-400">
                       <span className="font-bold">Price:</span>{' '}
-                      {product.sellingPrice}
+                      Tk {product.sellingPrice}
                     </h5>
                   </div>
                 </div>

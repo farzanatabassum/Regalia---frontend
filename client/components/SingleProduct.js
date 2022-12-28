@@ -40,7 +40,7 @@ const SingleProduct = ({
               </h2>
 
               <h2 className=" mb-6 text-lg font-normal text-gray-700 dark:text-gray-400">
-                <span className="font-bold">Price:</span> {price}
+                <span className="font-bold">Price:</span> Tk {price}
               </h2>
               <button className="flex text-white bg-gray-700 border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded">
                 Add to Cart

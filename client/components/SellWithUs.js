@@ -199,8 +199,6 @@ const SellWithUs = () => {
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-
-                  // className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
                 >
                   <option defaultValue>Choose a gender</option>
                   <option value="Male">Male</option>
@@ -249,10 +247,10 @@ const SellWithUs = () => {
               </div>
               {/* Image */}
               <div>
-              <h2 className="mb-1">Image of the cloth</h2>
-        <label htmlFor="image" className="sr-only">
-          Image
-        </label>
+                <h2 className="mb-1">Image of the cloth</h2>
+                <label htmlFor="image" className="sr-only">
+                  Image
+                </label>
                 <UploadImage setUrl={setUrl} />
               </div>
             </div>

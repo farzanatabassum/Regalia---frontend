@@ -9,40 +9,37 @@ const UpdateProfile = () => {
   const [gender, setGender] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState('');
-  const router=useRouter()
+  const router = useRouter();
   useEffect(() => {
     const token = localStorage.getItem('Token');
-    if(!token){
-      router.push('/')
-    }
-    else
-   { 
-    //get user details
-    getUser()
-      .then((parsed) => {
+    if (!token) {
+      router.push('/');
+    } else {
+      //get user details
+      getUser().then((parsed) => {
         setUser(parsed);
         setName(parsed.name);
         setEmail(parsed.email);
         setGender(parsed.gender);
-     
-      })}
+      });
+    }
   }, [router]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await updateProfile(name,password,user._id)
+    const data = await updateProfile(name, password, user._id);
     try {
-      if(!data.error)
-    {  toast.success('Profile updated', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-      });
-    }
+      if (!data.error) {
+        toast.success('Profile updated', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        });
+      }
     } catch (error) {
       toast.error('Failed to update', {
         position: 'top-right',
@@ -58,8 +55,8 @@ const UpdateProfile = () => {
   };
   return (
     <div>
-       {/* React toastify */}
-       <ToastContainer
+      {/* React toastify */}
+      <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -122,6 +119,7 @@ const UpdateProfile = () => {
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
                   placeholder="Email address"
                   value={email}
+                  readOnly
                 />
               </div>
               <div>
@@ -132,7 +130,8 @@ const UpdateProfile = () => {
                 <select
                   name="gender"
                   value={gender}
-                  class="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
+                  readOnly
+                  className="mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm bg-gray-50  p-2.5 "
                 >
                   <option defaultValue>Choose a gender</option>
                   <option value="Male">Male</option>
@@ -155,13 +154,12 @@ const UpdateProfile = () => {
                     setPassword(e.target.value);
                   }}
                 />
-                 {/* validate the password length */}
-                 {password.length < 7 && (
+                {/* validate the password length */}
+                {password.length < 7 && (
                   <h1 className="text-red-600 mb-1">
                     Password must be at least 7 characters long
                   </h1>
                 )}
-                
               </div>
             </div>
 

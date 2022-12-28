@@ -1,13 +1,13 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
-import UpdatePreference from '../components/UpdatePreference';
+import UpdateProductPreference from '../components/UpdateProductPreference';
 
 const updatePreference = () => {
   return (
     <div>
       <Navbar />
-      <UpdatePreference />
+      <UpdateProductPreference />
       <Footer />
     </div>
   );

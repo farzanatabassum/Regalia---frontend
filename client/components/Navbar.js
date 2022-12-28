@@ -50,17 +50,17 @@ const Navbar = () => {
                 <ul className="flex space-x-4 ">
                   <Link href="/">
                     <li className="text-gray-900 hover:bg-gray-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                      <a>Home</a>
+                      Home
                     </li>
                   </Link>
                   <Link href="/about" >
                     <li className="text-gray-900 hover:bg-gray-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                      <a>About</a>
+                      About
                     </li>
                   </Link>
                   <Link href="/sellwithus">
                     <li className="text-gray-900 hover:bg-gray-500 hover:text-white  px-3 py-2 rounded-md text-sm font-medium">
-                      <a>Sell with us</a>
+                      Sell with us
                     </li>
                   </Link>
                 </ul>
@@ -87,27 +87,25 @@ const Navbar = () => {
                   >
                     <ul>
                       <Link href={'/seller'}>
-                        <a>
-                          {' '}
+                        
                           <li className="py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white">
                             My Products
                           </li>
-                        </a>
+                      
                       </Link>
                       <Link href={'/updatePreference'}>
-                        <a>
-                          {' '}
+                       
                           <li className="py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white">
                             My Preferences
                           </li>
-                        </a>
+                       
                       </Link>
                       <Link href={'/profile'}>
-                        <a>
+                       
                           <li className="py-1 text-base text-center hover:bg-gray-600 rounded-md hover:text-white">
                             My Profile
                           </li>
-                        </a>
+                      
                       </Link>
                       <li
                         onClick={logout}
@@ -146,17 +144,17 @@ const Navbar = () => {
             <ul>
               <Link href="/">
                 <li className="text-gray-900 hover:bg-gray-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">
-                  <a>Home</a>
+                Home
                 </li>
               </Link>
               <Link href="/about">
                 <li className="text-gray-900 hover:bg-gray-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">
-                  <a>About</a>
+                  About
                 </li>
               </Link>
               <Link href="/sellwithus">
                 <li className="text-gray-900 hover:bg-gray-500 hover:text-white  px-3 py-2 rounded-md text-base font-medium">
-                  <a>Sell with us</a>
+                 Sell with us
                 </li>
               </Link>
             </ul>

@@ -1,10 +1,10 @@
 import React from 'react';
-import ProductPreference from '../components/ProductPreference';
+import UpdateProductPreference from '../components/UpdateProductPreference';
 
 const Preference = () => {
   return (
     <div>
-      <ProductPreference />
+      <UpdateProductPreference />
     </div>
   );
 };

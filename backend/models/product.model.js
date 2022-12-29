@@ -52,7 +52,8 @@ const productSchema = mongoose.Schema(
     },
     totalViews:{
       type:Number,
-    }
+      default:0,
+    },
   },
   {
     timestamps: true,

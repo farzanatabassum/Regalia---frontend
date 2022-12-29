@@ -136,7 +136,7 @@ const listAll = asyncHandler(async (req, res) => {
 //get req
 //public
 //Get Single product details
-const singleProduct = asyncHandler(async (req, res,next) => {
+const singleProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
   
   if (!product) {
@@ -144,7 +144,7 @@ const singleProduct = asyncHandler(async (req, res,next) => {
     throw new Error('Product not found');
   }
   res.status(200).json(product);
-  // next()
+
 
 });
 

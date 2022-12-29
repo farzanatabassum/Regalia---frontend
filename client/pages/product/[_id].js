@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { getproductdetails, getProductViews } from '../../express_api/product';
-// import { getProductViews } from '../../express_api/product';
-
 const Post = () => {
   const router = useRouter();
   const { _id } = router.query;
@@ -19,13 +17,10 @@ const Post = () => {
     }
     count++;
     getProductViews(_id).then((data) => {
-      console.log(data);
       setCount(data.totalViews);
-      // setProducts(data);
-      // setIsLoading(false);
+      
     });
     getproductdetails(_id).then((parsed) => {
-      console.log('Single', parsed);
       setProducts(parsed);
       setIsLoading(false);
     });

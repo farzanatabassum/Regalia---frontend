@@ -12,16 +12,15 @@ const Post = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getproductdetails(_id)
-      .then((parsed) => {
-        setProducts(parsed);
-        setIsLoading(false);
-      });
+    getproductdetails(_id).then((parsed) => {
+      setProducts(parsed);
+      setIsLoading(false);
+    });
   }, [_id]);
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       {isLoading && <div>Loading... </div>}
       <SingleProduct
         img={products.image}
@@ -32,7 +31,7 @@ const Post = () => {
         size={products.size}
         price={products.sellingPrice}
       />
-      <Footer/>
+      <Footer />
     </>
   );
 };

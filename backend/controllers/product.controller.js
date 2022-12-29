@@ -141,7 +141,7 @@ const singleProduct = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Product not found');
   }
-
+  
   res.status(200).json(product);
 });
 

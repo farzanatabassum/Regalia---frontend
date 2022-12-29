@@ -23,7 +23,7 @@ const Navbar = () => {
   const logout = async () => {
     localStorage.removeItem('Token');
     setUser({ value: null });
-   
+
     //navigating to signup page
     setTimeout(() => {
       router.push('/login');
@@ -89,7 +89,6 @@ const Navbar = () => {
                     }}
                     className="absolute right-8 bg-gray-400 top-11 rounded-md px-5 py-4 w-44 z-10"
                   >
-                   
                     <ul>
                       <Link href={'/seller'}>
                         <li className="py-1  text-center text-base hover:bg-gray-600 rounded-md hover:text-white">
@@ -117,11 +116,9 @@ const Navbar = () => {
                 )}
                 {/* User logged in */}
                 {user.value && (
-                  <RiAccountCircleLine className="text-xl md:text-2xl mx-5 mt-5" />                
+                  <RiAccountCircleLine className="text-xl md:text-2xl mx-5 mt-5" />
                 )}
-                {user.value && (
-                   <h3>{name.split(' ')[0]}</h3>
-                )}
+                {user.value && <h3>{name.split(' ')[0]}</h3>}
               </a>
               {/* User logged out */}
               {!user.value && (

@@ -51,7 +51,7 @@ const productSchema = mongoose.Schema(
       validate: (v) => Array.isArray(v) && v.length > 1,
     },
     totalViews:{
-      type:Number,
+      type: Number,
       default:0,
     },
   },

@@ -1,5 +1,6 @@
 const Product = require('../models/product.model');
 const asyncHandler = require('express-async-handler');
+const { default: next } = require('next');
 
 //api/products/create
 //post req
@@ -135,14 +136,16 @@ const listAll = asyncHandler(async (req, res) => {
 //get req
 //public
 //Get Single product details
-const singleProduct = asyncHandler(async (req, res) => {
+const singleProduct = asyncHandler(async (req, res,next) => {
   const product = await Product.findById(req.params.id);
- 
+  
   if (!product) {
     res.status(400);
     throw new Error('Product not found');
   }
   res.status(200).json(product);
+  // next()
+
 });
 
 //api/products/view/:id
@@ -152,7 +155,7 @@ const singleProduct = asyncHandler(async (req, res) => {
 const productView = asyncHandler(async(req, res) => {
 const product=await Product.findById(req.params.id)
 if(product){
-  product.totalViews=parseInt(req.body.totalViews)+1;
+  product.totalViews=product.totalViews+1;
   const updatedViews=await product.save();
   console.log(updatedViews)
   res.json({
@@ -164,7 +167,6 @@ else {
   res.status(404);
   throw new Error('Product Not Found');
 }
-    
 });
 
 module.exports = {

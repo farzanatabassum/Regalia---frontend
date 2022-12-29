@@ -29,7 +29,19 @@ const getproductdetails = async (_id) => {
     console.log(error);
   }
 };
-
+//product views
+const getProductViews = async (_id) => {
+  try {
+    let res = await fetch(`http://localhost:5000/api/products/view/${_id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
 //get seller products
 const getProduct = async () => {
   try {
@@ -70,8 +82,7 @@ const updateProduct = async (_id, data) => {
 };
 //delete product
 const deleteProduct = async (productId) => {
-  try
-  {
+  try {
     const token = localStorage.getItem('Token');
     const response = await fetch(
       `http://localhost:5000/api/products/deleteProduct/${productId}`,
@@ -83,10 +94,9 @@ const deleteProduct = async (productId) => {
         },
       }
     );
-   return await response.json();
-  }
-  catch(error){
-    console.log(error)
+    return await response.json();
+  } catch (error) {
+    console.log(error);
   }
 };
 export {
@@ -95,4 +105,5 @@ export {
   getProduct,
   updateProduct,
   deleteProduct,
+  getProductViews,
 };

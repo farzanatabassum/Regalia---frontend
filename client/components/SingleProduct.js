@@ -13,10 +13,9 @@ const SingleProduct = ({
 }) => {
   return (
     <div>
-      <div className='flex justify-center mt-10'>
+      <div className='flex justify-end mt-10 mx-20'>
       <AiFillEye className='text-xl md:text-2xl mr-4'></AiFillEye>{count}
       </div>
-      {/* <h1>Views:{count}</h1> */}
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">

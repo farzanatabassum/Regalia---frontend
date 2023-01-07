@@ -8,7 +8,6 @@ const nodemailer = require('nodemailer');
 //post req
 //public
 const register = asyncHandler(async (req, res) => {
-  // const {name,email,gender,password}=req.body
   const { name, email, gender, password } = req.body;
   //if password less than 7
   if (password.length < 7) {

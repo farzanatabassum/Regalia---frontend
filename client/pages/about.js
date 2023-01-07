@@ -6,7 +6,7 @@ const about = () => {
   return (
     <div>
       <Navbar />
-      <div >
+      <div>
         <section className="text-gray-600 body-font">
           <div className="container px-5 py-24 mx-auto flex flex-wrap">
             <div className="lg:w-1/2 w-full mb-10 lg:mb-0 rounded-lg overflow-hidden">
@@ -25,15 +25,21 @@ const about = () => {
                   </h2>
                   <p className="leading-relaxed text-base mb-8">
                     {' '}
-                    Welcome to Regalia. We are a cloud store open to thousands
-                    of reused branded clothes, where you get to choose the best
-                    fit for you, be it casual wear, party wear, traditional,
-                    formal, etc., that too only based on your preference.
+                    Bonjour! Welcome to Regalia. Regalia means attire, and we at
+                    Regalia solemnly believe that defines both the purpose and
+                    meaning of our brand. We are open to thousands of reused
+                    branded clothes, where you get to choose the best fit for
+                    you and your loved ones, be it casual wear, fancy party
+                    wear, formal, etc., completely based on your preference
+                    only.
                   </p>
                   <p className="leading-relaxed text-base mb-4">
-                    Buy all those branded pieces and uplift your style as you
-                    will just get to view and buy pieces chosen by us for you
-                    according to what you are looking for.
+                    Buy all those branded pieces and uplift your style. Stay
+                    trendy at an affordable price and save your time and
+                    yourself from all the hassle of going shopping and looking
+                    at the zillion pieces and still failing to get the desired
+                    one. Your happiness is only a click away when you shop at
+                    Regalia.
                   </p>
                   Happy shopping!
                 </div>

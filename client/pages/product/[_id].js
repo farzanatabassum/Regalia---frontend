@@ -18,7 +18,6 @@ const Post = () => {
     count++;
     getProductViews(_id).then((data) => {
       setCount(data.totalViews);
-      
     });
     getproductdetails(_id).then((parsed) => {
       setProducts(parsed);

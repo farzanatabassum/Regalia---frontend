@@ -1,6 +1,5 @@
 const Product = require('../models/product.model');
 const asyncHandler = require('express-async-handler');
-const { default: next } = require('next');
 
 //api/products/create
 //post req
@@ -115,8 +114,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
     throw new Error('User not authorized');
   }
 
-  //Deleting prod  res.status(200).json({ id: req.params.id })
-
+  //Deleting product
   await Product.deleteOne({ _id: req.params.id });
   res.status(200).json({ id: req.params.id });
 });
@@ -138,35 +136,31 @@ const listAll = asyncHandler(async (req, res) => {
 //Get Single product details
 const singleProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
-  
+
   if (!product) {
     res.status(400);
     throw new Error('Product not found');
   }
   res.status(200).json(product);
-
-
 });
 
 //api/products/view/:id
 //get req
 //public
 //Calculate total product views
-const productView = asyncHandler(async(req, res) => {
-const product=await Product.findById(req.params.id)
-if(product){
-  product.totalViews=product.totalViews+1;
-  const updatedViews=await product.save();
-  console.log(updatedViews)
-  res.json({
-    _id:updatedViews._id,
-    totalViews:updatedViews.totalViews,
-  })
-}  
-else {
-  res.status(404);
-  throw new Error('Product Not Found');
-}
+const productView = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  if (product) {
+    product.totalViews = product.totalViews + 1;
+    const updatedViews = await product.save();
+    res.json({
+      _id: updatedViews._id,
+      totalViews: updatedViews.totalViews,
+    });
+  } else {
+    res.status(404);
+    throw new Error('Product Not Found');
+  }
 });
 
 module.exports = {

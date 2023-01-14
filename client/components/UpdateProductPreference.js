@@ -128,12 +128,12 @@ const UpdateProductPreference = () => {
       />
       <section className="py-10 px-12">
         <p className="text-center text-2xl font-semibold mb-10">
-          Choose at least 2 products from the preference product list to get
+          Choose at least 2 categories from the preference category list to get
           your recommended products
         </p>
         {count == 1 ? (
           <h1 className="text-center text-2xl font-semibold mb-10 text-red-600">
-            Please choose at least 2 products
+            Please choose at least 2 categories
           </h1>
         ) : null}
         <div className="grid grid-flow-row gap-8 text-neutral-600 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

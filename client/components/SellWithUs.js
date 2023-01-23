@@ -103,18 +103,33 @@ const SellWithUs = () => {
                 <label htmlFor="category" className="sr-only">
                   Category
                 </label>
-
-                <input
-                  id="category"
+                <select
                   name="category"
-                  type="category"
-                  autoComplete="category"
-                  required
-                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  placeholder="Category"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                />
+                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                >
+                  <option defaultValue>Choose category of the cloth</option>
+                  <option value="Abaya">Abaya</option>
+                  <option value="Coat">Coat</option>
+                  <option value="Dress">Dress</option>
+                  <option value="Hoodie">Hoodie</option>
+                  <option value="Jacket">Jacket</option>
+                  <option value="Jeans">Jeans</option>
+                  <option value="Lehenga">Lehenga</option>
+                  <option value="Panjabi">Panjabi</option>
+                  <option value="Polos">Polos</option>
+                  <option value="Salwar Kameez">Salwar Kameez</option>
+                  <option value="Skirt">Skirt</option>
+                  <option value="Sweater">Sweater</option>
+                  <option value="Sweatshirt">Sweatshirt</option>
+                  <option value="Shirt">Shirt</option>
+                  <option value="Suit">Suit</option>
+                  <option value="Turtleneck Sweater">Turtleneck Sweater</option>
+                  <option value="Tshirt">Tshirt</option>
+                  <option value="Tracksuit">Tracksuit</option>
+                  <option value="Tops">Tops</option>
+                </select>
               </div>
               {/* Brand of the cloth */}
               <div>
@@ -122,17 +137,33 @@ const SellWithUs = () => {
                 <label htmlFor="brand" className="sr-only">
                   Brand of the cloth
                 </label>
-                <input
-                  id="brand"
-                  name="brand"
-                  type="brand"
-                  autoComplete="brand"
-                  required
+                <select
+                name="brand"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
                   className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  placeholder="Brand of the cloth"
-                  value={brand}
-                  onChange={(e) => setBrand(e.target.value)}
-                />
+                >
+                  <option defaultValue>Choose a brand</option>
+                  <option value="Aarong">Aarong</option>
+                  <option value="Anzara">Anzara</option>
+                  <option value="Artisan">Artisan</option>
+                  <option value="Cats Eye">Cats Eye</option>
+                  <option value="Dorjibari">Dorjibari</option>
+                  <option value="Deshi Dosh">Deshi Dosh</option>
+                  <option value="Ecstasy">Ecstasy</option>
+                  <option value="Gentle Park">Gentle Park</option>
+                  <option value="Le Reve">Le Reve</option>
+                  <option value="Myth">Myth</option>
+                  <option value="NogorPolli">NogorPolli</option>
+                  <option value="Illiyeen">Illiyeen</option>
+                  <option value="Rang">Rang</option>
+                  <option value="Richman">Richman</option>
+                  <option value="Sailor">Sailor</option>
+                  <option value="Sabyasachi">Sabyasachi</option>
+                  <option value="Tahoor">Tahoor</option>
+                  <option value="Trendz">Trendz</option>
+                  <option value="Yellow">Yellow</option>
+                </select>
               </div>
               {/* Fabric of the cloth */}
               <div>
@@ -140,17 +171,30 @@ const SellWithUs = () => {
                 <label htmlFor="fabric" className="sr-only">
                   Fabric
                 </label>
-                <input
-                  id="fabric"
+                <select
                   name="fabric"
-                  type="fabric"
-                  autoComplete="fabric"
-                  required
-                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  placeholder="Fabric"
                   value={fabric}
                   onChange={(e) => setFabric(e.target.value)}
-                />
+                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                >
+                  <option defaultValue>Choose fabric of the cloth</option>
+                  <option value="Cotton">Cotton</option>
+                  <option value="Chiffon">Chiffon</option>
+                  <option value="Cashmere">Cashmere</option>
+                  <option value="Denim">Denim</option>
+                  <option value="Georgette">Georgette</option>
+                  <option value="Jersey">Jersey</option>
+                  <option value="Linen">Linen</option>
+                  <option value="Leather">Leather</option>
+                  <option value="Nylon">Nylon</option>
+                  <option value="Polyester">Polyester</option>
+                  <option value="Polar Fleece">Polar Fleece</option>
+                  <option value="Organza">Organza</option>
+                  <option value="Silk">Silk</option>
+                  <option value="Sweatshirt Fleece">Sweatshirt Fleece</option>
+                  <option value="Satin">Satin</option>
+                  <option value="Wool">Wool</option>
+                </select>
               </div>
               {/* Size of the cloth */}
               <div>
@@ -158,17 +202,19 @@ const SellWithUs = () => {
                 <label htmlFor="size" className="sr-only">
                   Size of the cloth
                 </label>
-                <input
-                  id="size"
-                  name="size"
-                  type="size"
-                  autoComplete="size"
-                  required
-                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                  placeholder="Size of the cloth"
-                  value={size}
-                  onChange={(e) => setSize(e.target.value)}
-                />
+                 <select
+                 name='size'
+                 value={size}
+                 onChange={(e) => setSize(e.target.value)}
+                 className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                >
+                  <option defaultValue>Choose size of the cloth</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XL</option>
+                </select>
               </div>
               {/* Condition of the cloth */}
               <div>
@@ -176,17 +222,18 @@ const SellWithUs = () => {
                 <label htmlFor="condition" className="sr-only">
                   Condition of the cloth
                 </label>
-                <input
-                  id="condition"
+                 <select
                   name="condition"
-                  type="condition"
-                  autoComplete="condition"
-                  required
-                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 bg-white sm:text-sm"
-                  placeholder="Condition of the cloth"
                   value={condition}
                   onChange={(e) => setCondition(e.target.value)}
-                />
+                  className=" mb-3 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                >
+                  <option defaultValue>Choose condition of the cloth</option>
+                  <option value="New with tag">New with tag</option>
+                  <option value="New without tag">New without tag</option>
+                  <option value="Used but in good condition">Used but in good condition</option>
+                  <option value="Defective">Defective</option>
+                </select>
               </div>
               {/* Gender */}
               <div>
